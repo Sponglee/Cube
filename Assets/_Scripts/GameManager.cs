@@ -20,13 +20,26 @@ public class GameManager : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0))
         {
-            GrabRayObj();
+            GameObject tmpObj = GrabRayObj();
+
+            if (tmpObj.CompareTag("Tile"))
+            {
+                tmpObj.GetComponent<Renderer>().material = materials[Random.Range(0, materials.Length)];
+            }
+        }
+        else if(Input.GetMouseButtonDown(1))
+        {
+            GameObject tmpObj = GrabRayObj();
+            if (tmpObj.CompareTag("Tile"))
+            {
+                tmpObj.transform.parent.parent.parent.parent.GetComponent<Animator>().SetTrigger("Open");
+            }
         }
     }
 
 
 
-    public void GrabRayObj()
+    public GameObject GrabRayObj()
     {
         RaycastHit hit;
         Ray ray = camHolder.ScreenPointToRay(Input.mousePosition);
@@ -34,13 +47,11 @@ public class GameManager : MonoBehaviour
         Debug.DrawLine(camHolder.transform.position, ray.direction, Color.red, 5f);
         if (Physics.Raycast(ray, out hit))
         {
-            Transform objectHit = hit.transform;
-            if (objectHit.CompareTag("Tile"))
-            {
-                objectHit.GetComponent<Renderer>().material = materials[Random.Range(0, materials.Length)];
-            }
+            GameObject objectHit = hit.transform.gameObject;
+            return objectHit;
 
         }
+        return null;
     }
 
 }
