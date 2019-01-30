@@ -10,69 +10,99 @@ public class CubeElemController : MonoBehaviour
     //Reference to side
     [SerializeField]
     private string sideName;
-    [SerializeField]
+    
     //elemCount size
     private int sideLength;
     //Index of elem
     [SerializeField]
     private int elemIndex;
+    public int ElemIndex { get => elemIndex; set => elemIndex = value; }
+  
     //Coresponding bottom index
     [SerializeField]
     private int bottomRef;
-  
+    public int BottomRef { get => bottomRef; set => bottomRef = value; }
+    
+    //Bottom references for checking
+    [SerializeField]
+    private List<CubeElemController> bottomLinks;
+    public List<CubeElemController> BottomLinks { get => bottomLinks; set => bottomLinks = value; }
 
-   
-
+    private void Awake()
+    {
+        if (sideName == "CubeBottom")
+        {
+            bottomLinks = new List<CubeElemController>();
+        }
+        //Grab a reference to controller
+        cubeController = transform.parent.parent.parent.parent.GetComponent<CubeController>();
+        //Get index and side name for this elem
+        ElemIndex = transform.GetSiblingIndex();
+        sideName = transform.parent.parent.parent.name;
+        sideLength = cubeController.elemCount;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        //Grab a reference to controller
-        cubeController = transform.parent.parent.parent.parent.GetComponent<CubeController>();
+        StartCoroutine(StopStart());
+       
+    }
 
-
-        //Get index and side name for this elem
-        elemIndex = transform.GetSiblingIndex();
-        sideName = transform.parent.parent.parent.name;
-        sideLength = cubeController.elemCount;
-
-
+    public IEnumerator StopStart()
+    {
+        yield return new WaitForEndOfFrame();
+        Debug.Log(sideName);
         //Grab references to coresponding bottom elems
         int i;
         int j;
 
-        //Debug.Log(cubeController.sideMatrices.Count);
+        Debug.Log(cubeController.sideMatrices.Count);
         if (sideName == "CubeBottom")
         {
-            bottomRef = elemIndex;
+            BottomRef = ElemIndex;
         }
         else if (sideName == "CubeFront")
         {
-            bottomRef = elemIndex;
+            i = ElemIndex / sideLength;
+            j = ElemIndex % sideLength;
+            BottomRef = cubeController.sideMatrices[1][i, j];
+            BottomAdd();
         }
         else if (sideName == "CubeRight")
         {
-            i = elemIndex / sideLength;
-            j = elemIndex % sideLength;
-            bottomRef = cubeController.sideMatrices[2][i, j];
+            i = ElemIndex / sideLength;
+            j = ElemIndex % sideLength;
+            BottomRef = cubeController.sideMatrices[2][i, j];
+            BottomAdd();
         }
         else if (sideName == "CubeBack")
         {
-            i = elemIndex / sideLength;
-            j = elemIndex % sideLength;
-            bottomRef = cubeController.sideMatrices[3][i, j];
+            i = ElemIndex / sideLength;
+            j = ElemIndex % sideLength;
+            BottomRef = cubeController.sideMatrices[3][i, j];
+            BottomAdd();
         }
         else if (sideName == "CubeLeft")
         {
-            i = elemIndex / sideLength;
-            j = elemIndex % sideLength;
-            bottomRef = cubeController.sideMatrices[4][i, j];
+            i = ElemIndex / sideLength;
+            j = ElemIndex % sideLength;
+            BottomRef = cubeController.sideMatrices[4][i, j];
+            BottomAdd();
+        }
+    }
+    
+    public void BottomAdd()
+    {
+        Debug.Log(transform.GetComponent<Renderer>().material.color + "::::::" + cubeController.materials[0].color);
+        if (transform.GetComponent<Renderer>().material.color != cubeController.materials[0].color)
+        {
+            cubeController.cubeBottom.GetChild(0).GetChild(0).GetChild(bottomRef).GetComponent<CubeElemController>().BottomLinks.Add(this);
+
         }
 
     }
 
-    
 
 
-   
 }

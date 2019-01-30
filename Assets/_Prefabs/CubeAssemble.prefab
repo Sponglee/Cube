@@ -12,8 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &630485942875576482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26,8 +30,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &4190004019884645006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40,8 +48,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &2177171965326639756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54,8 +66,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!1 &1195939731796807405
 GameObject:
   m_ObjectHideFlags: 0
@@ -566,16 +582,13 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 0fbe481291e46d64b8166062b14c9df0, type: 2}
   - {fileID: 2100000, guid: 5fd0d7cb525b2304b84eeed782d0e479, type: 2}
   - {fileID: 2100000, guid: 69b33a58c72f7af46a6e006bade318e4, type: 2}
-  cubeFront: {fileID: 0}
-  cubeRight: {fileID: 0}
-  cubeBack: {fileID: 0}
-  cubeLeft: {fileID: 0}
-  cubeBottom: {fileID: 0}
+  cubeBottom: {fileID: 1195939733169446693}
   cubeSides:
   - {fileID: 1195939732975390631}
   - {fileID: 1195939731907841062}
   - {fileID: 1195939732776394530}
   - {fileID: 1195939733440882051}
+  elemCount: 3
   cameraPoints:
   - {fileID: 6845108921059320279}
   - {fileID: 6585903345946680401}
@@ -748,8 +761,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &819317902788590414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -762,8 +779,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &2981088924824928400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -776,8 +797,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &5716671885600557425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -790,8 +815,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!1 &1885526062616381481
 GameObject:
   m_ObjectHideFlags: 0
@@ -834,8 +863,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &4694068372432405637
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -848,8 +881,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &911744165991294234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -862,8 +899,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &4854119548631450394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -876,8 +917,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &8366301116278441514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -890,8 +935,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &4749730512003616283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -904,8 +953,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &3551373227899370630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -918,8 +971,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &419894112888322776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -932,8 +989,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &5942297865641599808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -946,8 +1007,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &8855836814732522506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -960,8 +1025,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &7002751635050887230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -974,8 +1043,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &2063300255445928549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -988,8 +1061,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &5746848750598599179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1002,8 +1079,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!1 &3836649655696186262
 GameObject:
   m_ObjectHideFlags: 0
@@ -1085,8 +1166,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!1 &3988643268953401880
 GameObject:
   m_ObjectHideFlags: 0
@@ -1190,8 +1275,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!1 &4111174229995708805
 GameObject:
   m_ObjectHideFlags: 0
@@ -1234,8 +1323,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &3801639592308619924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1248,8 +1341,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &4623341869961548928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1262,8 +1359,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &1593981711734860216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1276,8 +1377,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &9218644861300060880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1290,8 +1395,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!1 &5123061903581694789
 GameObject:
   m_ObjectHideFlags: 0
@@ -1364,8 +1473,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &4679311439355928841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1378,8 +1491,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &7723173221491227686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1392,8 +1509,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &6978189628367831882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1406,8 +1527,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &7531325674063423992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1420,8 +1545,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &653387391811702606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1434,8 +1563,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &7243644294485964300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1448,8 +1581,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &7422995385375773320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1462,8 +1599,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &1277101763571858107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1476,8 +1617,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &5868760709454090391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1490,8 +1635,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &1467624772536580553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1504,8 +1653,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!1 &8358590794064336841
 GameObject:
   m_ObjectHideFlags: 0
@@ -1552,8 +1705,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &4297468487339723964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1566,8 +1723,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &1290297858068612076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1580,8 +1741,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &3750959467848151788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1594,8 +1759,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &5643985748064551010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1608,8 +1777,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!114 &3489575128851512375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1622,8 +1795,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5b6172b9762c4e96fea71570eb3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeController: {fileID: 0}
   sideName: 
+  sideLength: 0
   elemIndex: 0
+  bottomRef: 0
+  bottomLinks: []
 --- !u!1001 &2092521188475273208
 PrefabInstance:
   m_ObjectHideFlags: 0

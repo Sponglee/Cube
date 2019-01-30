@@ -16,10 +16,10 @@ public class CubeController : MonoBehaviour
     List<Material> tmpMats;
 
     //Sides references
-    public Transform cubeFront;
-    public Transform cubeRight;
-    public Transform cubeBack;
-    public Transform cubeLeft;
+    //public Transform cubeFront;
+    //public Transform cubeRight;
+    //public Transform cubeBack;
+    //public Transform cubeLeft;
     public Transform cubeBottom;
 
     public Transform[] cubeSides;
@@ -59,7 +59,7 @@ public class CubeController : MonoBehaviour
         int degrees = -90;
         for (int i = 0; i < 5; i++)
         {
-            Debug.Log(degrees);
+            //Debug.Log(degrees);
             switch (degrees)
             {
                 //BottomSide
@@ -71,7 +71,7 @@ public class CubeController : MonoBehaviour
                 //FrontSide
                 case 0:
                     {
-                        sideMatrices.Add(initialMatrix);
+                        sideMatrices.Add(RevertRows(initialMatrix));
                     }
                     break;
                 //RightSide
@@ -100,6 +100,8 @@ public class CubeController : MonoBehaviour
 
     }
 
+
+ 
 
     // Start is called before the first frame update
     void Start()
@@ -132,6 +134,7 @@ public class CubeController : MonoBehaviour
             }
         }
     }
+
 
  
     public void MoveCamera(Transform camera)
@@ -198,7 +201,25 @@ public class CubeController : MonoBehaviour
             for (int j = 0; j < elemCount; j++)
             {
                 result[i, j] = tmpArray[j];
-                Debug.Log(result[i, j]);
+                //Debug.Log(result[i, j]);
+            }
+        }
+        return result;
+    }
+
+    //Revert rows
+    public int[,] RevertRows(int[,] a)
+    {
+
+        int[,] result = new int[elemCount, elemCount];
+
+        for (int i = 0; i < elemCount; i++)
+        {
+            int[] tmpArray = new int[elemCount];
+
+            for (int j = 0; j < elemCount; j++)
+            {
+                result[elemCount - 1 - i, j] = a[i,j];
             }
         }
         return result;

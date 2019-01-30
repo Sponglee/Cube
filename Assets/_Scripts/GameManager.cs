@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
             GameObject tmpObj = GrabRayObj();
             if (tmpObj.CompareTag("Tile"))
             {
-                tmpObj.GetComponent<Renderer>().material = bottomMaterial;
+                BottomCheck(tmpObj.transform, tmpObj);
             }
         }
         else if (Input.GetMouseButtonDown(1))
@@ -48,6 +48,22 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+
+    //Check if elem is ref to other sides
+    public void BottomCheck(Transform tile, GameObject tmpObj)
+    {
+        CubeElemController tmpTile = tile.GetComponent<CubeElemController>();
+        if (tmpTile.BottomLinks.Count != 0)
+        {
+            tmpObj.GetComponent<Renderer>().material = tmpTile.BottomLinks[0].transform.GetComponent<Renderer>().material;
+            Debug.Log(tmpTile.BottomLinks[0].transform.GetComponent<Renderer>().material);
+        }
+
+
+    }
+
+
 
     //Reset camera transform and set Parent
     public void ChangeCameraState(Transform cameraParent)
