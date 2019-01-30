@@ -34,15 +34,13 @@ public class CubeController : MonoBehaviour
     public Transform[] cameraPoints;
     public int activeCameraPoint = 0;
 
-    // Start is called before the first frame update
-    void Start()
-    {
 
+    private void Awake()
+    {
         //Initialize matrix for sides
         initialMatrix = new int[elemCount, elemCount];
         //Initialize list of sides for elems
         sideMatrices = new List<int[,]>();
-
         //FILL INDEX MATRIX
         int index = 0;
 
@@ -50,43 +48,63 @@ public class CubeController : MonoBehaviour
         {
             for (int j = 0; j < elemCount; j++)
             {
-                initialMatrix[i,j] = index;
+                initialMatrix[i, j] = index;
                 index++;
             }
-            
+
         }
 
         //Get rotated matrices for each side
         //rotation iterator;
-        int degrees = 0;
-        for (int i = 0; i < 4; i++)
+        int degrees = -90;
+        for (int i = 0; i < 5; i++)
         {
             Debug.Log(degrees);
             switch (degrees)
             {
-                case 0:
+                //BottomSide
+                case -90:
+                    {
+                        sideMatrices.Add(initialMatrix);
+                    }
                     break;
+                //FrontSide
+                case 0:
+                    {
+                        sideMatrices.Add(initialMatrix);
+                    }
+                    break;
+                //RightSide
                 case 90:
-                        {
-                            sideMatrices.Add(TransposeMatrix(initialMatrix));
-                        }
-                        break;
+                    {
+                        sideMatrices.Add(TransposeMatrix(initialMatrix));
+                    }
+                    break;
+                //BackSide
                 case 180:
-                        {
-                            sideMatrices.Add(RevertColumns(initialMatrix));
-                        }
-                        break;
-                    case 270:
-                        {
-                            sideMatrices.Add(RevertColumns(TransposeMatrix(RevertColumns(initialMatrix))));
-                        }
-                        break;
+                    {
+                        sideMatrices.Add(RevertColumns(initialMatrix));
+                    }
+                    break;
+                //LeftSide
+                case 270:
+                    {
+                        sideMatrices.Add(RevertColumns(TransposeMatrix(RevertColumns(initialMatrix))));
+                    }
+                    break;
                 default:
                     break;
             }
             degrees += 90;
         }
-         
+
+    }
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+       
         //Initialize tmpMats
         tmpMats = new List<Material>();
         //Initialize cube sides
@@ -136,13 +154,12 @@ public class CubeController : MonoBehaviour
             camera.localPosition = Vector3.Lerp(camera.transform.localPosition, Vector3.zero, cameraSpeed * Time.deltaTime);
             yield return null;
         }
-        //Debug.Log("REEE");
     }
 
 
 
 
-    
+      
     //MATRIX CALCULATIONS
 
     
