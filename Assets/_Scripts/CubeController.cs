@@ -1,16 +1,35 @@
-﻿using System.Collections;
+﻿
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+
+
 
 public class CubeController : MonoBehaviour
 {
 
     //Material pool
     public Material[] materials;
-    //Sides references
-    public Transform[] cubeSides;
-    public Transform cuveBottom;
+    //Active Materials
+    List<Material> tmpMats;
 
+    //Sides references
+    public Transform cubeFront;
+    public Transform cubeRight;
+    public Transform cubeBack;
+    public Transform cubeLeft;
+    public Transform cubeBottom;
+
+    public Transform[] cubeSides;
+
+    //Elem count per side in a row
+    public int elemCount = 3;
+    //Side matrix
+    public int[,] initialMatrix;
+    int[,] tmpMatrix;
+    public List<int[,]> sideMatrices;
     //Camera reference points
     public Transform[] cameraPoints;
     public int activeCameraPoint = 0;
@@ -18,15 +37,70 @@ public class CubeController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        //Initialize matrix for sides
+        initialMatrix = new int[elemCount, elemCount];
+        //Initialize list of sides for elems
+        sideMatrices = new List<int[,]>();
+
+        //FILL INDEX MATRIX
+        int index = 0;
+
+        for (int i = 0; i < elemCount; i++)
+        {
+            for (int j = 0; j < elemCount; j++)
+            {
+                initialMatrix[i,j] = index;
+                index++;
+            }
+            
+        }
+
+        //Get rotated matrices for each side
+        //rotation iterator;
+        int degrees = 0;
+        for (int i = 0; i < 4; i++)
+        {
+            Debug.Log(degrees);
+            switch (degrees)
+            {
+                case 0:
+                    break;
+                case 90:
+                        {
+                            sideMatrices.Add(TransposeMatrix(initialMatrix));
+                        }
+                        break;
+                case 180:
+                        {
+                            sideMatrices.Add(RevertColumns(initialMatrix));
+                        }
+                        break;
+                    case 270:
+                        {
+                            sideMatrices.Add(RevertColumns(TransposeMatrix(RevertColumns(initialMatrix))));
+                        }
+                        break;
+                default:
+                    break;
+            }
+            degrees += 90;
+        }
+         
+        //Initialize tmpMats
+        tmpMats = new List<Material>();
         //Initialize cube sides
         foreach (Transform cubeSide in cubeSides)
         {
-            Material tmpMat = materials[Random.Range(0, materials.Length)];
+            //Set and remember random color per side
+            Material tmpMat = materials[UnityEngine.Random.Range(0, materials.Length)];
+            tmpMats.Add(tmpMat);
+
             //Grab references to each element per side
             foreach (Transform child in cubeSide.GetChild(0).GetChild(0))
             {
                 //Randomize side's elem colorss
-                float matRandomizer = Random.Range(0, 100);
+                float matRandomizer = UnityEngine.Random.Range(0, 100);
                 if (matRandomizer <= 50)
                 {
                     //Side color elem
@@ -41,12 +115,7 @@ public class CubeController : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-       
-    }
-
-
+ 
     public void MoveCamera(Transform camera)
     {
         activeCameraPoint++;
@@ -67,7 +136,54 @@ public class CubeController : MonoBehaviour
             camera.localPosition = Vector3.Lerp(camera.transform.localPosition, Vector3.zero, cameraSpeed * Time.deltaTime);
             yield return null;
         }
-        Debug.Log("REEE");
+        //Debug.Log("REEE");
     }
 
+
+
+
+    
+    //MATRIX CALCULATIONS
+
+    
+    //Transpose matrix
+    public int[,] TransposeMatrix(int[,] a)
+    { 
+        int[,] result = new int[elemCount, elemCount];
+       
+        for (int i = 0; i < elemCount; i++)
+        {
+            for (int j = 0; j < elemCount; j++)
+            {
+                result[j, i] = a[i, j];
+            }
+        }
+        return result;
+    }
+
+    //Revert rows
+    public int[,] RevertColumns(int[,] a)
+    {
+
+        int[,] result = new int[elemCount, elemCount]; 
+
+        for (int i = 0; i < elemCount; i++)
+        {
+            int[] tmpArray = new int[elemCount];
+
+            for (int j = 0; j < elemCount; j++)
+            {
+                tmpArray[j] = a[i,j];
+            }
+
+            Array.Reverse(tmpArray);
+
+            for (int j = 0; j < elemCount; j++)
+            {
+                result[i, j] = tmpArray[j];
+                Debug.Log(result[i, j]);
+            }
+        }
+        return result;
+    }
 }
