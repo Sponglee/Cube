@@ -234,6 +234,8 @@ MonoBehaviour:
   camHolder: {fileID: 13609265}
   physicalCam: {fileID: 1883198662}
   activeCube: {fileID: 793477109}
+  selectedColor: -1
+  selectedCount: 0
 --- !u!4 &423665256
 Transform:
   m_ObjectHideFlags: 0

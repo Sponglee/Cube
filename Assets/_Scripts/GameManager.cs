@@ -1,4 +1,5 @@
 ﻿using Cinemachine;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -13,12 +14,22 @@ public class GameManager : MonoBehaviour
     //Active cube ref
     public CubeController activeCube;
 
+
+    //Collor of selected combo
+    public int selectedColor = -1;
+    public int comboCount = 0;
+
+    //List of clicked elem of same color 
+    public List<Transform> comboBuffer;
+
+
     // Start is called before the first frame update
     void Start()
     {
         //Debug Initialize camera
         ChangeCameraState(activeCube.cameraPoints[activeCube.activeCameraPoint]);
-
+        //Initialize combo buffer
+        comboBuffer = new List<Transform>();
     }
 
     // Update is called once per frame
@@ -49,21 +60,139 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
+   
     //Check if elem is ref to other sides
     public void BottomCheck(Transform tile, GameObject tmpObj)
     {
         CubeElemController tmpTile = tile.GetComponent<CubeElemController>();
         if (tmpTile.BottomLinks.Count != 0)
         {
-            tmpObj.GetComponent<Renderer>().material = tmpTile.BottomLinks[0].transform.GetComponent<Renderer>().material;
-            Debug.Log(tmpTile.BottomLinks[0].transform.GetComponent<Renderer>().material);
+            //Check if there's selected color in bottomLinks - grab material from it
+            int bottomColor = FindBottomColor(tmpTile, selectedColor);
+           
+
+            //First color pick
+            if (selectedColor == -1)
+            {
+                tmpObj.GetComponent<Renderer>().material = tmpTile.BottomLinks[0].transform.GetComponent<Renderer>().material;
+                //Remember selection
+                selectedColor = tmpTile.BottomLinks[0].ElemMatIndex;
+                //Remember color count
+                comboBuffer.Add(tmpObj.transform);
+                comboCount++;
+            }
+            else if(selectedColor != 0)
+            {
+                Debug.Log(":>: " + bottomColor + " :: " + selectedColor);
+                //DEBUG
+                Debug.Log("~~~~" + tmpTile.BottomLinks[bottomColor].transform.GetComponent<Renderer>().material + " : " + activeCube.materials[selectedColor]);
+
+                if (tmpTile.BottomLinks[bottomColor].transform.GetComponent<Renderer>().material.color == activeCube.materials[selectedColor].color)
+                {
+
+                    Debug.Log("ENTER");
+                    //Paint elem to selectedColor
+                    tmpObj.GetComponent<Renderer>().material = tmpTile.BottomLinks[bottomColor].transform.GetComponent<Renderer>().material;
+
+                    //Remember color count
+                    if (!comboBuffer.Contains(tmpObj.transform))
+                    {
+                        comboBuffer.Add(tmpObj.transform);
+                        comboCount++;
+                    }
+
+
+
+                    Debug.Log(selectedColor);
+                    //ComboClear condition
+                    if (comboCount >= activeCube.colorCombos[selectedColor].Count)
+                    {
+                        Debug.Log("!!!!!!!!!!!!!!!!!1GAMEOVER!!!!!!!!!!!!!!!!!!");
+
+                        ClearBuffer();
+                    }
+                }
+                else
+                {
+                    ClearBuffer();
+                }
+                
+            }
+            else
+            {
+                
+                ClearBuffer();
+            }
+           
         }
+        else
+        {
+            ClearBuffer();
+        }
+
 
 
     }
 
+    //Clear selected color from buffer
+    public void ClearBuffer()
+    {
+       
+        foreach (Transform elem in comboBuffer)
+        {
+            elem.GetComponent<Renderer>().material = activeCube.materials[0];
 
+            //If combo more than colors - clear color from sides
+            if(selectedColor != 1 && comboCount >= activeCube.colorCombos[selectedColor].Count)
+            {
+                foreach (CubeElemController link in elem.GetComponent<CubeElemController>().BottomLinks)
+                {
+                    //DElete selected color ones from the wall
+                    if(link.GetComponent<Renderer>().material.color == activeCube.materials[selectedColor].color)
+                        link.transform.GetComponent<Renderer>().material = activeCube.materials[0];
+                }
+            }
+        }
+            
+
+        //Delete selected colors from links
+        if (selectedColor != -1 && comboCount >= activeCube.colorCombos[selectedColor].Count)
+        {
+            activeCube.colorCombos[selectedColor].Clear();
+        }
+
+        selectedColor = -1;
+        comboCount = 0;
+        comboBuffer.Clear();
+
+
+        //Debug
+        Debug.Log("_____________________");
+
+        for (int i = 0; i < activeCube.colorCombos.Length; i++)
+        {
+            if (activeCube.colorCombos[i] != null)
+                Debug.Log(activeCube.colorCombos[i].Count + " : " + activeCube.materials[i]);
+            else
+                Debug.Log("NULL");
+        }
+        Debug.Log("_____________________");
+    }
+                
+
+    //Find color from bottomLinks
+    public int FindBottomColor(CubeElemController tile, int color)
+    {
+        for (int i = 0; i < tile.BottomLinks.Count; i++)
+        {
+            if (tile.BottomLinks[i].ElemMatIndex == color)
+            {
+                Debug.Log(i);
+                return i;
+            }
+        }
+        return 0;
+    }
 
     //Reset camera transform and set Parent
     public void ChangeCameraState(Transform cameraParent)

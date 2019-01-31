@@ -16,11 +16,10 @@ public class CubeController : MonoBehaviour
     List<Material> tmpMats;
 
     //Sides references
-    //public Transform cubeFront;
-    //public Transform cubeRight;
-    //public Transform cubeBack;
-    //public Transform cubeLeft;
     public Transform cubeBottom;
+
+    //Color combo references
+    public List<Transform>[] colorCombos;
 
     public Transform[] cubeSides;
 
@@ -106,15 +105,23 @@ public class CubeController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
         //Initialize tmpMats
         tmpMats = new List<Material>();
+        //Initialize colorCombos
+        colorCombos = new List<Transform>[materials.Length];
+
         //Initialize cube sides
         foreach (Transform cubeSide in cubeSides)
         {
             //Set and remember random color per side
-            Material tmpMat = materials[UnityEngine.Random.Range(0, materials.Length)];
+            int randomMat = UnityEngine.Random.Range(1, materials.Length);
+            Material tmpMat = materials[randomMat];
             tmpMats.Add(tmpMat);
+
+            //Debug.Log(":::" + randomMat);
+            //Initialize color combos lists to anything except first material 
+            if (randomMat != 0 && colorCombos[randomMat] == null)
+                colorCombos[randomMat] = new List<Transform>();
 
             //Grab references to each element per side
             foreach (Transform child in cubeSide.GetChild(0).GetChild(0))
@@ -125,6 +132,13 @@ public class CubeController : MonoBehaviour
                 {
                     //Side color elem
                     child.GetComponent<Renderer>().material = tmpMat;
+                    CubeElemController tmpController = child.GetComponent<CubeElemController>();
+                    tmpController.ElemMat = tmpMat;
+                    tmpController.ElemMatIndex = randomMat;
+
+                    //Add elem to combo per color
+                    colorCombos[randomMat].Add(child);
+
                 }
                 else
                 {
@@ -133,10 +147,57 @@ public class CubeController : MonoBehaviour
                 }
             }
         }
+        //Debug
+        Debug.Log("_____________________");
+
+        for (int i = 0; i < colorCombos.Length; i++)
+        {
+            if (colorCombos[i] != null)
+                Debug.Log(colorCombos[i].Count + " : " + materials[i]);
+            else
+                Debug.Log("NULL");
+        }
+        Debug.Log("_____________________");
+
     }
 
 
- 
+
+    private IEnumerator StopCheckDoubles(Transform child, int mat, CubeElemController tmpCont)
+    {
+        yield return new WaitForFixedUpdate();
+
+        if (!CheckForDoubles(child, mat, tmpCont))
+        {
+          
+
+        }
+
+        
+    }
+
+
+    //Check if there's already same bottom ref for this color
+    public bool CheckForDoubles(Transform child, int mat, CubeElemController tmpCont)
+    {
+        
+        foreach (Transform tmpCombo in colorCombos[mat])
+        {
+            //If checked elem has same bottomRef - dont add;
+            if (tmpCombo.GetComponent<CubeElemController>().BottomRef == child.GetComponent<CubeElemController>().BottomRef 
+                /*&& tmpCombo.GetComponent<Renderer>().material.color == */)
+            {
+                Debug.Log("REEE SAME " + child.GetComponent<CubeElemController>().ElemIndex +
+                    " : " + child.GetComponent<Renderer>().material+" : " + child.GetComponent<CubeElemController>().BottomRef);
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+    //Camera switching 
     public void MoveCamera(Transform camera)
     {
         activeCameraPoint++;

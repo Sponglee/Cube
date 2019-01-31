@@ -10,7 +10,16 @@ public class CubeElemController : MonoBehaviour
     //Reference to side
     [SerializeField]
     private string sideName;
-    
+
+
+    //Element's material index in materials array
+    [SerializeField]
+    private int elemMatIndex;
+    public int ElemMatIndex { get => elemMatIndex; set => elemMatIndex = value; }
+    //Element's material
+    [SerializeField]
+    private Material elemMat;
+    public Material ElemMat { get => elemMat; set => elemMat = value; }
     //elemCount size
     private int sideLength;
     //Index of elem
@@ -27,6 +36,7 @@ public class CubeElemController : MonoBehaviour
     [SerializeField]
     private List<CubeElemController> bottomLinks;
     public List<CubeElemController> BottomLinks { get => bottomLinks; set => bottomLinks = value; }
+  
 
     private void Awake()
     {
@@ -45,19 +55,20 @@ public class CubeElemController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(StopStart());
+        //Delay bottom references 
+        StartCoroutine(StopElemStart());
        
     }
 
-    public IEnumerator StopStart()
+    private IEnumerator StopElemStart()
     {
-        yield return new WaitForEndOfFrame();
-        Debug.Log(sideName);
+        yield return new WaitForSecondsRealtime(0.2f); 
+        //Debug.Log(sideName);
         //Grab references to coresponding bottom elems
         int i;
         int j;
 
-        Debug.Log(cubeController.sideMatrices.Count);
+        //Debug.Log(cubeController.sideMatrices.Count);
         if (sideName == "CubeBottom")
         {
             BottomRef = ElemIndex;
@@ -94,7 +105,7 @@ public class CubeElemController : MonoBehaviour
     
     public void BottomAdd()
     {
-        Debug.Log(transform.GetComponent<Renderer>().material.color + "::::::" + cubeController.materials[0].color);
+        //Debug.Log(transform.GetComponent<Renderer>().material.color + "::::::" + cubeController.materials[0].color);
         if (transform.GetComponent<Renderer>().material.color != cubeController.materials[0].color)
         {
             cubeController.cubeBottom.GetChild(0).GetChild(0).GetChild(bottomRef).GetComponent<CubeElemController>().BottomLinks.Add(this);
