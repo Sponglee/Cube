@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
             GameObject tmpObj = GrabRayObj();
             if (tmpObj.CompareTag("Tile"))
             {
-                BottomCheck(tmpObj.transform, tmpObj);
+                BottomCheck(tmpObj.transform);
             }
         }
         else if (Input.GetMouseButtonDown(1))
@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
 
    
     //Check if elem is ref to other sides
-    public void BottomCheck(Transform tile, GameObject tmpObj)
+    public void BottomCheck(Transform tile/*, GameObject tmpObj*/)
     {
         CubeElemController tmpTile = tile.GetComponent<CubeElemController>();
         if (tmpTile.BottomLinks.Count != 0)
@@ -74,11 +74,11 @@ public class GameManager : MonoBehaviour
             //First color pick
             if (selectedColor == -1)
             {
-                tmpObj.GetComponent<Renderer>().material = tmpTile.BottomLinks[0].transform.GetComponent<Renderer>().material;
+                tile.GetComponent<Renderer>().material = tmpTile.BottomLinks[0].transform.GetComponent<Renderer>().material;
                 //Remember selection
                 selectedColor = tmpTile.BottomLinks[0].ElemMatIndex;
                 //Remember color count
-                comboBuffer.Add(tmpObj.transform);
+                comboBuffer.Add(tile);
                 comboCount++;
             }
             else if(selectedColor != 0)
@@ -92,14 +92,18 @@ public class GameManager : MonoBehaviour
 
                     Debug.Log("ENTER");
                     //Paint elem to selectedColor
-                    tmpObj.GetComponent<Renderer>().material = tmpTile.BottomLinks[bottomColor].transform.GetComponent<Renderer>().material;
+                    tile.GetComponent<Renderer>().material = tmpTile.BottomLinks[bottomColor].transform.GetComponent<Renderer>().material;
 
                     //Remember color count
-                    if (!comboBuffer.Contains(tmpObj.transform))
+                    if (!comboBuffer.Contains(tile))
                     {
-                        comboBuffer.Add(tmpObj.transform);
+                        comboBuffer.Add(tile);
                         comboCount++;
                     }
+                    //else
+                    ////{
+                    ////    comboCount++;
+                    ////}
 
 
 
@@ -140,17 +144,34 @@ public class GameManager : MonoBehaviour
        
         foreach (Transform elem in comboBuffer)
         {
+            //Set elem to blank
             elem.GetComponent<Renderer>().material = activeCube.materials[0];
 
+
+
             //If combo more than colors - clear color from sides
-            if(selectedColor != 1 && comboCount >= activeCube.colorCombos[selectedColor].Count)
+            if(selectedColor != -1 && comboCount >= activeCube.colorCombos[selectedColor].Count)
             {
+                //For link removal
+                List<int> indexes = new List<int>();
+
                 foreach (CubeElemController link in elem.GetComponent<CubeElemController>().BottomLinks)
                 {
                     //DElete selected color ones from the wall
-                    if(link.GetComponent<Renderer>().material.color == activeCube.materials[selectedColor].color)
+                    if (link.GetComponent<Renderer>().material.color == activeCube.materials[selectedColor].color)
+                    {
                         link.transform.GetComponent<Renderer>().material = activeCube.materials[0];
+                        indexes.Add(elem.GetComponent<CubeElemController>().BottomLinks.IndexOf(link));
+
+                    }
                 }
+
+                //Delete links on bottom elems
+                for (int i = 0; i < indexes.Count; i++)
+                {
+                    elem.GetComponent<CubeElemController>().BottomLinks.RemoveAt(indexes[i]);
+                }
+
             }
         }
             
@@ -159,6 +180,8 @@ public class GameManager : MonoBehaviour
         if (selectedColor != -1 && comboCount >= activeCube.colorCombos[selectedColor].Count)
         {
             activeCube.colorCombos[selectedColor].Clear();
+
+
         }
 
         selectedColor = -1;
@@ -183,15 +206,21 @@ public class GameManager : MonoBehaviour
     //Find color from bottomLinks
     public int FindBottomColor(CubeElemController tile, int color)
     {
+        int result = -1;
+
         for (int i = 0; i < tile.BottomLinks.Count; i++)
         {
             if (tile.BottomLinks[i].ElemMatIndex == color)
             {
-                Debug.Log(i);
-                return i;
+                //if it's first index
+                if (result == -1)
+                    result = i;
+                //If second - add up to comboCount
+                else
+                    comboCount++;
             }
         }
-        return 0;
+        return result;
     }
 
     //Reset camera transform and set Parent

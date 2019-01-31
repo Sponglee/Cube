@@ -103,6 +103,8 @@ public class CubeElemController : MonoBehaviour
         }
     }
     
+
+    //Bottom links
     public void BottomAdd()
     {
         //Debug.Log(transform.GetComponent<Renderer>().material.color + "::::::" + cubeController.materials[0].color);

@@ -147,7 +147,36 @@ public class CubeController : MonoBehaviour
                 }
             }
         }
+        StartCoroutine(StopCheckDoubles());
+       
+    }
+
+
+    //Check for all doublicates in colorCombos
+    private IEnumerator StopCheckDoubles()
+    {
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        
+
+        foreach (Transform child in cubeBottom.GetChild(0).GetChild(0))
+        {
+            List<int> links = new List<int>();
+            foreach (CubeElemController item in child.GetComponent<CubeElemController>().BottomLinks)
+            {
+                
+                if (links.Contains(item.ElemMatIndex))
+                {
+                    links.Add(item.ElemMatIndex);
+                    //////////////////////////colorCombos[]
+                }
+            }
+        }
+
+
         //Debug
+
+
         Debug.Log("_____________________");
 
         for (int i = 0; i < colorCombos.Length; i++)
@@ -159,21 +188,6 @@ public class CubeController : MonoBehaviour
         }
         Debug.Log("_____________________");
 
-    }
-
-
-
-    private IEnumerator StopCheckDoubles(Transform child, int mat, CubeElemController tmpCont)
-    {
-        yield return new WaitForFixedUpdate();
-
-        if (!CheckForDoubles(child, mat, tmpCont))
-        {
-          
-
-        }
-
-        
     }
 
 
@@ -196,7 +210,19 @@ public class CubeController : MonoBehaviour
     }
 
 
-
+     //Find color from bottomLinks
+    public int FindBottomColor(CubeElemController tile, int color)
+    {
+        for (int i = 0; i < tile.BottomLinks.Count; i++)
+        {
+            if (tile.BottomLinks[i].ElemMatIndex == color)
+            {
+                Debug.Log(i);
+                return i;
+            }
+        }
+        return 0;
+    }
     //Camera switching 
     public void MoveCamera(Transform camera)
     {
