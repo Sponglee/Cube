@@ -114,7 +114,7 @@ public class GameManager : MonoBehaviour
                     //ComboClear condition
                     if (comboCount >= activeCube.colorCombos[selectedColor].Count)
                     {
-                        Debug.Log("!!!!!!!!!!!!!!!!!1GAMEOVER!!!!!!!!!!!!!!!!!!");
+                        //Debug.Log("!!!!!!!!!!!!!!!!!1GAMEOVER!!!!!!!!!!!!!!!!!!");
                         ClearBuffer();
 
                     }
@@ -204,20 +204,44 @@ public class GameManager : MonoBehaviour
         comboBuffer.Clear();
 
 
+      
+
+
+        CheckCubeEnd();
+       
+    }
+        
+    
+    //Check if cube is finished
+    public void CheckCubeEnd()
+    {
         //Debug
         Debug.Log("_____________________");
 
+        int nullCount = 0;
         for (int i = 0; i < activeCube.colorCombos.Length; i++)
         {
+
             if (activeCube.colorCombos[i] != null)
+            {
+                if (activeCube.colorCombos[i].Count == 0)
+                    nullCount++;
                 Debug.Log(activeCube.colorCombos[i].Count + " : " + activeCube.materials[i]);
+            }
             else
+            {
+                nullCount++;
                 Debug.Log("NULL");
+            }
+        }
+        if (nullCount >= activeCube.colorCombos.Length)
+        {
+            activeCube.anim.SetTrigger("Open");
         }
         Debug.Log("_____________________");
     }
-                
 
+    
     //Find color from bottomLinks
     public int FindBottomColor(CubeElemController tile, int color)
     {
@@ -255,6 +279,7 @@ public class GameManager : MonoBehaviour
         camHolder.localScale = Vector3.one;
     }
 
+    //Elem pick
     public GameObject GrabRayObj()
     {
         RaycastHit hit;

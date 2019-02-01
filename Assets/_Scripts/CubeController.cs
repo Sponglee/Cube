@@ -15,6 +15,8 @@ public class CubeController : MonoBehaviour
     //Active Materials
     List<Material> tmpMats;
 
+    //Animator reference
+    public Animator anim;
     //Sides references
     public Transform cubeBottom;
 
@@ -36,6 +38,8 @@ public class CubeController : MonoBehaviour
 
     private void Awake()
     {
+        //Initialize animator
+        anim = GetComponent<Animator>();
         //Initialize matrix for sides
         initialMatrix = new int[elemCount, elemCount];
         //Initialize list of sides for elems
@@ -147,48 +151,36 @@ public class CubeController : MonoBehaviour
                 }
             }
         }
-        StartCoroutine(StopCheckDoubles());
+        //StartCoroutine(StopCheckDoubles());
        
     }
 
 
-    //Check for all doublicates in colorCombos
-    private IEnumerator StopCheckDoubles()
-    {
-        yield return new WaitForSecondsRealtime(0.5f);
+    ////Check for all doublicates in colorCombos
+    //private IEnumerator StopCheckDoubles()
+    //{
+    //    yield return new WaitForSecondsRealtime(0.5f);
 
         
 
-        foreach (Transform child in cubeBottom.GetChild(0).GetChild(0))
-        {
-            List<int> links = new List<int>();
-            foreach (CubeElemController item in child.GetComponent<CubeElemController>().BottomLinks)
-            {
+    //    foreach (Transform child in cubeBottom.GetChild(0).GetChild(0))
+    //    {
+    //        List<int> links = new List<int>();
+    //        foreach (CubeElemController item in child.GetComponent<CubeElemController>().BottomLinks)
+    //        {
                 
-                if (links.Contains(item.ElemMatIndex))
-                {
-                    links.Add(item.ElemMatIndex);
-                    //////////////////////////colorCombos[]
-                }
-            }
-        }
+    //            if (links.Contains(item.ElemMatIndex))
+    //            {
+    //                links.Add(item.ElemMatIndex);
+    //                //////////////////////////colorCombos[]
+    //            }
+    //        }
+    //    }
 
 
-        //Debug
+        
 
-
-        Debug.Log("_____________________");
-
-        for (int i = 0; i < colorCombos.Length; i++)
-        {
-            if (colorCombos[i] != null)
-                Debug.Log(colorCombos[i].Count + " : " + materials[i]);
-            else
-                Debug.Log("NULL");
-        }
-        Debug.Log("_____________________");
-
-    }
+    //}
 
 
     //Check if there's already same bottom ref for this color
