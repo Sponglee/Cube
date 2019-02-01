@@ -26,10 +26,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Debug Initialize camera
-        ChangeCameraState(activeCube.cameraPoints[activeCube.activeCameraPoint]);
-        //Initialize combo buffer
-        comboBuffer = new List<Transform>();
+       
+        
     }
 
     // Update is called once per frame
@@ -42,6 +40,15 @@ public class GameManager : MonoBehaviour
             if (tmpObj.CompareTag("Tile"))
             {
                 BottomCheck(tmpObj.transform);
+            }
+            else if(tmpObj.CompareTag("Door"))
+            {
+                activeCube = tmpObj.transform.parent.parent.parent.GetComponent<CubeController>();
+                //Debug Initialize camera
+                ChangeCameraState(activeCube.cameraPoints[activeCube.activeCameraPoint]);
+                //Initialize combo buffer
+                comboBuffer = new List<Transform>();
+                
             }
         }
         else if (Input.GetMouseButtonDown(1))
