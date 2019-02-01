@@ -67,8 +67,7 @@ public class GameManager : MonoBehaviour
         CubeElemController tmpTile = tile.GetComponent<CubeElemController>();
         if (tmpTile.BottomLinks.Count != 0)
         {
-            //Check if there's selected color in bottomLinks - grab material from it
-            int bottomColor = FindBottomColor(tmpTile, selectedColor);
+           
            
 
             //First color pick
@@ -80,17 +79,21 @@ public class GameManager : MonoBehaviour
                 //Remember color count
                 comboBuffer.Add(tile);
                 comboCount++;
+                //Check if there's selected color in bottomLinks - grab material from it
+                int bottomColor = FindBottomColor(tmpTile, selectedColor);
             }
             else if(selectedColor != 0)
             {
+                //Check if there's selected color in bottomLinks - grab material from it
+                int bottomColor = FindBottomColor(tmpTile, selectedColor);
                 Debug.Log(":>: " + bottomColor + " :: " + selectedColor);
-                //DEBUG
-                Debug.Log("~~~~" + tmpTile.BottomLinks[bottomColor].transform.GetComponent<Renderer>().material + " : " + activeCube.materials[selectedColor]);
+               
 
-                if (tmpTile.BottomLinks[bottomColor].transform.GetComponent<Renderer>().material.color == activeCube.materials[selectedColor].color)
+                if (bottomColor >=0 && tmpTile.BottomLinks[bottomColor].transform.GetComponent<Renderer>().material.color == activeCube.materials[selectedColor].color)
                 {
-
-                    Debug.Log("ENTER");
+                    //DEBUG
+                    Debug.Log("~~~~" + tmpTile.BottomLinks[bottomColor].transform.GetComponent<Renderer>().material + " : " + activeCube.materials[selectedColor]);
+                 
                     //Paint elem to selectedColor
                     tile.GetComponent<Renderer>().material = tmpTile.BottomLinks[bottomColor].transform.GetComponent<Renderer>().material;
 
@@ -112,8 +115,8 @@ public class GameManager : MonoBehaviour
                     if (comboCount >= activeCube.colorCombos[selectedColor].Count)
                     {
                         Debug.Log("!!!!!!!!!!!!!!!!!1GAMEOVER!!!!!!!!!!!!!!!!!!");
-
                         ClearBuffer();
+
                     }
                 }
                 else
@@ -124,8 +127,8 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                
                 ClearBuffer();
+
             }
            
         }
@@ -134,7 +137,7 @@ public class GameManager : MonoBehaviour
             ClearBuffer();
         }
 
-
+        
 
     }
 
@@ -162,6 +165,8 @@ public class GameManager : MonoBehaviour
                     {
                         link.transform.GetComponent<Renderer>().material = activeCube.materials[0];
                         indexes.Add(elem.GetComponent<CubeElemController>().BottomLinks.IndexOf(link));
+                        Debug.Log(">>"+elem.GetComponent<CubeElemController>().BottomLinks.IndexOf(link));
+                        
 
                     }
                 }
@@ -169,7 +174,8 @@ public class GameManager : MonoBehaviour
                 //Delete links on bottom elems
                 for (int i = 0; i < indexes.Count; i++)
                 {
-                    elem.GetComponent<CubeElemController>().BottomLinks.RemoveAt(indexes[i]);
+                    Debug.Log("<<" + elem.GetComponent<CubeElemController>().BottomLinks[indexes[i]]);
+                    //elem.GetComponent<CubeElemController>().BottomLinks.RemoveAt(indexes[i]);
                 }
 
             }
@@ -207,19 +213,25 @@ public class GameManager : MonoBehaviour
     public int FindBottomColor(CubeElemController tile, int color)
     {
         int result = -1;
-
+        
+        //check material of each link
         for (int i = 0; i < tile.BottomLinks.Count; i++)
         {
+            //Check for same color in links
             if (tile.BottomLinks[i].ElemMatIndex == color)
             {
                 //if it's first index
                 if (result == -1)
+                {
                     result = i;
+                   
+                }
                 //If second - add up to comboCount
                 else
                     comboCount++;
             }
         }
+        Debug.Log("RESULT :  " + result);
         return result;
     }
 
