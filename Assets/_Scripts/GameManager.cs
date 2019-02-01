@@ -141,10 +141,14 @@ public class GameManager : MonoBehaviour
 
     }
 
+
+
+    
+
     //Clear selected color from buffer
     public void ClearBuffer()
     {
-       
+       //Each elem in buffer
         foreach (Transform elem in comboBuffer)
         {
             //Set elem to blank
@@ -155,39 +159,44 @@ public class GameManager : MonoBehaviour
             //If combo more than colors - clear color from sides
             if(selectedColor != -1 && comboCount >= activeCube.colorCombos[selectedColor].Count)
             {
-                //For link removal
-                List<int> indexes = new List<int>();
+                //indexes for bottomlinks to remove
+                List<Transform> indexes = new List<Transform>();
 
+                //Iterate through links per elem in buffer
                 foreach (CubeElemController link in elem.GetComponent<CubeElemController>().BottomLinks)
                 {
-                    //DElete selected color ones from the wall
+                    
+
+                    //Remember selected color links indexes from the wall
                     if (link.GetComponent<Renderer>().material.color == activeCube.materials[selectedColor].color)
                     {
+                        //set link to blank
                         link.transform.GetComponent<Renderer>().material = activeCube.materials[0];
-                        indexes.Add(elem.GetComponent<CubeElemController>().BottomLinks.IndexOf(link));
-                        Debug.Log(">>"+elem.GetComponent<CubeElemController>().BottomLinks.IndexOf(link));
+
+                        //Remember indexes of bottomLinks to remove
+                        indexes.Add(link.transform);
+                        Debug.Log(">>" + indexes.Count);
                         
 
                     }
+
                 }
 
-                //Delete links on bottom elems
-                for (int i = 0; i < indexes.Count; i++)
+                //Delete all links from this buffer elem
+                foreach (Transform item in indexes)
                 {
-                    Debug.Log("<<" + elem.GetComponent<CubeElemController>().BottomLinks[indexes[i]]);
-                    //elem.GetComponent<CubeElemController>().BottomLinks.RemoveAt(indexes[i]);
+                    Debug.Log("INDEX : " + item + ":::: " + elem.GetSiblingIndex());
+                    elem.GetComponent<CubeElemController>().BottomLinks.Remove(item.GetComponent<CubeElemController>());
                 }
-
+                indexes.Clear();
             }
         }
-            
 
+          
         //Delete selected colors from links
         if (selectedColor != -1 && comboCount >= activeCube.colorCombos[selectedColor].Count)
         {
             activeCube.colorCombos[selectedColor].Clear();
-
-
         }
 
         selectedColor = -1;
