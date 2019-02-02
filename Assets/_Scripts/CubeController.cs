@@ -26,7 +26,7 @@ public class CubeController : MonoBehaviour
     public Transform[] cubeSides;
 
     //Elem count per side in a row
-    public int elemCount = 3;
+    public int elemCount;
     //Side matrix
     public int[,] initialMatrix;
     int[,] tmpMatrix;

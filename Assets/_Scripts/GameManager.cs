@@ -1,4 +1,5 @@
 ﻿using Cinemachine;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -86,8 +87,17 @@ public class GameManager : MonoBehaviour
                 //Remember color count
                 comboBuffer.Add(tile);
                 comboCount++;
+               
                 //Check if there's selected color in bottomLinks - grab material from it
                 int bottomColor = FindBottomColor(tmpTile, selectedColor);
+
+                //Check buffer
+                if (comboCount >= activeCube.colorCombos[selectedColor].Count)
+                {
+                    //Debug.Log("!!!!!!!!!!!!!!!!!1GAMEOVER!!!!!!!!!!!!!!!!!!");
+                    ClearBuffer();
+
+                }
             }
             else if(selectedColor != 0)
             {
@@ -108,6 +118,8 @@ public class GameManager : MonoBehaviour
                     if (!comboBuffer.Contains(tile))
                     {
                         comboBuffer.Add(tile);
+                        Debug.Log("REEE");
+
                         comboCount++;
                     }
                     //else
@@ -118,7 +130,7 @@ public class GameManager : MonoBehaviour
 
 
                     Debug.Log(selectedColor);
-                    //ComboClear condition
+                    //Check buffer
                     if (comboCount >= activeCube.colorCombos[selectedColor].Count)
                     {
                         //Debug.Log("!!!!!!!!!!!!!!!!!1GAMEOVER!!!!!!!!!!!!!!!!!!");
@@ -128,12 +140,14 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
+                    //Clear selection
                     ClearBuffer();
                 }
                 
             }
             else
             {
+                //Clear selection
                 ClearBuffer();
 
             }
@@ -141,6 +155,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            //Clear selection
             ClearBuffer();
         }
 
@@ -148,8 +163,17 @@ public class GameManager : MonoBehaviour
 
     }
 
-
-
+    //Material change for pizzaz
+    public IEnumerator ChangeMat(Material start, Material end, float speed)
+    {
+        
+        while(start.color != end.color)
+        {
+            start.Lerp(start, end, speed);
+            //Debug.Log("+");
+            yield return null;
+        }
+    }
     
 
     //Clear selected color from buffer
@@ -158,14 +182,17 @@ public class GameManager : MonoBehaviour
        //Each elem in buffer
         foreach (Transform elem in comboBuffer)
         {
-            //Set elem to blank
-            elem.GetComponent<Renderer>().material = activeCube.materials[0];
-
+            
 
 
             //If combo more than colors - clear color from sides
             if(selectedColor != -1 && comboCount >= activeCube.colorCombos[selectedColor].Count)
             {
+                 
+                //Set Bottom elem to blank if combo
+                StartCoroutine(ChangeMat(elem.GetComponent<Renderer>().material, activeCube.materials[0], 0.05f));
+
+
                 //indexes for bottomlinks to remove
                 List<Transform> indexes = new List<Transform>();
 
@@ -177,9 +204,9 @@ public class GameManager : MonoBehaviour
                     //Remember selected color links indexes from the wall
                     if (link.GetComponent<Renderer>().material.color == activeCube.materials[selectedColor].color)
                     {
-                        //set link to blank
-                        link.transform.GetComponent<Renderer>().material = activeCube.materials[0];
-
+                        //set SIDE link to blank if combo
+                        StartCoroutine(ChangeMat(link.transform.GetComponent<Renderer>().material, activeCube.materials[0], 0.04f));
+                       
                         //Remember indexes of bottomLinks to remove
                         indexes.Add(link.transform);
                         Debug.Log(">>" + indexes.Count);
@@ -188,6 +215,7 @@ public class GameManager : MonoBehaviour
                     }
 
                 }
+               
 
                 //Delete all links from this buffer elem
                 foreach (Transform item in indexes)
@@ -196,6 +224,12 @@ public class GameManager : MonoBehaviour
                     elem.GetComponent<CubeElemController>().BottomLinks.Remove(item.GetComponent<CubeElemController>());
                 }
                 indexes.Clear();
+            }
+            else
+            {
+                //Set Bottom elem to blank if no combo
+                StartCoroutine(ChangeMat(elem.GetComponent<Renderer>().material, activeCube.materials[0], 0.08f));
+
             }
         }
 
@@ -210,10 +244,7 @@ public class GameManager : MonoBehaviour
         comboCount = 0;
         comboBuffer.Clear();
 
-
-      
-
-
+        //Check if cube is clear
         CheckCubeEnd();
        
     }
