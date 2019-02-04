@@ -44,10 +44,21 @@ public class GameManager : Singleton<GameManager>
         {
             //Click on the bottom cube to select
             GameObject tmpObj = GrabRayObj();
+            //Check if clicked a tile and it's bottom
             if (tmpObj.CompareTag("Tile"))
             {
-                BottomCheck(tmpObj.transform);
-                character.Destination = tmpObj.transform.position + new Vector3(0, 0.144f, 0);
+                //Check what u've pressed if cube is closed
+                if(!activeCube.CubeOpened)
+                    BottomCheck(tmpObj.transform);
+
+                //Move character to a tile if bottom and cube is closed, if opened - move to any elem player wants
+                if (tmpObj.GetComponent<CubeElemController>().SideName == "CubeBottom" && !activeCube.CubeOpened)
+                    character.Destination = tmpObj.transform.position + new Vector3(0, 0.144f, 0);
+                else if(activeCube.CubeOpened)
+                    character.Destination = tmpObj.transform.position + new Vector3(0, 0.144f, 0);
+
+
+
                 //tmpObj.GetComponent<Renderer>().material = activeCube.materials[1];
             }
             else if(tmpObj.CompareTag("Door"))
@@ -71,6 +82,7 @@ public class GameManager : Singleton<GameManager>
             if (tmpObj.CompareTag("Tile"))
             {
                 tmpObj.transform.parent.parent.parent.parent.GetComponent<Animator>().SetTrigger("Open");
+                tmpObj.transform.parent.parent.parent.parent.GetComponent<CubeController>().CubeOpened = true;
             }
         }
     }
@@ -292,6 +304,7 @@ public class GameManager : Singleton<GameManager>
         if (nullCount >= activeCube.colorCombos.Length)
         {
             activeCube.anim.SetTrigger("Open");
+            activeCube.CubeOpened = true;
         }
         Debug.Log("_____________________");
     }

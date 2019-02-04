@@ -4,9 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
-
 public class CubeController : MonoBehaviour
 {
 
@@ -34,6 +31,14 @@ public class CubeController : MonoBehaviour
     //Camera reference points
     public Transform[] cameraPoints;
     public int activeCameraPoint = 0;
+
+    //Cube opened bool
+    private bool cubeOpened = false;
+    public bool CubeOpened { get => cubeOpened; set => cubeOpened = value; }
+
+    //Camera rotation speed
+    public float cameraSpeed = 1f;
+
 
 
     private void Awake()
@@ -227,7 +232,7 @@ public class CubeController : MonoBehaviour
         StartCoroutine(StopCamera(camera));
     }
 
-    public float cameraSpeed = 1f;
+
     public IEnumerator StopCamera(Transform camera)
     {
         //Smoothly move camera to point

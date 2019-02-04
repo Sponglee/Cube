@@ -10,6 +10,7 @@ public class CubeElemController : MonoBehaviour
     //Reference to side
     [SerializeField]
     private string sideName;
+    public string SideName { get => sideName; set => sideName = value; }
 
 
     //Element's material index in materials array
@@ -37,10 +38,9 @@ public class CubeElemController : MonoBehaviour
     private List<CubeElemController> bottomLinks;
     public List<CubeElemController> BottomLinks { get => bottomLinks; set => bottomLinks = value; }
   
-
     private void Awake()
     {
-        if (sideName == "CubeBottom")
+        if (SideName == "CubeBottom")
         {
             bottomLinks = new List<CubeElemController>();
         }
@@ -48,7 +48,7 @@ public class CubeElemController : MonoBehaviour
         cubeController = transform.parent.parent.parent.parent.GetComponent<CubeController>();
         //Get index and side name for this elem
         ElemIndex = transform.GetSiblingIndex();
-        sideName = transform.parent.parent.parent.name;
+        SideName = transform.parent.parent.parent.name;
         sideLength = cubeController.elemCount;
     }
 
@@ -69,32 +69,32 @@ public class CubeElemController : MonoBehaviour
         int j;
 
         //Debug.Log(cubeController.sideMatrices.Count);
-        if (sideName == "CubeBottom")
+        if (SideName == "CubeBottom")
         {
             BottomRef = ElemIndex;
         }
-        else if (sideName == "CubeFront")
+        else if (SideName == "CubeFront")
         {
             i = ElemIndex / sideLength;
             j = ElemIndex % sideLength;
             BottomRef = cubeController.sideMatrices[1][i, j];
             BottomAdd();
         }
-        else if (sideName == "CubeRight")
+        else if (SideName == "CubeRight")
         {
             i = ElemIndex / sideLength;
             j = ElemIndex % sideLength;
             BottomRef = cubeController.sideMatrices[2][i, j];
             BottomAdd();
         }
-        else if (sideName == "CubeBack")
+        else if (SideName == "CubeBack")
         {
             i = ElemIndex / sideLength;
             j = ElemIndex % sideLength;
             BottomRef = cubeController.sideMatrices[3][i, j];
             BottomAdd();
         }
-        else if (sideName == "CubeLeft")
+        else if (SideName == "CubeLeft")
         {
             i = ElemIndex / sideLength;
             j = ElemIndex % sideLength;
