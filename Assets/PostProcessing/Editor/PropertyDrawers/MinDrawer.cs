@@ -24,6 +24,6 @@ namespace UnityEditor.PostProcessing
             {
                 EditorGUI.LabelField(position, label.text, "Use Min with float or int.");
             }
-        }
+        } 
     }
 }

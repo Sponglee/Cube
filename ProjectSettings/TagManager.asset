@@ -8,6 +8,8 @@ TagManager:
   - Tile
   - Cube
   - Door
+  - Spawn
+  - Character
   layers:
   - Default
   - TransparentFX

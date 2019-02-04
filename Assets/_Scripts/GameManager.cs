@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
 
     public Material bottomMaterial;
@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     //Active cube ref
     public CubeController activeCube;
 
+    //Character reference
+    public CharacterController character;
 
     //Collor of selected combo
     public int selectedColor = -1;
@@ -27,8 +29,12 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
+
         
+        //Debug Initialize camera
+        ChangeCameraState(activeCube.cameraPoints[activeCube.activeCameraPoint]);
+        //Initialize combo buffer
+        comboBuffer = new List<Transform>();
     }
 
     // Update is called once per frame
@@ -41,14 +47,15 @@ public class GameManager : MonoBehaviour
             if (tmpObj.CompareTag("Tile"))
             {
                 BottomCheck(tmpObj.transform);
+                character.Destination = tmpObj.transform.position + new Vector3(0, 0.144f, 0);
+                //tmpObj.GetComponent<Renderer>().material = activeCube.materials[1];
             }
             else if(tmpObj.CompareTag("Door"))
             {
-                activeCube = tmpObj.transform.parent.parent.parent.GetComponent<CubeController>();
-                //Debug Initialize camera
-                ChangeCameraState(activeCube.cameraPoints[activeCube.activeCameraPoint]);
-                //Initialize combo buffer
-                comboBuffer = new List<Transform>();
+              
+                //Move character to a door
+                character.Destination = tmpObj.transform.position;
+                //character.transform.position = activeCube.transform.position + new Vector3(0, 0.3f, 0);
                 
             }
         }
@@ -81,7 +88,7 @@ public class GameManager : MonoBehaviour
             //First color pick
             if (selectedColor == -1)
             {
-                tile.GetComponent<Renderer>().material = tmpTile.BottomLinks[0].transform.GetComponent<Renderer>().material;
+                tile.GetComponent<CubeElemController>().materialInteraction = tmpTile.BottomLinks[0].transform.GetComponent<Renderer>().material;
                 //Remember selection
                 selectedColor = tmpTile.BottomLinks[0].ElemMatIndex;
                 //Remember color count
@@ -94,8 +101,10 @@ public class GameManager : MonoBehaviour
                 //Check buffer
                 if (comboCount >= activeCube.colorCombos[selectedColor].Count)
                 {
-                    //Debug.Log("!!!!!!!!!!!!!!!!!1GAMEOVER!!!!!!!!!!!!!!!!!!");
-                    ClearBuffer();
+
+                    //Enable clear buffer on character collision
+                    tile.GetComponent<CubeElemController>().ClearBufferTrigger = true;
+                    //ClearBuffer();
 
                 }
             }
@@ -110,9 +119,10 @@ public class GameManager : MonoBehaviour
                 {
                     //DEBUG
                     Debug.Log("~~~~" + tmpTile.BottomLinks[bottomColor].transform.GetComponent<Renderer>().material + " : " + activeCube.materials[selectedColor]);
-                 
+
                     //Paint elem to selectedColor
-                    tile.GetComponent<Renderer>().material = tmpTile.BottomLinks[bottomColor].transform.GetComponent<Renderer>().material;
+                    //tile.GetComponent<Renderer>().material = tmpTile.BottomLinks[bottomColor].transform.GetComponent<Renderer>().material;
+                    tile.GetComponent<CubeElemController>().materialInteraction = tmpTile.BottomLinks[bottomColor].transform.GetComponent<Renderer>().material;
 
                     //Remember color count
                     if (!comboBuffer.Contains(tile))
@@ -133,33 +143,40 @@ public class GameManager : MonoBehaviour
                     //Check buffer
                     if (comboCount >= activeCube.colorCombos[selectedColor].Count)
                     {
-                        //Debug.Log("!!!!!!!!!!!!!!!!!1GAMEOVER!!!!!!!!!!!!!!!!!!");
-                        ClearBuffer();
+                        //Enable clear buffer on character collision
+                        tile.GetComponent<CubeElemController>().ClearBufferTrigger = true;
+                        //ClearBuffer();
 
                     }
                 }
                 else
                 {
                     //Clear selection
-                    ClearBuffer();
+                    //Enable clear buffer on character collision
+                    tile.GetComponent<CubeElemController>().ClearBufferTrigger = true;
+                    //ClearBuffer();
                 }
-                
+
             }
             else
             {
                 //Clear selection
-                ClearBuffer();
+                //Enable clear buffer on character collision
+                tile.GetComponent<CubeElemController>().ClearBufferTrigger = true;
+                //ClearBuffer();
 
             }
-           
+
         }
         else
         {
             //Clear selection
-            ClearBuffer();
+            //Enable clear buffer on character collision
+            tile.GetComponent<CubeElemController>().ClearBufferTrigger = true;
+            //ClearBuffer();
         }
 
-        
+
 
     }
 
@@ -333,4 +350,7 @@ public class GameManager : MonoBehaviour
         return null;
     }
 
+
+
+    
 }

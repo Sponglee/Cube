@@ -116,6 +116,28 @@ public class CubeElemController : MonoBehaviour
 
     }
 
+    //Selected material for character to paint tiles with
+    public Material materialInteraction;
+    public bool ClearBufferTrigger = false;
 
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Character"))
+        {
+            if(materialInteraction != null)
+            {
+                //Set Material
+                transform.GetComponent<Renderer>().material = materialInteraction;
+                //Reset selected material
+                materialInteraction = null;
+            }
+            if(ClearBufferTrigger)
+            {
+                GameManager.Instance.ClearBuffer();
+                ClearBufferTrigger = false;
+            }
+            //GameManager.Instance.BottomCheck(transform);
+        }
+    }
 
 }
