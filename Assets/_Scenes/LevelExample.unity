@@ -395,14 +395,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bottomMaterial: {fileID: 2100000, guid: 87cc45b4bc2519f409e1609e3c6a7c9a, type: 2}
   camHolder: {fileID: 13609265}
-  currentCamPoint: {fileID: 0}
+  currentCamPoints: {fileID: 0}
   physicalCam: {fileID: 1883198662}
+  activeCameraPoint: 0
   activeCube: {fileID: 374111494}
   character: {fileID: 689782085624860350}
   selectedColor: -1
   comboCount: 0
   comboBuffer: []
-  cameraSpeed: 1
+  cameraSpeed: 2
 --- !u!4 &423665256
 Transform:
   m_ObjectHideFlags: 0
