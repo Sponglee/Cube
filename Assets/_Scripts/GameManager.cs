@@ -77,8 +77,7 @@ public class GameManager : Singleton<GameManager>
                 
             }
 
-            
-            
+
         }
         else if (Input.GetMouseButtonDown(1))
         {
@@ -96,13 +95,58 @@ public class GameManager : Singleton<GameManager>
             }
         }
 
-        if(Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0))
         {
-            if(SwipeManager.Instance.Direction == SwipeDirection.Up)
+            Debug.Log("rRRRREEE");
+            if (SwipeManager.Instance.IsSwiping(SwipeDirection.Up))
             {
+                Vector3 dir = currentCamPoints.GetChild(activeCameraPoint).transform.position
+                                                                                         - new Vector3(activeCube.transform.position.x,
+                                                                                             currentCamPoints.GetChild(activeCameraPoint).transform.position.y,
+                                                                                             activeCube.transform.position.z);
+                character.transform.GetComponent<Rigidbody>().velocity = -dir * 8f;
+                character.InputMove = true;
+                Debug.Log("_Up");
+            }
+            else if (SwipeManager.Instance.IsSwiping(SwipeDirection.Right))
+            {
+                Vector3 dir = currentCamPoints.GetChild(activeCameraPoint).transform.position
+                                                                                        - new Vector3(activeCube.transform.position.x,
+                                                                                            currentCamPoints.GetChild(activeCameraPoint).transform.position.y,
+                                                                                            activeCube.transform.position.z);
+                character.transform.GetComponent<Rigidbody>().velocity = Vector3.Cross(dir, Vector3.up)*8f;
+
+                //Debug.DrawLine(character.transform.position, character.transform.position + Vector3.Cross(dir, Vector3.up) ,Color.green, 5f);
+
+                character.InputMove = true;
+                Debug.Log("_Right");
+            }
+            else if (SwipeManager.Instance.IsSwiping(SwipeDirection.Down))
+            {
+                Vector3 dir = currentCamPoints.GetChild(activeCameraPoint).transform.position
+                                                                                         - new Vector3(activeCube.transform.position.x,
+                                                                                             currentCamPoints.GetChild(activeCameraPoint).transform.position.y,
+                                                                                             activeCube.transform.position.z);
+                character.transform.GetComponent<Rigidbody>().velocity = dir * 8f;
+                character.InputMove = true;
+                Debug.Log("_Down");
+            }
+            else if (SwipeManager.Instance.IsSwiping(SwipeDirection.Left))
+            {
+                Vector3 dir = currentCamPoints.GetChild(activeCameraPoint).transform.position
+                                                                                         - new Vector3(activeCube.transform.position.x,
+                                                                                             currentCamPoints.GetChild(activeCameraPoint).transform.position.y,
+                                                                                             activeCube.transform.position.z);
+                character.transform.GetComponent<Rigidbody>().velocity = Vector3.Cross(dir, Vector3.down) * 8f;
+                character.InputMove = true;
+                Debug.Log("_Left");
 
             }
+            else if (SwipeManager.Instance.IsSwiping(SwipeDirection.None))
+                Debug.Log("NONE");
+            
         }
+
     }
 
     //Reset camera transform and set Parent

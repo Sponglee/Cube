@@ -50,10 +50,10 @@ public class SwipeManager : Singleton<SwipeManager>
         if (Input.GetMouseButtonDown(0))
         {
             touchPosition = Input.mousePosition;
-            screenTouch = Camera.main.ScreenToViewportPoint(touchPosition);
+            screenTouch = GameManager.Instance.physicalCam.ScreenToViewportPoint(touchPosition);
         }
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonUp(0))
         {
             Vector2 deltaSwipe = touchPosition - Input.mousePosition;
 
@@ -83,7 +83,7 @@ public class SwipeManager : Singleton<SwipeManager>
 
                 Direction |= SwipeDirection.None;
             }
-            //Debug.Log(Direction);
+            Debug.Log(Direction);
         }
 
     }

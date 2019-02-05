@@ -34,6 +34,9 @@ public class CharacterController : MonoBehaviour
         }
     }
 
+
+    //Player input trigger
+    public bool InputMove = false;
     public float speed = 0.01f;
 
 
@@ -80,6 +83,18 @@ public class CharacterController : MonoBehaviour
             GameManager.Instance.comboBuffer = new List<Transform>();
             transform.position = activeCube.transform.position + new Vector3(0, 0.3f, 0);
 
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.transform.CompareTag("Tile") && collision.transform.GetComponent<CubeElemController>().SideName == "CubeBottom" && InputMove)
+        {
+            InputMove = false;
+            transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            Destination = Vector3.zero;
+            Destination = collision.transform.position + new Vector3(0, 0.144f, 0);
+            GameManager.Instance.BottomCheck(collision.transform);
         }
     }
 }
