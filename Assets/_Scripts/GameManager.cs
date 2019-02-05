@@ -55,23 +55,20 @@ public class GameManager : Singleton<GameManager>
             //Click on the bottom cube to select
             GameObject tmpObj = GrabRayObj();
             //Check if clicked a tile and it's bottom
-            if (tmpObj.CompareTag("Tile"))
+            if (tmpObj.CompareTag("Tile") && activeCube.CubeOpened)
             {
-                //Check what u've pressed if cube is closed
-                if(!activeCube.CubeOpened)
-                    BottomCheck(tmpObj.transform);
+                
+                    //BottomCheck(tmpObj.transform);
 
-                //Move character to a tile if bottom and cube is closed, if opened - move to any elem player wants
-                if (tmpObj.GetComponent<CubeElemController>().SideName == "CubeBottom" && !activeCube.CubeOpened)
-                    character.Destination = tmpObj.transform.position + new Vector3(0, 0.144f, 0);
-                else if(activeCube.CubeOpened)
+               
+                 
                     character.Destination = tmpObj.transform.position + new Vector3(0, 0.144f, 0);
 
 
 
                 //tmpObj.GetComponent<Renderer>().material = activeCube.materials[1];
             }
-            else if(tmpObj.CompareTag("Door"))
+            else if(tmpObj.CompareTag("Door") && activeCube.CubeOpened)
             {
               
                 //Move character to a door
@@ -79,6 +76,9 @@ public class GameManager : Singleton<GameManager>
                 //character.transform.position = activeCube.transform.position + new Vector3(0, 0.3f, 0);
                 
             }
+
+            
+            
         }
         else if (Input.GetMouseButtonDown(1))
         {
@@ -93,6 +93,14 @@ public class GameManager : Singleton<GameManager>
             {
                 tmpObj.transform.parent.parent.parent.parent.GetComponent<Animator>().SetTrigger("Open");
                 tmpObj.transform.parent.parent.parent.parent.GetComponent<CubeController>().CubeOpened = true;
+            }
+        }
+
+        if(Input.GetMouseButtonUp(0))
+        {
+            if(SwipeManager.Instance.Direction == SwipeDirection.Up)
+            {
+
             }
         }
     }
