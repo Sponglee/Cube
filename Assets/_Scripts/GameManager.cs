@@ -8,10 +8,16 @@ public class GameManager : Singleton<GameManager>
 
     public Material bottomMaterial;
 
+
+
     //Cinemachine camera holder
     public Transform camHolder;
+    //Reference point for camera
+    public Transform currentCamPoints;
     //Physical Camera ref for rays etc
     public Camera physicalCam;
+    //active Camera position
+    public int activeCameraPoint = 0;
     //Active cube ref
     public CubeController activeCube;
 
@@ -25,6 +31,9 @@ public class GameManager : Singleton<GameManager>
     //List of clicked elem of same color 
     public List<Transform> comboBuffer;
 
+    //Camera rotation speed
+    public float cameraSpeed = 1f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +41,8 @@ public class GameManager : Singleton<GameManager>
 
         
         //Debug Initialize camera
-        ChangeCameraState(activeCube.cameraPoints[activeCube.activeCameraPoint]);
+        ChangeCameraState(activeCube.cameraPoints[activeCameraPoint], activeCube.transform);
+        
         //Initialize combo buffer
         comboBuffer = new List<Transform>();
     }
@@ -73,7 +83,7 @@ public class GameManager : Singleton<GameManager>
         else if (Input.GetMouseButtonDown(1))
         {
             //Switch between camera points
-            activeCube.MoveCamera(camHolder);
+            MoveCamera(currentCamPoints);
         }
         else if(Input.GetMouseButtonDown(2))
         {
@@ -87,7 +97,46 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-   
+    //Reset camera transform and set Parent
+    public void ChangeCameraState(Transform cameraParent, Transform target)
+    {
+        currentCamPoints = cameraParent.parent;
+        
+        camHolder.SetParent(cameraParent);
+        camHolder.GetComponent<CinemachineVirtualCamera>().m_LookAt = target;
+        camHolder.localRotation = Quaternion.identity;
+        camHolder.localPosition = Vector3.zero;
+        camHolder.localScale = Vector3.one;
+    }
+
+
+    
+    //Camera switching 
+    public void MoveCamera(Transform cameraPoints)
+    {
+        
+        activeCameraPoint++;
+        if (activeCameraPoint >= cameraPoints.childCount)
+        {
+            activeCameraPoint = 0;
+        }
+        camHolder.SetParent(cameraPoints.GetChild(activeCameraPoint));
+        StartCoroutine(StopCamera(camHolder));
+    }
+
+    public IEnumerator StopCamera(Transform camera)
+    {
+        //Smoothly move camera to point
+        while (camera.transform.localPosition != new Vector3(0f, 0f, 0f))
+        {
+            camera.localPosition = Vector3.Lerp(camera.transform.localPosition, Vector3.zero, cameraSpeed * Time.deltaTime);
+            yield return null;
+        }
+    }
+
+
+
+
     //Check if elem is ref to other sides
     public void BottomCheck(Transform tile/*, GameObject tmpObj*/)
     {
@@ -301,10 +350,14 @@ public class GameManager : Singleton<GameManager>
                 Debug.Log("NULL");
             }
         }
+
+        //Cube Open condition
         if (nullCount >= activeCube.colorCombos.Length)
         {
             activeCube.anim.SetTrigger("Open");
             activeCube.CubeOpened = true;
+            //ChangeCameraState(character.transform.GetChild(0).GetChild(activeCameraPoint), character.transform.GetChild(1));
+
         }
         Debug.Log("_____________________");
     }
@@ -336,16 +389,7 @@ public class GameManager : Singleton<GameManager>
         return result;
     }
 
-    //Reset camera transform and set Parent
-    public void ChangeCameraState(Transform cameraParent)
-    {
-        
-        camHolder.SetParent(cameraParent);
-        camHolder.GetComponent<CinemachineVirtualCamera>().m_LookAt = activeCube.transform;
-        camHolder.localRotation = Quaternion.identity;
-        camHolder.localPosition = Vector3.zero;
-        camHolder.localScale = Vector3.one;
-    }
+   
 
     //Elem pick
     public GameObject GrabRayObj()

@@ -30,15 +30,13 @@ public class CubeController : MonoBehaviour
     public List<int[,]> sideMatrices;
     //Camera reference points
     public Transform[] cameraPoints;
-    public int activeCameraPoint = 0;
+   
 
     //Cube opened bool
     private bool cubeOpened = false;
     public bool CubeOpened { get => cubeOpened; set => cubeOpened = value; }
 
-    //Camera rotation speed
-    public float cameraSpeed = 1f;
-
+  
 
 
     private void Awake()
@@ -220,29 +218,7 @@ public class CubeController : MonoBehaviour
         }
         return 0;
     }
-    //Camera switching 
-    public void MoveCamera(Transform camera)
-    {
-        activeCameraPoint++;
-        if(activeCameraPoint>= cameraPoints.Length)
-        {
-            activeCameraPoint = 0;
-        }
-        camera.SetParent(cameraPoints[activeCameraPoint]);
-        StartCoroutine(StopCamera(camera));
-    }
-
-
-    public IEnumerator StopCamera(Transform camera)
-    {
-        //Smoothly move camera to point
-        while (camera.transform.localPosition != new Vector3(0f,0f,0f))
-        {
-            camera.localPosition = Vector3.Lerp(camera.transform.localPosition, Vector3.zero, cameraSpeed * Time.deltaTime);
-            yield return null;
-        }
-    }
-
+   
 
 
 
