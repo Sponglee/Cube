@@ -42,7 +42,7 @@ public class SwipeManager : Singleton<SwipeManager>
     }
 
     // Update is called once per frame
-    void Update()
+    void Update ()
     {
 
 
@@ -83,6 +83,7 @@ public class SwipeManager : Singleton<SwipeManager>
 
                 Direction |= SwipeDirection.None;
             }
+            /*D*/
             Debug.Log(Direction);
         }
 

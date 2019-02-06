@@ -34,6 +34,7 @@ public class GameManager : Singleton<GameManager>
     //Camera rotation speed
     public float cameraSpeed = 1f;
 
+  
 
     // Start is called before the first frame update
     void Start()
@@ -48,8 +49,13 @@ public class GameManager : Singleton<GameManager>
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
+        if(Input.GetMouseButtonDown(1))
+        {
+            character.JumpBool = true;
+        }
+
         if(Input.GetMouseButtonDown(0))
         {
             //Click on the bottom cube to select
@@ -79,41 +85,60 @@ public class GameManager : Singleton<GameManager>
 
 
         }
-        else if (Input.GetMouseButtonDown(1))
+        else if (Input.GetMouseButtonUp(1) )
         {
-            //Switch between camera points
-            MoveCamera(currentCamPoints);
+            
+               
+            
+                character.JumpBool = false;
+            
+           
         }
         else if(Input.GetMouseButtonDown(2))
         {
+            MoveCamera(currentCamPoints);
+
             //Debug open cube anim trigger
-            GameObject tmpObj = GrabRayObj();
-            if (tmpObj.CompareTag("Tile"))
-            {
-                tmpObj.transform.parent.parent.parent.parent.GetComponent<Animator>().SetTrigger("Open");
-                tmpObj.transform.parent.parent.parent.parent.GetComponent<CubeController>().CubeOpened = true;
-            }
+            //GameObject tmpObj = GrabRayObj();
+            //if (tmpObj.CompareTag("Tile"))
+            //{
+            //    tmpObj.transform.parent.parent.parent.parent.GetComponent<Animator>().SetTrigger("Open");
+            //    tmpObj.transform.parent.parent.parent.parent.GetComponent<CubeController>().CubeOpened = true;
+            //}
         }
 
         if (Input.GetMouseButtonUp(0))
         {
-            Debug.Log("rRRRREEE");
+
+            Vector3 dir;
+
+            if (character.JumpBool)
+            {
+                dir = currentCamPoints.GetChild(activeCameraPoint)
+                 .transform.position - new Vector3(activeCube.transform.position.x,
+                     activeCube.transform.position.y, activeCube.transform.position.z);
+
+            }
+            else
+            {
+                dir = currentCamPoints.GetChild(activeCameraPoint)
+                 .transform.position - new Vector3(activeCube.transform.position.x, currentCamPoints
+                     .GetChild(activeCameraPoint).transform.position.y, activeCube.transform.position.z);
+
+            }
+          
+
+
             if (SwipeManager.Instance.IsSwiping(SwipeDirection.Up))
             {
-                Vector3 dir = currentCamPoints.GetChild(activeCameraPoint).transform.position
-                                                                                         - new Vector3(activeCube.transform.position.x,
-                                                                                             currentCamPoints.GetChild(activeCameraPoint).transform.position.y,
-                                                                                             activeCube.transform.position.z);
+                
                 character.transform.GetComponent<Rigidbody>().velocity = -dir * 8f;
                 character.InputMove = true;
                 Debug.Log("_Up");
             }
             else if (SwipeManager.Instance.IsSwiping(SwipeDirection.Right))
             {
-                Vector3 dir = currentCamPoints.GetChild(activeCameraPoint).transform.position
-                                                                                        - new Vector3(activeCube.transform.position.x,
-                                                                                            currentCamPoints.GetChild(activeCameraPoint).transform.position.y,
-                                                                                            activeCube.transform.position.z);
+               
                 character.transform.GetComponent<Rigidbody>().velocity = Vector3.Cross(dir, Vector3.up)*8f;
 
                 //Debug.DrawLine(character.transform.position, character.transform.position + Vector3.Cross(dir, Vector3.up) ,Color.green, 5f);
@@ -123,20 +148,14 @@ public class GameManager : Singleton<GameManager>
             }
             else if (SwipeManager.Instance.IsSwiping(SwipeDirection.Down))
             {
-                Vector3 dir = currentCamPoints.GetChild(activeCameraPoint).transform.position
-                                                                                         - new Vector3(activeCube.transform.position.x,
-                                                                                             currentCamPoints.GetChild(activeCameraPoint).transform.position.y,
-                                                                                             activeCube.transform.position.z);
+               
                 character.transform.GetComponent<Rigidbody>().velocity = dir * 8f;
                 character.InputMove = true;
                 Debug.Log("_Down");
             }
             else if (SwipeManager.Instance.IsSwiping(SwipeDirection.Left))
             {
-                Vector3 dir = currentCamPoints.GetChild(activeCameraPoint).transform.position
-                                                                                         - new Vector3(activeCube.transform.position.x,
-                                                                                             currentCamPoints.GetChild(activeCameraPoint).transform.position.y,
-                                                                                             activeCube.transform.position.z);
+                
                 character.transform.GetComponent<Rigidbody>().velocity = Vector3.Cross(dir, Vector3.down) * 8f;
                 character.InputMove = true;
                 Debug.Log("_Left");

@@ -8,6 +8,14 @@ public class CharacterController : MonoBehaviour
 
     //Reference to animations
     public Animator charAnim;
+    //Player input trigger
+    public bool InputMove = false;
+    //JumpToggle
+    public bool JumpBool = false;
+    //MoveSpeed
+    public float speed = 1f;
+
+
 
     //destination
     private Vector3 destination = Vector3.zero;
@@ -35,10 +43,7 @@ public class CharacterController : MonoBehaviour
     }
 
 
-    //Player input trigger
-    public bool InputMove = false;
-    public float speed = 0.01f;
-
+   
 
    
 
