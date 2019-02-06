@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-
+    //Floor material
     public Material bottomMaterial;
 
 
@@ -33,14 +33,13 @@ public class GameManager : Singleton<GameManager>
 
     //Camera rotation speed
     public float cameraSpeed = 1f;
+    //Character movement speed
+    public float charInputSpeed = 4f;
 
-  
 
     // Start is called before the first frame update
     void Start()
     {
-
-        
         //Debug Initialize camera
         ChangeCameraState(activeCube.cameraPoints[activeCameraPoint], activeCube.transform);
         
@@ -63,20 +62,11 @@ public class GameManager : Singleton<GameManager>
             //Check if clicked a tile and it's bottom
             if (tmpObj.CompareTag("Tile") && activeCube.CubeOpened)
             {
-                
-                    //BottomCheck(tmpObj.transform);
-
-               
-                 
-                    character.Destination = tmpObj.transform.position + new Vector3(0, 0.144f, 0);
-
-
-
-                //tmpObj.GetComponent<Renderer>().material = activeCube.materials[1];
+                //Movecharacter to tile when cube opened
+                character.Destination = tmpObj.transform.position + new Vector3(0, 0.144f, 0);
             }
             else if(tmpObj.CompareTag("Door") && activeCube.CubeOpened)
             {
-              
                 //Move character to a door
                 character.Destination = tmpObj.transform.position;
                 //character.transform.position = activeCube.transform.position + new Vector3(0, 0.3f, 0);
@@ -85,94 +75,107 @@ public class GameManager : Singleton<GameManager>
 
 
         }
-        else if (Input.GetMouseButtonUp(1) )
+        else if (Input.GetMouseButtonUp(1))
         {
-            
-               
-            
-                character.JumpBool = false;
-            
-           
+            //Jump trigger
+            character.JumpBool = false;
         }
         else if(Input.GetMouseButtonDown(2))
         {
+            //Switch cam
             MoveCamera(currentCamPoints);
-
-            //Debug open cube anim trigger
-            //GameObject tmpObj = GrabRayObj();
-            //if (tmpObj.CompareTag("Tile"))
-            //{
-            //    tmpObj.transform.parent.parent.parent.parent.GetComponent<Animator>().SetTrigger("Open");
-            //    tmpObj.transform.parent.parent.parent.parent.GetComponent<CubeController>().CubeOpened = true;
-            //}
         }
 
         if (Input.GetMouseButtonUp(0))
         {
-
-            Vector3 dir;
-
-            if (character.JumpBool)
-            {
-                dir = currentCamPoints.GetChild(activeCameraPoint)
-                 .transform.position - new Vector3(activeCube.transform.position.x,
-                     activeCube.transform.position.y, activeCube.transform.position.z);
-
-            }
-            else
-            {
-                dir = currentCamPoints.GetChild(activeCameraPoint)
-                 .transform.position - new Vector3(activeCube.transform.position.x, currentCamPoints
-                     .GetChild(activeCameraPoint).transform.position.y, activeCube.transform.position.z);
-
-            }
-          
-
-
+            //Get char movement direction
             if (SwipeManager.Instance.IsSwiping(SwipeDirection.Up))
             {
-                
-                character.transform.GetComponent<Rigidbody>().velocity = -dir * 8f;
+                MoveCharacter(0);                
                 character.InputMove = true;
                 Debug.Log("_Up");
             }
             else if (SwipeManager.Instance.IsSwiping(SwipeDirection.Right))
             {
-               
-                character.transform.GetComponent<Rigidbody>().velocity = Vector3.Cross(dir, Vector3.up)*8f;
-
-                //Debug.DrawLine(character.transform.position, character.transform.position + Vector3.Cross(dir, Vector3.up) ,Color.green, 5f);
-
+                MoveCharacter(1);
                 character.InputMove = true;
                 Debug.Log("_Right");
             }
             else if (SwipeManager.Instance.IsSwiping(SwipeDirection.Down))
             {
-               
-                character.transform.GetComponent<Rigidbody>().velocity = dir * 8f;
+                MoveCharacter(2);
                 character.InputMove = true;
                 Debug.Log("_Down");
             }
             else if (SwipeManager.Instance.IsSwiping(SwipeDirection.Left))
             {
-                
-                character.transform.GetComponent<Rigidbody>().velocity = Vector3.Cross(dir, Vector3.down) * 8f;
+                MoveCharacter(3);
                 character.InputMove = true;
                 Debug.Log("_Left");
-
             }
             else if (SwipeManager.Instance.IsSwiping(SwipeDirection.None))
                 Debug.Log("NONE");
-            
+        }
+    }
+
+  
+    //Character movement through input
+    public void MoveCharacter(int crossDir)
+    {
+        Vector3 dir = currentCamPoints.GetChild(activeCameraPoint)
+               .transform.position - new Vector3(activeCube.transform.position.x, currentCamPoints
+                   .GetChild(activeCameraPoint).transform.position.y, activeCube.transform.position.z);
+
+        
+        Vector3 tmpDir;
+
+        //Get direction to form velocity
+        switch (crossDir)
+        {
+            case 0:
+                {
+                     tmpDir = -dir * charInputSpeed;
+                }
+                break;
+            case 1:
+                {
+                    tmpDir = Vector3.Cross(dir, Vector3.up) * 4f;
+                }
+                break;
+            case 2:
+                {
+                    tmpDir = dir * 4f;
+                }
+                break;
+            case 3:
+                {
+                    tmpDir = Vector3.Cross(dir, Vector3.down) * 4f;
+                }
+                break;
+            default:
+                {
+                    tmpDir = Vector3.zero;
+                }
+                break;
         }
 
+        //Add vertical velocity if jump pressed
+        if(character.JumpBool)
+        {
+            tmpDir += Vector3.up * 2f;
+        }
+
+        //Move character
+        character.transform.GetComponent<Rigidbody>().velocity = tmpDir;
+
     }
+
 
     //Reset camera transform and set Parent
     public void ChangeCameraState(Transform cameraParent, Transform target)
     {
-        currentCamPoints = cameraParent.parent;
         
+        currentCamPoints = cameraParent.parent;
         camHolder.SetParent(cameraParent);
         camHolder.GetComponent<CinemachineVirtualCamera>().m_LookAt = target;
         camHolder.localRotation = Quaternion.identity;

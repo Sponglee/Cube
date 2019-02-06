@@ -65,7 +65,7 @@ public class CharacterController : MonoBehaviour
         if(Mathf.Approximately(transform.position.x,Destination.x) && Mathf.Approximately(transform.position.z, Destination.z))
         {
             Destination = Vector3.zero;
-        }
+        }   
     }
 
 
