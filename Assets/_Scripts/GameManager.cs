@@ -113,6 +113,30 @@ public class GameManager : Singleton<GameManager>
                 character.InputMove = true;
                 //Debug.Log("_Left");
             }
+            else if (SwipeManager.Instance.IsSwiping(SwipeDirection.UpRight))
+            {
+                MoveCharacter(4);
+                character.InputMove = true;
+                //Debug.Log("_Left");
+            }
+            else if (SwipeManager.Instance.IsSwiping(SwipeDirection.DownRight))
+            {
+                MoveCharacter(5);
+                character.InputMove = true;
+                //Debug.Log("_Left");
+            }
+            else if (SwipeManager.Instance.IsSwiping(SwipeDirection.DownLeft))
+            {
+                MoveCharacter(6);
+                character.InputMove = true;
+                //Debug.Log("_Left");
+            }
+            else if (SwipeManager.Instance.IsSwiping(SwipeDirection.UpLeft))
+            {
+                MoveCharacter(7);
+                character.InputMove = true;
+                //Debug.Log("_Left");
+            }
             else if (SwipeManager.Instance.IsSwiping(SwipeDirection.None))
             {
 
@@ -135,25 +159,52 @@ public class GameManager : Singleton<GameManager>
         //Get direction to form velocity
         switch (crossDir)
         {
-            //0 - up 1 - right - 2 - down - 3 - left
+            //0 - up
             case 0:
                 {
                      tmpDir = -dir * charInputSpeed;
                 }
                 break;
+            //1 - right
             case 1:
                 {
                     tmpDir = Vector3.Cross(dir, Vector3.up) * charInputSpeed;
                 }
                 break;
+            //2 - down
             case 2:
                 {
                     tmpDir = dir * charInputSpeed;
                 }
                 break;
+            //3 - left
             case 3:
                 {
                     tmpDir = Vector3.Cross(dir, Vector3.down) * charInputSpeed;
+                }
+                break;
+            //4 - upRight
+            case 4:
+                {
+                    tmpDir = -dir * charInputSpeed + Vector3.Cross(dir, Vector3.up) * charInputSpeed ;
+                }
+                break;
+            //5 - downRight
+            case 5:
+                {
+                    tmpDir = dir * charInputSpeed + Vector3.Cross(dir, Vector3.up) * charInputSpeed;
+                }
+                break;
+            //6 - downLeft
+            case 6:
+                {
+                    tmpDir = dir * charInputSpeed + Vector3.Cross(dir, Vector3.down) * charInputSpeed;
+                }
+                break;
+            //7 - upLeft
+            case 7:
+                {
+                    tmpDir = -dir * charInputSpeed + Vector3.Cross(dir, Vector3.down) * charInputSpeed;
                 }
                 break;
             default:
@@ -235,7 +286,7 @@ public class GameManager : Singleton<GameManager>
 
                 //Remember color count
                 comboBuffer.Add(tile);
-                Debug.Log("REE");
+                //Debug.Log("REE");
                 comboCount++;
                
                 
@@ -270,7 +321,7 @@ public class GameManager : Singleton<GameManager>
                     if (!comboBuffer.Contains(tile))
                     {
                         comboBuffer.Add(tile);
-                        Debug.Log("REEE");
+                        //Debug.Log("REEE");
 
                         comboCount++;
                     }
@@ -297,7 +348,7 @@ public class GameManager : Singleton<GameManager>
                     //Enable clear buffer on character collision
                     //ClearBuffer();
 
-                    Debug.Log("BC : " + bottomColor);
+                    //Debug.Log("BC : " + bottomColor);
                     tile.GetComponent<CubeElemController>().ClearBufferTrigger = true;
                 }
 
@@ -415,7 +466,7 @@ public class GameManager : Singleton<GameManager>
     public void CheckCubeEnd()
     {
         //Debug
-        Debug.Log("_____________________");
+        //Debug.Log("_____________________");
 
         int nullCount = 0;
         for (int i = 0; i < activeCube.colorCombos.Length; i++)
@@ -425,14 +476,15 @@ public class GameManager : Singleton<GameManager>
             {
                 if (activeCube.colorCombos[i].Count == 0)
                     nullCount++;
-                Debug.Log(activeCube.colorCombos[i].Count + " : " + activeCube.materials[i]);
+                //Debug.Log(activeCube.colorCombos[i].Count + " : " + activeCube.materials[i]);
             }
             else
             {
                 nullCount++;
-                Debug.Log("NULL");
+                //Debug.Log("NULL");
             }
         }
+        //Debug.Log("_____________________");
 
         //Cube Open condition
         if (nullCount >= activeCube.colorCombos.Length)
@@ -442,7 +494,6 @@ public class GameManager : Singleton<GameManager>
             //ChangeCameraState(character.transform.GetChild(0).GetChild(activeCameraPoint), character.transform.GetChild(1));
 
         }
-        Debug.Log("_____________________");
     }
 
     
