@@ -64,7 +64,7 @@ public class SwipeManager : Singleton<SwipeManager>
             {
                 if (screenTouch.y >= 0.5)
                 {
-                    Direction |= (deltaSwipe.x < 0) ? SwipeDirection.Left : SwipeDirection.Right;
+                    Direction |= (deltaSwipe.x < 0) ? SwipeDirection.Right : SwipeDirection.Left;
                 }
                 else
                     Direction |= (deltaSwipe.x < 0) ? SwipeDirection.Right : SwipeDirection.Left;
@@ -84,7 +84,7 @@ public class SwipeManager : Singleton<SwipeManager>
                 Direction |= SwipeDirection.None;
             }
             /*D*/
-            Debug.Log(Direction);
+            //Debug.Log(Direction);
         }
 
     }

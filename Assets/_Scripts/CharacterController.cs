@@ -27,7 +27,7 @@ public class CharacterController : MonoBehaviour
             destination = value;
             if(value == Vector3.zero)
             {
-                Debug.Log("STOP");
+                //Debug.Log("STOP");
 
                 int pose = Random.Range(0, 4);
                 charAnim.SetInteger("RandomIdle", pose);

@@ -93,28 +93,31 @@ public class GameManager : Singleton<GameManager>
             {
                 MoveCharacter(0);                
                 character.InputMove = true;
-                Debug.Log("_Up");
+                //Debug.Log("_Up");
             }
             else if (SwipeManager.Instance.IsSwiping(SwipeDirection.Right))
             {
                 MoveCharacter(1);
                 character.InputMove = true;
-                Debug.Log("_Right");
+                //Debug.Log("_Right");
             }
             else if (SwipeManager.Instance.IsSwiping(SwipeDirection.Down))
             {
                 MoveCharacter(2);
                 character.InputMove = true;
-                Debug.Log("_Down");
+                //Debug.Log("_Down");
             }
             else if (SwipeManager.Instance.IsSwiping(SwipeDirection.Left))
             {
                 MoveCharacter(3);
                 character.InputMove = true;
-                Debug.Log("_Left");
+                //Debug.Log("_Left");
             }
             else if (SwipeManager.Instance.IsSwiping(SwipeDirection.None))
-                Debug.Log("NONE");
+            {
+
+                //Debug.Log("NONE");
+            }
         }
     }
 
@@ -132,6 +135,7 @@ public class GameManager : Singleton<GameManager>
         //Get direction to form velocity
         switch (crossDir)
         {
+            //0 - up 1 - right - 2 - down - 3 - left
             case 0:
                 {
                      tmpDir = -dir * charInputSpeed;
@@ -139,17 +143,17 @@ public class GameManager : Singleton<GameManager>
                 break;
             case 1:
                 {
-                    tmpDir = Vector3.Cross(dir, Vector3.up) * 4f;
+                    tmpDir = Vector3.Cross(dir, Vector3.up) * charInputSpeed;
                 }
                 break;
             case 2:
                 {
-                    tmpDir = dir * 4f;
+                    tmpDir = dir * charInputSpeed;
                 }
                 break;
             case 3:
                 {
-                    tmpDir = Vector3.Cross(dir, Vector3.down) * 4f;
+                    tmpDir = Vector3.Cross(dir, Vector3.down) * charInputSpeed;
                 }
                 break;
             default:
@@ -226,12 +230,15 @@ public class GameManager : Singleton<GameManager>
                 tile.GetComponent<CubeElemController>().materialInteraction = tmpTile.BottomLinks[0].transform.GetComponent<Renderer>().material;
                 //Remember selection
                 selectedColor = tmpTile.BottomLinks[0].ElemMatIndex;
+                //Check if there's selected color in bottomLinks to add scorecount
+                int bottomColor = FindBottomColor(tmpTile, selectedColor);
+
                 //Remember color count
                 comboBuffer.Add(tile);
+                Debug.Log("REE");
                 comboCount++;
                
-                //Check if there's selected color in bottomLinks - grab material from it
-                int bottomColor = FindBottomColor(tmpTile, selectedColor);
+                
 
                 //Check buffer
                 if (comboCount >= activeCube.colorCombos[selectedColor].Count)
@@ -247,13 +254,13 @@ public class GameManager : Singleton<GameManager>
             {
                 //Check if there's selected color in bottomLinks - grab material from it
                 int bottomColor = FindBottomColor(tmpTile, selectedColor);
-                Debug.Log(":>: " + bottomColor + " :: " + selectedColor);
+                //Debug.Log(":>: " + bottomColor + " :: " + selectedColor);
                
 
                 if (bottomColor >=0 && tmpTile.BottomLinks[bottomColor].transform.GetComponent<Renderer>().material.color == activeCube.materials[selectedColor].color)
                 {
                     //DEBUG
-                    Debug.Log("~~~~" + tmpTile.BottomLinks[bottomColor].transform.GetComponent<Renderer>().material + " : " + activeCube.materials[selectedColor]);
+                    //Debug.Log("~~~~" + tmpTile.BottomLinks[bottomColor].transform.GetComponent<Renderer>().material + " : " + activeCube.materials[selectedColor]);
 
                     //Paint elem to selectedColor
                     //tile.GetComponent<Renderer>().material = tmpTile.BottomLinks[bottomColor].transform.GetComponent<Renderer>().material;
@@ -274,7 +281,7 @@ public class GameManager : Singleton<GameManager>
 
 
 
-                    Debug.Log(selectedColor);
+                    //Debug.Log(selectedColor);
                     //Check buffer
                     if (comboCount >= activeCube.colorCombos[selectedColor].Count)
                     {
@@ -288,8 +295,10 @@ public class GameManager : Singleton<GameManager>
                 {
                     //Clear selection
                     //Enable clear buffer on character collision
-                    tile.GetComponent<CubeElemController>().ClearBufferTrigger = true;
                     //ClearBuffer();
+
+                    Debug.Log("BC : " + bottomColor);
+                    tile.GetComponent<CubeElemController>().ClearBufferTrigger = true;
                 }
 
             }
@@ -361,7 +370,7 @@ public class GameManager : Singleton<GameManager>
                        
                         //Remember indexes of bottomLinks to remove
                         indexes.Add(link.transform);
-                        Debug.Log(">>" + indexes.Count);
+                        //Debug.Log(">>" + indexes.Count);
                         
 
                     }
@@ -372,7 +381,7 @@ public class GameManager : Singleton<GameManager>
                 //Delete all links from this buffer elem
                 foreach (Transform item in indexes)
                 {
-                    Debug.Log("INDEX : " + item + ":::: " + elem.GetSiblingIndex());
+                    //Debug.Log("INDEX : " + item + ":::: " + elem.GetSiblingIndex());
                     elem.GetComponent<CubeElemController>().BottomLinks.Remove(item.GetComponent<CubeElemController>());
                 }
                 indexes.Clear();
@@ -441,25 +450,35 @@ public class GameManager : Singleton<GameManager>
     public int FindBottomColor(CubeElemController tile, int color)
     {
         int result = -1;
+
         
-        //check material of each link
-        for (int i = 0; i < tile.BottomLinks.Count; i++)
-        {
-            //Check for same color in links
-            if (tile.BottomLinks[i].ElemMatIndex == color)
+            //check material of each link
+            for (int i = 0; i < tile.BottomLinks.Count; i++)
             {
-                //if it's first index
-                if (result == -1)
+                //Check for same color in links
+                if (tile.BottomLinks[i].ElemMatIndex == color)
                 {
-                    result = i;
-                   
+                    //if it's first index
+                    if (result == -1)
+                    {
+                        result = i;
+
+                    }
+                    //If second - add up to comboCount
+                    else
+                    {
+                        //If this tile wasn't checked yet
+                        if (!comboBuffer.Contains(tile.transform))
+                        {
+                            Debug.Log("DOUBLE LINK");
+                            comboCount++;
+                        }
+                    }
                 }
-                //If second - add up to comboCount
-                else
-                    comboCount++;
             }
-        }
-        Debug.Log("RESULT :  " + result);
+            //Debug.Log("RESULT :  " + result);
+        
+        
         return result;
     }
 
