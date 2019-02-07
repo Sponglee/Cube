@@ -40,7 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2999233694034937458}
   m_Layer: 0
-  m_Name: CameraPoints (1)
+  m_Name: CameraPoints
   m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -163,10 +163,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6964625594398980862}
+  - component: {fileID: 689782085624860350}
   - component: {fileID: 26639764}
   - component: {fileID: 26639765}
   - component: {fileID: 7623465684958080959}
-  - component: {fileID: 689782085624860350}
+  - component: {fileID: 4222039000965861959}
   m_Layer: 0
   m_Name: CharacterHolder
   m_TagString: Character
@@ -191,6 +192,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &689782085624860350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7186726132077735085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dfb97c75bcd2ec4ab061c759b9c87c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  charAnim: {fileID: 7243131769936716272}
+  InputMove: 1
+  JumpBool: 0
+  speed: 0.04
 --- !u!54 &26639764
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -232,22 +249,22 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.1
-  m_Center: {x: 0, y: 0.15, z: 0}
---- !u!114 &689782085624860350
-MonoBehaviour:
+  m_Radius: 0.09
+  m_Center: {x: 0, y: 0.26, z: 0}
+--- !u!136 &4222039000965861959
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7186726132077735085}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6dfb97c75bcd2ec4ab061c759b9c87c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  charAnim: {fileID: 7243131769936716272}
-  speed: 0.04
+  m_Radius: 0.03
+  m_Height: 0.37
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.178, z: 0}
 --- !u!1 &7243131769946231344
 GameObject:
   m_ObjectHideFlags: 0

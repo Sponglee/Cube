@@ -120,7 +120,7 @@ public class CubeElemController : MonoBehaviour
     public Material materialInteraction;
     public bool ClearBufferTrigger = false;
 
-    private void OnCollisionStay(Collision collision)
+    private void OnTriggerStay(Collider collision)
     {
         if (collision.gameObject.CompareTag("Character"))
         {

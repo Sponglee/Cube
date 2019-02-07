@@ -220,6 +220,7 @@ public class GameManager : Singleton<GameManager>
             tmpDir += Vector3.up * 2f;
         }
 
+        Debug.DrawLine(character.transform.position, character.transform.position + tmpDir, Color.blue, 5f);
         //Move character
         character.transform.GetComponent<Rigidbody>().velocity = tmpDir;
 

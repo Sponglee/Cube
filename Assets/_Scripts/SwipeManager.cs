@@ -75,26 +75,26 @@ public class SwipeManager : Singleton<SwipeManager>
             //}
             /*else */if (Mathf.Abs(deltaSwipe.x) > Mathf.Abs(deltaSwipe.y) && Mathf.Abs(deltaSwipe.x) > swipeResistance)
             {
-                //if (deltaSwipe.y>swipeResistance)
-                //{
-                //    if (deltaSwipe.x < 0)
-                //        Direction |= (deltaSwipe.y < 0) ? SwipeDirection.UpRight : SwipeDirection.DownRight;
-                //    else if (deltaSwipe.x > 0)
-                //        Direction |= (deltaSwipe.y < 0) ? SwipeDirection.UpLeft : SwipeDirection.DownLeft;
-                //}
-                //else
+                if (Mathf.Abs(deltaSwipe.y) > swipeResistance)
+                {
+                    if (deltaSwipe.x < 0)
+                        Direction |= (deltaSwipe.y < 0) ? SwipeDirection.UpRight : SwipeDirection.DownRight;
+                    else if (deltaSwipe.x > 0)
+                        Direction |= (deltaSwipe.y < 0) ? SwipeDirection.UpLeft : SwipeDirection.DownLeft;
+                }
+                else
                     Direction |= (deltaSwipe.x < 0) ? SwipeDirection.Right : SwipeDirection.Left;
             }
             else if (Mathf.Abs(deltaSwipe.y) > Mathf.Abs(deltaSwipe.x) && Mathf.Abs(deltaSwipe.y) > swipeResistance)
             {
-                //if (deltaSwipe.x > swipeResistance)
-                //{
-                //    if (deltaSwipe.x < 0)
-                //        Direction |= (deltaSwipe.y < 0) ? SwipeDirection.UpRight : SwipeDirection.DownRight;
-                //    else if (deltaSwipe.x > 0)
-                //        Direction |= (deltaSwipe.y < 0) ? SwipeDirection.UpLeft : SwipeDirection.DownLeft;
-                //}
-                //else
+                if (Mathf.Abs(deltaSwipe.x) > swipeResistance)
+                {
+                    if (deltaSwipe.x < 0)
+                        Direction |= (deltaSwipe.y < 0) ? SwipeDirection.UpRight : SwipeDirection.DownRight;
+                    else if (deltaSwipe.x > 0)
+                        Direction |= (deltaSwipe.y < 0) ? SwipeDirection.UpLeft : SwipeDirection.DownLeft;
+                }
+                else
                     Direction |= (deltaSwipe.y < 0) ? SwipeDirection.Up : SwipeDirection.Down;
             }
             else
