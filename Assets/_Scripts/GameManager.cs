@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -51,8 +52,8 @@ public class GameManager : Singleton<GameManager>
     void LateUpdate()
     {
        
-
-        if(Input.GetMouseButtonDown(0))
+        //Check for clicks after cube opens
+        if(activeCube.CubeOpened && !IsPointerOverUIObject("UI") && Input.GetMouseButtonDown(0))
         {
             //Click on the bottom cube to select
             GameObject tmpObj = GrabRayObj();
@@ -75,7 +76,7 @@ public class GameManager : Singleton<GameManager>
        
     }
 
-    //Swipe manager check
+    //Swipe manager execution
     public void CharacterSwipeResult()
     {
         //Get char movement direction
@@ -127,11 +128,11 @@ public class GameManager : Singleton<GameManager>
             character.InputMove = true;
             //Debug.Log("_Left");
         }
-        else if (SwipeManager.Instance.IsSwiping(SwipeDirection.None))
-        {
+        //else if (SwipeManager.Instance.IsSwiping(SwipeDirection.None))
+        //{
 
-            //Debug.Log("NONE");
-        }
+        //    //Debug.Log("NONE");
+        //}
     }
 
 
@@ -230,8 +231,7 @@ public class GameManager : Singleton<GameManager>
         camHolder.localScale = Vector3.one;
     }
 
-
-    
+  
     //Camera switching 
     public void MoveCamera(Transform cameraPoints)
     {
@@ -255,6 +255,18 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    // Is touching ui check
+    public bool IsPointerOverUIObject(string obj)
+    {
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        if (results.Count > 0)
+            return results[0].gameObject.CompareTag(obj);
+        else
+            return false;
+    }
 
 
 
