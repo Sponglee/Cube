@@ -68,6 +68,7 @@ public class SwipeManager : Singleton<SwipeManager>
             if(touches.Length == 2)
             {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 //Activate jumpbool
                 gameManager.character.JumpBool = true;
 
@@ -86,6 +87,8 @@ public class SwipeManager : Singleton<SwipeManager>
                     CheckSwipe(deltaSwipe);
                 }
 =======
+=======
+>>>>>>> parent of 67131b2... 08.02.19
                 //if (deltaSwipe.y>swipeResistance)
                 //{
                 //    if (deltaSwipe.x < 0)
@@ -100,6 +103,7 @@ public class SwipeManager : Singleton<SwipeManager>
             //Else if only 1 finger
             else if(touches.Length == 1)
             {
+<<<<<<< HEAD
 <<<<<<< HEAD
                 Touch touch = Input.GetTouch(0);
                 //If jump finger was pressed - release and return
@@ -145,6 +149,8 @@ public class SwipeManager : Singleton<SwipeManager>
                 else if (deltaSwipe.x > 0)
                     Direction |= (deltaSwipe.y < 0) ? SwipeDirection.UpLeft : SwipeDirection.DownLeft;
 =======
+=======
+>>>>>>> parent of 67131b2... 08.02.19
                 //if (deltaSwipe.x > swipeResistance)
                 //{
                 //    if (deltaSwipe.x < 0)
