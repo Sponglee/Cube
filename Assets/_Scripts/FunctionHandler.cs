@@ -23,6 +23,14 @@ public class FunctionHandler : MonoBehaviour
     {
         //Switch cam
         GameManager.Instance.MoveCamera(GameManager.Instance.currentCamPoints);
+        #region TUTORIAL
+        if (TutorialManager.Instance && TutorialManager.Instance.TutorialActive == 2)
+        {
+            Debug.Log("RzEEEEEEE");
+            TutorialManager.Instance.TutorialActive = 3;
+            TutorialManager.Instance.CloseTut(3);
+        }
+        #endregion
     }
 
 
@@ -31,11 +39,32 @@ public class FunctionHandler : MonoBehaviour
         SceneManager.LoadScene("Main");
     }
 
+    //Menu
+    public GameObject menu;
 
-    //public void RightClick()
-    //{
-      
-    //    //Jump trigger
-    //    GameManager.Instance.character.JumpBool = true;
-    //}
+    public void OpenMenu()
+    {
+        menu.SetActive(true);
+        Time.timeScale =1;
+    }
+
+    public void CloseMenu()
+    {
+        menu.SetActive(false);
+        Time.timeScale = 1;
+    }
+
+    //Tutorial
+    public void Tutorial()
+    {
+       
+        SceneManager.LoadScene("Tutorial");
+    }
+
+    //Exit
+    public void Exit()
+    {
+        Application.Quit();
+    }
+    
 }

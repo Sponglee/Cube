@@ -83,6 +83,7 @@ public class SwipeManager : Singleton<SwipeManager>
                     deltaSwipe = screenTouch - endTouch;
                     //Debug.Log("ENDED " + deltaSwipe.x + ":" + deltaSwipe.y
                     CheckSwipe(deltaSwipe);
+                   
                 }
             }
             //Else if only 1 finger
@@ -114,6 +115,7 @@ public class SwipeManager : Singleton<SwipeManager>
                     deltaSwipe = screenTouch - endTouch;
                     //Debug.Log("ENDED " + deltaSwipe.x + ":" + deltaSwipe.y);
                     CheckSwipe(deltaSwipe);
+                   
                 }
             }
         }

@@ -36,8 +36,10 @@ public class CubeController : MonoBehaviour
     private bool cubeOpened = false;
     public bool CubeOpened { get => cubeOpened; set => cubeOpened = value; }
 
-  
-
+    //Tutorial toggle
+    public bool TutorialCube = false;
+    //Last cube on the level toggle
+    public bool EndCube = false;
 
     private void Awake()
     {
@@ -107,84 +109,121 @@ public class CubeController : MonoBehaviour
     }
 
 
- 
+
 
     // Start is called before the first frame update
     void Start()
     {
+        //EndCubeToggle
+        if(EndCube)
+        {
+            Instantiate(GameManager.Instance.elevator, transform.position, Quaternion.identity);
+        }
         //Initialize tmpMats
         tmpMats = new List<Material>();
         //Initialize colorCombos
         colorCombos = new List<Transform>[materials.Length];
 
-        //Initialize cube sides
-        foreach (Transform cubeSide in cubeSides)
+        //Initialize cube sides if not tutorial
+        if (!TutorialCube)
         {
-            //Set and remember random color per side
-            int randomMat = UnityEngine.Random.Range(1, materials.Length);
-            Material tmpMat = materials[randomMat];
-            tmpMats.Add(tmpMat);
-
-            //Debug.Log(":::" + randomMat);
-            //Initialize color combos lists to anything except first material 
-            if (randomMat != 0 && colorCombos[randomMat] == null)
-                colorCombos[randomMat] = new List<Transform>();
-
-            //Grab references to each element per side
-            foreach (Transform child in cubeSide.GetChild(0).GetChild(0))
+            foreach (Transform cubeSide in cubeSides)
             {
-                //Randomize side's elem colorss
-                float matRandomizer = UnityEngine.Random.Range(0, 100);
-                if (matRandomizer <= 50)
-                {
-                    //Side color elem
-                    child.GetComponent<Renderer>().material = tmpMat;
-                    CubeElemController tmpController = child.GetComponent<CubeElemController>();
-                    tmpController.ElemMat = tmpMat;
-                    tmpController.ElemMatIndex = randomMat;
+                //Set and remember random color per side
+                int randomMat = UnityEngine.Random.Range(1, materials.Length);
+                Material tmpMat = materials[randomMat];
+                tmpMats.Add(tmpMat);
 
-                    //Add elem to combo per color
-                    colorCombos[randomMat].Add(child);
+                //Debug.Log(":::" + randomMat);
+                //Initialize color combos lists to anything except first material 
+                if (randomMat != 0 && colorCombos[randomMat] == null)
+                    colorCombos[randomMat] = new List<Transform>();
 
-                }
-                else
+                //Grab references to each element per side
+                foreach (Transform child in cubeSide.GetChild(0).GetChild(0))
                 {
-                    //Blank elem
-                    child.GetComponent<Renderer>().material = materials[0];
+                    //Randomize side's elem colorss
+                    float matRandomizer = UnityEngine.Random.Range(0, 100);
+                    if (matRandomizer <= 50)
+                    {
+                        //Side color elem
+                        child.GetComponent<Renderer>().material = tmpMat;
+                        CubeElemController tmpController = child.GetComponent<CubeElemController>();
+                        tmpController.ElemMat = tmpMat;
+                        tmpController.ElemMatIndex = randomMat;
+
+                        //Add elem to combo per color
+                        colorCombos[randomMat].Add(child);
+
+                    }
+                    else
+                    {
+                        //Blank elem
+                        child.GetComponent<Renderer>().material = materials[0];
+                    }
                 }
             }
         }
-        //StartCoroutine(StopCheckDoubles());
-       
+        #region TUTORIAL
+        else if(TutorialCube)
+        {
+            
+            PlayerPrefs.SetInt("TutorialStep", 1);
+           
+
+            ////Red
+            //colorCombos[1] = new List<Transform>();
+            ////Green
+            //colorCombos[2] = new List<Transform>();
+
+            foreach (Transform cubeSide in cubeSides)
+            {
+
+                //Set and remember random color per side
+                int randomMat = 0;
+
+                if (cubeSide.name == "CubeFront")
+                {
+                    randomMat = 1;
+                }
+                else if(cubeSide.name == "CubeBack")
+                {
+                    randomMat = 2;
+                }
+
+                Material tmpMat = materials[randomMat];
+                tmpMats.Add(tmpMat);
+
+                //Debug.Log(":::" + randomMat);
+                //Initialize color combos lists to anything except first material 
+                if (randomMat != 0 && colorCombos[randomMat] == null)
+                    colorCombos[randomMat] = new List<Transform>();
+
+                //Grab references to each element per side
+                foreach (Transform child in cubeSide.GetChild(0).GetChild(0))
+                {
+                  
+                    if (child.GetComponent<Renderer>().material.color != materials[0].color)
+                    {
+                        //Side color elem
+                        child.GetComponent<Renderer>().material = tmpMat;
+                        CubeElemController tmpController = child.GetComponent<CubeElemController>();
+                        tmpController.ElemMat = tmpMat;
+                        tmpController.ElemMatIndex = randomMat;
+
+                        //Add elem to combo per color
+                        colorCombos[randomMat].Add(child);
+                        //Debug.Log(colorCombos[randomMat].Count);
+
+                    }
+                }
+            }
+           
+
+        }
+        #endregion
     }
-
-
-    ////Check for all doublicates in colorCombos
-    //private IEnumerator StopCheckDoubles()
-    //{
-    //    yield return new WaitForSecondsRealtime(0.5f);
-
-        
-
-    //    foreach (Transform child in cubeBottom.GetChild(0).GetChild(0))
-    //    {
-    //        List<int> links = new List<int>();
-    //        foreach (CubeElemController item in child.GetComponent<CubeElemController>().BottomLinks)
-    //        {
-                
-    //            if (links.Contains(item.ElemMatIndex))
-    //            {
-    //                links.Add(item.ElemMatIndex);
-    //                //////////////////////////colorCombos[]
-    //            }
-    //        }
-    //    }
-
-
-        
-
-    //}
-
+   
 
     //Check if there's already same bottom ref for this color
     public bool CheckForDoubles(Transform child, int mat, CubeElemController tmpCont)

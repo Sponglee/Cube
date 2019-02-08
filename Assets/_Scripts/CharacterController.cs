@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CharacterController : MonoBehaviour
 {
@@ -83,6 +84,13 @@ public class CharacterController : MonoBehaviour
         }
         else if (other.transform.CompareTag("Door"))
         {
+            #region TUTORIAL
+            //Check if door is for tutorial - change scene
+            if(other.transform.parent.parent.parent.GetComponent<CubeController>().TutorialCube)
+            {
+                SceneManager.LoadScene("Main");
+            }
+            #endregion
             //Stop movement
             Destination = Vector3.zero;
             

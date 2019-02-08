@@ -3,13 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
     //Floor material
     public Material bottomMaterial;
 
-
+    //elevator
+    public GameObject elevator;
 
     //Cinemachine camera holder
     public Transform camHolder;
@@ -41,6 +43,7 @@ public class GameManager : Singleton<GameManager>
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1;
         //Debug Initialize camera
         ChangeCameraState(activeCube.cameraPoints[activeCameraPoint], activeCube.transform);
         
@@ -404,7 +407,24 @@ public class GameManager : Singleton<GameManager>
             //If combo more than colors - clear color from sides
             if(selectedColor != -1 && comboCount >= activeCube.colorCombos[selectedColor].Count)
             {
-                 
+
+                #region TUTORIAL
+                if (TutorialManager.Instance && TutorialManager.Instance.TutorialActive == 1)
+                {
+                    Debug.Log("RzEEEEEEE");
+                    TutorialManager.Instance.TutorialActive = 2;
+                    TutorialManager.Instance.CloseTut(2);
+                }
+                else if (TutorialManager.Instance && TutorialManager.Instance.TutorialActive == 3)
+                {
+                    Debug.Log("RzEEEEEEE");
+                    TutorialManager.Instance.TutorialActive = 4;
+                    TutorialManager.Instance.CloseTut(4);
+                }
+                #endregion
+            
+               
+
                 //Set Bottom elem to blank if combo
                 StartCoroutine(ChangeMat(elem.GetComponent<Renderer>().material, activeCube.materials[0], 0.05f));
 
@@ -495,12 +515,25 @@ public class GameManager : Singleton<GameManager>
         {
             activeCube.anim.SetTrigger("Open");
             activeCube.CubeOpened = true;
+            if(activeCube.EndCube)
+            {
+                SceneManager.LoadScene("Main");
+            }
             //ChangeCameraState(character.transform.GetChild(0).GetChild(activeCameraPoint), character.transform.GetChild(1));
 
         }
+
+        #region TUTORIAL
+        if (TutorialManager.Instance && TutorialManager.Instance.TutorialActive == 4)
+        {
+            Debug.Log("RzEEEEEEE");
+            TutorialManager.Instance.TutorialActive = 4;
+            TutorialManager.Instance.CloseTut(4);
+        }
+        #endregion
     }
 
-    
+
     //Find color from bottomLinks
     public int FindBottomColor(CubeElemController tile, int color)
     {

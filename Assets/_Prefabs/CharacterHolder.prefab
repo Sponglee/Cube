@@ -207,7 +207,7 @@ MonoBehaviour:
   charAnim: {fileID: 7243131769936716272}
   InputMove: 1
   JumpBool: 0
-  speed: 0.04
+  tileCenterSpeed: 0.04
 --- !u!54 &26639764
 Rigidbody:
   m_ObjectHideFlags: 0
