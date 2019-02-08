@@ -50,10 +50,7 @@ public class GameManager : Singleton<GameManager>
     // Update is called once per frame
     void LateUpdate()
     {
-        if(Input.GetMouseButtonDown(1))
-        {
-            character.JumpBool = true;
-        }
+       
 
         if(Input.GetMouseButtonDown(0))
         {
@@ -75,77 +72,71 @@ public class GameManager : Singleton<GameManager>
 
 
         }
-        else if (Input.GetMouseButtonUp(1))
-        {
-            //Jump trigger
-            character.JumpBool = false;
-        }
-        else if(Input.GetMouseButtonDown(2))
-        {
-            //Switch cam
-            MoveCamera(currentCamPoints);
-        }
+       
+    }
 
-        if (Input.GetMouseButtonUp(0))
+    //Swipe manager check
+    public void CharacterSwipeResult()
+    {
+        //Get char movement direction
+        if (SwipeManager.Instance.IsSwiping(SwipeDirection.Up))
         {
-            //Get char movement direction
-            if (SwipeManager.Instance.IsSwiping(SwipeDirection.Up))
-            {
-                MoveCharacter(0);                
-                character.InputMove = true;
-                //Debug.Log("_Up");
-            }
-            else if (SwipeManager.Instance.IsSwiping(SwipeDirection.Right))
-            {
-                MoveCharacter(1);
-                character.InputMove = true;
-                //Debug.Log("_Right");
-            }
-            else if (SwipeManager.Instance.IsSwiping(SwipeDirection.Down))
-            {
-                MoveCharacter(2);
-                character.InputMove = true;
-                //Debug.Log("_Down");
-            }
-            else if (SwipeManager.Instance.IsSwiping(SwipeDirection.Left))
-            {
-                MoveCharacter(3);
-                character.InputMove = true;
-                //Debug.Log("_Left");
-            }
-            else if (SwipeManager.Instance.IsSwiping(SwipeDirection.UpRight))
-            {
-                MoveCharacter(4);
-                character.InputMove = true;
-                //Debug.Log("_Left");
-            }
-            else if (SwipeManager.Instance.IsSwiping(SwipeDirection.DownRight))
-            {
-                MoveCharacter(5);
-                character.InputMove = true;
-                //Debug.Log("_Left");
-            }
-            else if (SwipeManager.Instance.IsSwiping(SwipeDirection.DownLeft))
-            {
-                MoveCharacter(6);
-                character.InputMove = true;
-                //Debug.Log("_Left");
-            }
-            else if (SwipeManager.Instance.IsSwiping(SwipeDirection.UpLeft))
-            {
-                MoveCharacter(7);
-                character.InputMove = true;
-                //Debug.Log("_Left");
-            }
-            else if (SwipeManager.Instance.IsSwiping(SwipeDirection.None))
-            {
+            MoveCharacter(0);
+            character.InputMove = true;
+            //Debug.Log("_Up");
+        }
+        else if (SwipeManager.Instance.IsSwiping(SwipeDirection.Right))
+        {
+            MoveCharacter(1);
+            character.InputMove = true;
+            //Debug.Log("_Right");
+        }
+        else if (SwipeManager.Instance.IsSwiping(SwipeDirection.Down))
+        {
+            MoveCharacter(2);
+            character.InputMove = true;
+            //Debug.Log("_Down");
+        }
+        else if (SwipeManager.Instance.IsSwiping(SwipeDirection.Left))
+        {
+            MoveCharacter(3);
+            character.InputMove = true;
+            //Debug.Log("_Left");
+        }
+        else if (SwipeManager.Instance.IsSwiping(SwipeDirection.UpRight))
+        {
+            MoveCharacter(4);
+            character.InputMove = true;
+            //Debug.Log("_Left");
+        }
+        else if (SwipeManager.Instance.IsSwiping(SwipeDirection.DownRight))
+        {
+            MoveCharacter(5);
+            character.InputMove = true;
+            //Debug.Log("_Left");
+        }
+        else if (SwipeManager.Instance.IsSwiping(SwipeDirection.DownLeft))
+        {
+            MoveCharacter(6);
+            character.InputMove = true;
+            //Debug.Log("_Left");
+        }
+        else if (SwipeManager.Instance.IsSwiping(SwipeDirection.UpLeft))
+        {
+            MoveCharacter(7);
+            character.InputMove = true;
+            //Debug.Log("_Left");
+        }
+        else if (SwipeManager.Instance.IsSwiping(SwipeDirection.None))
+        {
 
-                //Debug.Log("NONE");
-            }
+            //Debug.Log("NONE");
         }
     }
 
-  
+
+
+
     //Character movement through input
     public void MoveCharacter(int crossDir)
     {
