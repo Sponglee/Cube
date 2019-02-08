@@ -12,9 +12,8 @@ public class CharacterController : MonoBehaviour
     public bool InputMove = false;
     //JumpToggle
     public bool JumpBool = false;
-
-    //Move To Tile Speed
-    public float tileCenterSpeed = 0.04f;
+    //MoveSpeed
+    public float speed = 1f;
 
 
 
@@ -62,7 +61,7 @@ public class CharacterController : MonoBehaviour
     public void Move()
     {
         //Debug.Log("RE");
-        transform.position = Vector3.MoveTowards(transform.position, Destination, tileCenterSpeed);
+        transform.position = Vector3.MoveTowards(transform.position, Destination, speed);
         if(Mathf.Approximately(transform.position.x,Destination.x) && Mathf.Approximately(transform.position.z, Destination.z))
         {
             Destination = Vector3.zero;
@@ -72,16 +71,8 @@ public class CharacterController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
-        if (other.transform.CompareTag("Tile") && other.transform.GetComponent<CubeElemController>().SideName == "CubeBottom" && InputMove)
-        {
-            InputMove = false;
-            transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            Destination = Vector3.zero;
-            Destination = other.transform.position + new Vector3(0, 0f, 0);
-            GameManager.Instance.BottomCheck(other.transform);
-        }
-        else if (other.transform.CompareTag("Door"))
+        
+        if (other.transform.CompareTag("Door"))
         {
             //Stop movement
             Destination = Vector3.zero;
@@ -98,14 +89,17 @@ public class CharacterController : MonoBehaviour
             transform.position = activeCube.transform.position + new Vector3(0, 0.3f, 0);
 
         }
-
-
-      
     }
 
-    //private void OnTriggerEnter (Collider collision)
-    //{
-        
-    //}
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.transform.CompareTag("Tile") && collision.transform.GetComponent<CubeElemController>().SideName == "CubeBottom" && InputMove)
+        {
+            InputMove = false;
+            transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            Destination = Vector3.zero;
+            Destination = collision.transform.position + new Vector3(0, 0.144f, 0);
+            GameManager.Instance.BottomCheck(collision.transform);
+        }
+    }
 }

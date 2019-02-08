@@ -67,6 +67,7 @@ public class SwipeManager : Singleton<SwipeManager>
             //If there's 2 fingers
             if(touches.Length == 2)
             {
+<<<<<<< HEAD
                 //Activate jumpbool
                 gameManager.character.JumpBool = true;
 
@@ -84,10 +85,22 @@ public class SwipeManager : Singleton<SwipeManager>
                     //Debug.Log("ENDED " + deltaSwipe.x + ":" + deltaSwipe.y
                     CheckSwipe(deltaSwipe);
                 }
+=======
+                //if (deltaSwipe.y>swipeResistance)
+                //{
+                //    if (deltaSwipe.x < 0)
+                //        Direction |= (deltaSwipe.y < 0) ? SwipeDirection.UpRight : SwipeDirection.DownRight;
+                //    else if (deltaSwipe.x > 0)
+                //        Direction |= (deltaSwipe.y < 0) ? SwipeDirection.UpLeft : SwipeDirection.DownLeft;
+                //}
+                //else
+                    Direction |= (deltaSwipe.x < 0) ? SwipeDirection.Right : SwipeDirection.Left;
+>>>>>>> parent of 67131b2... 08.02.19
             }
             //Else if only 1 finger
             else if(touches.Length == 1)
             {
+<<<<<<< HEAD
                 Touch touch = Input.GetTouch(0);
                 //If jump finger was pressed - release and return
                 if (gameManager.character.JumpBool)
@@ -131,6 +144,17 @@ public class SwipeManager : Singleton<SwipeManager>
                     Direction |= (deltaSwipe.y < 0) ? SwipeDirection.UpRight : SwipeDirection.DownRight;
                 else if (deltaSwipe.x > 0)
                     Direction |= (deltaSwipe.y < 0) ? SwipeDirection.UpLeft : SwipeDirection.DownLeft;
+=======
+                //if (deltaSwipe.x > swipeResistance)
+                //{
+                //    if (deltaSwipe.x < 0)
+                //        Direction |= (deltaSwipe.y < 0) ? SwipeDirection.UpRight : SwipeDirection.DownRight;
+                //    else if (deltaSwipe.x > 0)
+                //        Direction |= (deltaSwipe.y < 0) ? SwipeDirection.UpLeft : SwipeDirection.DownLeft;
+                //}
+                //else
+                    Direction |= (deltaSwipe.y < 0) ? SwipeDirection.Up : SwipeDirection.Down;
+>>>>>>> parent of 67131b2... 08.02.19
             }
             else
                 Direction |= (deltaSwipe.x < 0) ? SwipeDirection.Right : SwipeDirection.Left;
