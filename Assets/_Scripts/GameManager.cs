@@ -227,6 +227,7 @@ public class GameManager : Singleton<GameManager>
     {
         
         currentCamPoints = cameraParent.parent;
+        activeCameraPoint = cameraParent.GetSiblingIndex();
         camHolder.SetParent(cameraParent);
         camHolder.GetComponent<CinemachineVirtualCamera>().m_LookAt = target;
         camHolder.localRotation = Quaternion.identity;
@@ -515,7 +516,9 @@ public class GameManager : Singleton<GameManager>
         {
             activeCube.anim.SetTrigger("Open");
             activeCube.CubeOpened = true;
-            if(activeCube.EndCube)
+            //Debug Initialize camera
+            ChangeCameraState(character.transform.GetChild(0).GetChild(0), character.transform.GetChild(1));
+            if (activeCube.EndCube)
             {
                 SceneManager.LoadScene("Main");
             }
@@ -531,6 +534,7 @@ public class GameManager : Singleton<GameManager>
             TutorialManager.Instance.CloseTut(4);
         }
         #endregion
+       
     }
 
 

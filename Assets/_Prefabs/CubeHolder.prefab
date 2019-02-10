@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 3546648576743025120}
   - component: {fileID: 3562359205614611404}
   - component: {fileID: 3750959467848151788}
-  - component: {fileID: 7294599173030780431}
   m_Layer: 0
   m_Name: CubeElem (2)
   m_TagString: Tile
@@ -136,19 +135,6 @@ MonoBehaviour:
   bottomLinks: []
   materialInteraction: {fileID: 0}
   ClearBufferTrigger: 0
---- !u!65 &7294599173030780431
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 593900587324297713}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &686594648652728268
 GameObject:
   m_ObjectHideFlags: 0
@@ -195,7 +181,6 @@ GameObject:
   - component: {fileID: 6262960228336524202}
   - component: {fileID: 7281967642988803907}
   - component: {fileID: 5643985748064551010}
-  - component: {fileID: 6542010397063911488}
   m_Layer: 0
   m_Name: CubeElem (3)
   m_TagString: Tile
@@ -317,19 +302,6 @@ MonoBehaviour:
   bottomLinks: []
   materialInteraction: {fileID: 0}
   ClearBufferTrigger: 0
---- !u!65 &6542010397063911488
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1073993401410413775}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3152857780717289806
 GameObject:
   m_ObjectHideFlags: 0
@@ -344,7 +316,6 @@ GameObject:
   - component: {fileID: 6744419152113498049}
   - component: {fileID: 667071591460173754}
   - component: {fileID: 7531325674063423992}
-  - component: {fileID: 2773896042181507694}
   m_Layer: 0
   m_Name: CubeElem (6)
   m_TagString: Tile
@@ -466,19 +437,6 @@ MonoBehaviour:
   bottomLinks: []
   materialInteraction: {fileID: 0}
   ClearBufferTrigger: 0
---- !u!65 &2773896042181507694
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3152857780717289806}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3192907582649868169
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,7 +451,6 @@ GameObject:
   - component: {fileID: 4545944702400490558}
   - component: {fileID: 385662443774139508}
   - component: {fileID: 653387391811702606}
-  - component: {fileID: 6774004470983504053}
   m_Layer: 0
   m_Name: CubeElem (5)
   m_TagString: Tile
@@ -615,19 +572,6 @@ MonoBehaviour:
   bottomLinks: []
   materialInteraction: {fileID: 0}
   ClearBufferTrigger: 0
---- !u!65 &6774004470983504053
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3192907582649868169}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3870479325661312990
 GameObject:
   m_ObjectHideFlags: 0
@@ -750,7 +694,6 @@ GameObject:
   - component: {fileID: 3476205853876085601}
   - component: {fileID: 843707439528712319}
   - component: {fileID: 3551373227899370630}
-  - component: {fileID: 1089394102029812432}
   m_Layer: 0
   m_Name: CubeElem (1)
   m_TagString: Tile
@@ -872,19 +815,6 @@ MonoBehaviour:
   bottomLinks: []
   materialInteraction: {fileID: 0}
   ClearBufferTrigger: 0
---- !u!65 &1089394102029812432
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5782398637891405765}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5907999287726923387
 GameObject:
   m_ObjectHideFlags: 0
@@ -897,6 +827,7 @@ GameObject:
   - component: {fileID: 4656645731521249347}
   - component: {fileID: 3728988276028270453}
   - component: {fileID: 2491196923729365917}
+  - component: {fileID: 5531166933003400030}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Cube
@@ -985,6 +916,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &5531166933003400030
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5907999287726923387}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2, z: -0.05}
+  m_Center: {x: 0, y: 0.5, z: -0.5}
 --- !u!1 &7530713937134251380
 GameObject:
   m_ObjectHideFlags: 0
@@ -999,7 +943,6 @@ GameObject:
   - component: {fileID: 3035902080019546014}
   - component: {fileID: 3622592103501691859}
   - component: {fileID: 3583365230901005160}
-  - component: {fileID: 6284982937299249115}
   m_Layer: 0
   m_Name: CubeElem
   m_TagString: Tile
@@ -1121,19 +1064,6 @@ MonoBehaviour:
   bottomLinks: []
   materialInteraction: {fileID: 0}
   ClearBufferTrigger: 0
---- !u!65 &6284982937299249115
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7530713937134251380}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7704716037025714188
 GameObject:
   m_ObjectHideFlags: 0
@@ -1148,7 +1078,6 @@ GameObject:
   - component: {fileID: 7564457416482268757}
   - component: {fileID: 4061890621579237993}
   - component: {fileID: 5716671885600557425}
-  - component: {fileID: 7933118273171458798}
   m_Layer: 0
   m_Name: CubeElem (8)
   m_TagString: Tile
@@ -1270,19 +1199,6 @@ MonoBehaviour:
   bottomLinks: []
   materialInteraction: {fileID: 0}
   ClearBufferTrigger: 0
---- !u!65 &7933118273171458798
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7704716037025714188}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7798722236248594626
 GameObject:
   m_ObjectHideFlags: 0
@@ -1297,7 +1213,6 @@ GameObject:
   - component: {fileID: 7206945053646456817}
   - component: {fileID: 6097099717920552824}
   - component: {fileID: 4694068372432405637}
-  - component: {fileID: 2311083213959226847}
   m_Layer: 0
   m_Name: CubeElem (7)
   m_TagString: Tile
@@ -1419,19 +1334,6 @@ MonoBehaviour:
   bottomLinks: []
   materialInteraction: {fileID: 0}
   ClearBufferTrigger: 0
---- !u!65 &2311083213959226847
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7798722236248594626}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8861757925550003388
 GameObject:
   m_ObjectHideFlags: 0
@@ -1446,7 +1348,6 @@ GameObject:
   - component: {fileID: 3930019741749584491}
   - component: {fileID: 6029131655752681726}
   - component: {fileID: 4190004019884645006}
-  - component: {fileID: 3463329474769087525}
   m_Layer: 0
   m_Name: CubeElem (4)
   m_TagString: Tile
@@ -1568,16 +1469,3 @@ MonoBehaviour:
   bottomLinks: []
   materialInteraction: {fileID: 0}
   ClearBufferTrigger: 0
---- !u!65 &3463329474769087525
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8861757925550003388}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
