@@ -397,7 +397,7 @@ public class GameManager : Singleton<GameManager>
     
 
     //Clear selected color from buffer
-    public void ClearBuffer()
+    public void ClearBuffer(Transform currentTile)
     {
        //Each elem in buffer
         foreach (Transform elem in comboBuffer)
@@ -483,6 +483,16 @@ public class GameManager : Singleton<GameManager>
 
         //Check if cube is clear
         CheckCubeEnd();
+
+        #region TUTORIAL
+        //Skip multiple color if in tutorial
+        if(activeCube.TutorialCube)
+        {
+            return;
+        }
+        #endregion
+        //Check color of current tile if combo is broken
+        BottomCheck(currentTile);
        
     }
         

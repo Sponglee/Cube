@@ -133,7 +133,7 @@ public class CubeElemController : MonoBehaviour
             }
             if(ClearBufferTrigger)
             {
-                GameManager.Instance.ClearBuffer();
+                GameManager.Instance.ClearBuffer(transform);
                 ClearBufferTrigger = false;
             }
             //GameManager.Instance.BottomCheck(transform);

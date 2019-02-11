@@ -21,6 +21,8 @@ public class TutorialManager : Singleton<TutorialManager> {
         }
     }
 
+
+    
     // Use this for initialization
     void Start() {
 
@@ -42,15 +44,16 @@ public class TutorialManager : Singleton<TutorialManager> {
 
     public void CloseTut(int first = 0)
     {
+        
        //Movement
-        if(first == 1)
+        if(first == 1 && !GameManager.Instance.activeCube.CubeOpened)
         {
             rightHand.SetActive(true);
             rightHand.transform.GetChild(0).GetComponent<Animator>().Play("TutorialHandUP");
             
         }
         //Camera
-        else if (first == 2)
+        else if (first == 2 && !GameManager.Instance.activeCube.CubeOpened)
         {
             rightHand.SetActive(false);
 
@@ -60,7 +63,7 @@ public class TutorialManager : Singleton<TutorialManager> {
 
         }
         //Jump movement
-        else if (first == 3)
+        else if (first == 3 && !GameManager.Instance.activeCube.CubeOpened)
         {
             cameraHand.SetActive(false);
 
@@ -72,7 +75,7 @@ public class TutorialManager : Singleton<TutorialManager> {
 
         }
         //Door and camera
-        else if (first == 4)
+        else if (first == 4 && GameManager.Instance.activeCube.CubeOpened)
         {
            
            
@@ -87,12 +90,15 @@ public class TutorialManager : Singleton<TutorialManager> {
            
 
         }
-        else
+        else if(GameManager.Instance.activeCube.CubeOpened)
         {
             tutorialActive = 5;
             //thirdStep.SetActive(false);
             Time.timeScale = 1;
+            doorHand.SetActive(true);
+            doorHand.transform.GetChild(0).GetComponent<Animator>().Play("TutorialHandCLICK");
             transform.GetChild(0).gameObject.SetActive(false);
+            
         }
    
     }
