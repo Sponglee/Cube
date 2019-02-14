@@ -17,6 +17,8 @@ public class GameManager : Singleton<GameManager>
     public Transform camHolder;
     //Reference point for camera
     public Transform currentCamPoints;
+    public Transform openCubeCamPoints;
+
     //Physical Camera ref for rays etc
     public Camera physicalCam;
     //active Camera position
@@ -550,8 +552,12 @@ public class GameManager : Singleton<GameManager>
         {
             activeCube.anim.SetTrigger("Open");
             activeCube.CubeOpened = true;
-            //Debug Initialize camera
-            ChangeCameraState(character.transform.GetChild(0).GetChild(0), character.transform.GetChild(1));
+
+            //Switch Camera to open cube state
+            ChangeCameraState(openCubeCamPoints.GetChild(0), character.transform.GetChild(1));
+            //Set camera position
+            openCubeCamPoints.transform.position = new Vector3(activeCube.transform.position.x, 1, activeCube.transform.position.z);
+             
             if (activeCube.EndCube)
             {
                 SceneManager.LoadScene("Main");
