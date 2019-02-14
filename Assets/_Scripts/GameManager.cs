@@ -423,9 +423,9 @@ public class GameManager : Singleton<GameManager>
                     TutorialManager.Instance.CloseTut(4);
                 }
                 #endregion
-            
-               
 
+
+                
                 //Set Bottom elem to blank if combo
                 StartCoroutine(ChangeMat(elem.GetComponent<Renderer>().material, activeCube.materials[0], 0.05f));
 
@@ -475,14 +475,31 @@ public class GameManager : Singleton<GameManager>
         if (selectedColor != -1 && comboCount >= activeCube.colorCombos[selectedColor].Count)
         {
             activeCube.colorCombos[selectedColor].Clear();
+
+            //Reset combo counts
+            selectedColor = -1;
+            comboCount = 0;
+            comboBuffer.Clear();
+            //Check if cube is clear
+            CheckCubeEnd();
+            //Delay bottom check if combo is full
+            if(!activeCube.EndCube)
+                StartCoroutine(StopBottomCheck(currentTile));
+        }
+        else
+        {
+            //Reset ComboCounts
+            selectedColor = -1;
+            comboCount = 0;
+            comboBuffer.Clear();
+            //Check bottom right away
+            BottomCheck(currentTile);
         }
 
-        selectedColor = -1;
-        comboCount = 0;
-        comboBuffer.Clear();
+        
+        
 
-        //Check if cube is clear
-        CheckCubeEnd();
+        
 
         #region TUTORIAL
         //Skip multiple color if in tutorial
@@ -492,10 +509,17 @@ public class GameManager : Singleton<GameManager>
         }
         #endregion
         //Check color of current tile if combo is broken
-        BottomCheck(currentTile);
+        
+       
        
     }
         
+
+    public IEnumerator StopBottomCheck(Transform currentTile)
+    {
+        yield return new WaitForSeconds(0.4f);
+        BottomCheck(currentTile);
+    }
     
     //Check if cube is finished
     public void CheckCubeEnd()

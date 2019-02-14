@@ -53,10 +53,9 @@ public class SwipeManager : Singleton<SwipeManager>
     // Update is called once per frame
     void Update ()
     {
-
+        Direction = SwipeDirection.None;
 
         
-        Direction = SwipeDirection.None;
 
         if (Input.touchCount > 0 && !gameManager.activeCube.CubeOpened)
         {
