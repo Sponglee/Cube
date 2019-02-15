@@ -560,7 +560,8 @@ public class GameManager : Singleton<GameManager>
              
             if (activeCube.EndCube)
             {
-                SceneManager.LoadScene("Main");
+                StartCoroutine(StopLoadTransition());
+                
             }
             //ChangeCameraState(character.transform.GetChild(0).GetChild(activeCameraPoint), character.transform.GetChild(1));
 
@@ -578,6 +579,12 @@ public class GameManager : Singleton<GameManager>
     }
 
 
+
+    public IEnumerator StopLoadTransition()
+    {
+        yield return new WaitForSeconds(0.4f);
+        SceneManager.LoadScene("TowerExmpl");
+    }
     //Find color from bottomLinks
     public int FindBottomColor(CubeElemController tile, int color)
     {
