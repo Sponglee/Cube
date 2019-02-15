@@ -11,6 +11,8 @@ public class ObstacleController : MonoBehaviour
 
     public CubeController cube;
 
+    public Transform tileUnder;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,5 +41,14 @@ public class ObstacleController : MonoBehaviour
             endPoint = tmp;
         }
         
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("REEEEEEEEE");
+
+        if(other.transform.CompareTag("Character"))
+        {
+           GameManager.Instance.ClearBuffer(tileUnder);
+        }
     }
 }

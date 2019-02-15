@@ -399,7 +399,7 @@ public class GameManager : Singleton<GameManager>
     
 
     //Clear selected color from buffer
-    public void ClearBuffer(Transform currentTile)
+    public void ClearBuffer(Transform currentTile = null)
     {
        //Each elem in buffer
         foreach (Transform elem in comboBuffer)
@@ -485,7 +485,7 @@ public class GameManager : Singleton<GameManager>
             //Check if cube is clear
             CheckCubeEnd();
             //Delay bottom check if combo is full
-            if(!activeCube.EndCube)
+            if(!activeCube.EndCube && currentTile != null)
                 StartCoroutine(StopBottomCheck(currentTile));
         }
         else
@@ -495,7 +495,8 @@ public class GameManager : Singleton<GameManager>
             comboCount = 0;
             comboBuffer.Clear();
             //Check bottom right away
-            BottomCheck(currentTile);
+            if (currentTile != null)
+                BottomCheck(currentTile);
         }
 
         
