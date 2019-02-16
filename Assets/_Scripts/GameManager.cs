@@ -584,7 +584,7 @@ public class GameManager : Singleton<GameManager>
     public IEnumerator StopLoadTransition()
     {
         yield return new WaitForSeconds(0.4f);
-        SceneManager.LoadScene("TowerExmpl");
+        SceneManager.LoadScene("Planet");
     }
     //Find color from bottomLinks
     public int FindBottomColor(CubeElemController tile, int color)
