@@ -21,27 +21,27 @@ public class PlanetRotator : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetMouseButtonUp(0))
-        {
-            GameObject rayObj = GrabRayObj();
-            //Debug.Log(rayObj.transform.parent.name);
-            if (rayObj != null && rayObj.CompareTag("Tower") && activeCam == vcamMain)
-            {
-                activeCam = vcamClose;
-                ChangeCamState(rayObj);
-            }
-            else if (rayObj != null && rayObj.CompareTag("Tower") && activeCam == vcamClose)
-            {
-                activeCam = vcamMain;
-                SceneManager.LoadScene("Main");
-            }
-            else if ((rayObj == null || !rayObj.CompareTag("Tower")) && activeCam == vcamClose)
-            {
-                activeCam = vcamMain;
-                ChangeCamState();
-            }
+        //if (Input.GetMouseButtonUp(0))
+        //{
+        //    GameObject rayObj = GrabRayObj();
+        //    //Debug.Log(rayObj.transform.parent.name);
+        //    if (rayObj != null && rayObj.CompareTag("Tower") && activeCam == vcamMain)
+        //    {
+        //        activeCam = vcamClose;
+        //        ChangeCamState(rayObj);
+        //    }
+        //    else if (rayObj != null && rayObj.CompareTag("Tower") && activeCam == vcamClose)
+        //    {
+        //        activeCam = vcamMain;
+        //        SceneManager.LoadScene("Main");
+        //    }
+        //    else if ((rayObj == null || !rayObj.CompareTag("Tower")) && activeCam == vcamClose)
+        //    {
+        //        activeCam = vcamMain;
+        //        ChangeCamState();
+        //    }
 
-        }
+        //}
     }
 
     public void ChangeCamState(GameObject rayObj = null)
@@ -114,16 +114,16 @@ public class PlanetRotator : MonoBehaviour
     {
        
         float rotX = Input.GetAxis("Mouse X") * rotSpeed * Mathf.Deg2Rad;
-        float rotY = Input.GetAxis("Mouse Y") * rotSpeed * Mathf.Deg2Rad;
+        //float rotY = Input.GetAxis("Mouse Y") * rotSpeed * Mathf.Deg2Rad;
         if (Input.touchCount > 0)
         {
             rotX = Input.touches[0].deltaPosition.x;
-            rotY = Input.touches[0].deltaPosition.y;
+            //rotY = Input.touches[0].deltaPosition.y;
         }
 
         Debug.Log("REEE " + Input.GetAxis("Mouse X") + " : " + Input.GetAxis("Mouse Y") + " = " + rotSpeed);
 
-        cameras.transform.Rotate(Vector3.up, rotX, Space.Self);
-        cameras.transform.Rotate(Vector3.forward, rotY, Space.Self);
+        transform.Rotate(Vector3.up, -rotX, Space.Self);
+        //cameras.transform.Rotate(Vector3.forward, rotY, Space.Self);
     }
 }

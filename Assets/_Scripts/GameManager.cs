@@ -13,21 +13,29 @@ public class GameManager : Singleton<GameManager>
     //elevator
     public GameObject elevator;
 
-    //Cinemachine camera holder
-    public Transform camHolder;
-    //Reference point for camera
-    public Transform currentCamPoints;
-    public Transform openCubeCamPoints;
+   
+   
+    
+  
 
-    //Physical Camera ref for rays etc
-    public Camera physicalCam;
-    //active Camera position
-    public int activeCameraPoint = 0;
+    //Cube prefab
+    public GameObject cubePref;
+
+    //Reference point for camera
+    public Transform activeCamPoints;
     //Active cube ref
     public CubeController activeCube;
+    //active Camera position
+    public int activeCameraPoint = 0;
+
 
     //Character reference
     public CharacterController character;
+    //Physical Camera ref for rays etc
+    public Camera physicalCam;
+    //Cinemachine camera holder
+    public Transform camHolder;
+
 
     //Collor of selected combo
     public int selectedColor = -1;
@@ -45,6 +53,12 @@ public class GameManager : Singleton<GameManager>
     // Start is called before the first frame update
     void Start()
     {
+
+        GameObject cubeSpawn = Instantiate(cubePref, Vector3.zero, Quaternion.identity);
+
+        activeCube = cubeSpawn.GetComponent<CubeController>();
+        activeCamPoints = cubeSpawn.transform.GetChild(0);
+
         Time.timeScale = 1;
         //Debug Initialize camera
         ChangeCameraState(activeCube.cameraPoints[activeCameraPoint], activeCube.transform);
@@ -146,8 +160,8 @@ public class GameManager : Singleton<GameManager>
     //Character movement through input
     public void MoveCharacter(int crossDir)
     {
-        Vector3 dir = currentCamPoints.GetChild(activeCameraPoint)
-               .transform.position - new Vector3(activeCube.transform.position.x, currentCamPoints
+        Vector3 dir = activeCamPoints.GetChild(activeCameraPoint)
+               .transform.position - new Vector3(activeCube.transform.position.x, activeCamPoints
                    .GetChild(activeCameraPoint).transform.position.y, activeCube.transform.position.z);
 
         
@@ -228,7 +242,7 @@ public class GameManager : Singleton<GameManager>
     public void ChangeCameraState(Transform cameraParent, Transform target)
     {
         
-        currentCamPoints = cameraParent.parent;
+        activeCamPoints = cameraParent.parent;
         activeCameraPoint = cameraParent.GetSiblingIndex();
         camHolder.SetParent(cameraParent);
         camHolder.GetComponent<CinemachineVirtualCamera>().m_LookAt = target;
@@ -551,19 +565,25 @@ public class GameManager : Singleton<GameManager>
         //Cube Open condition
         if (nullCount >= activeCube.colorCombos.Length)
         {
-            activeCube.anim.SetTrigger("Open");
-            activeCube.CubeOpened = true;
-
-            //Switch Camera to open cube state
-            ChangeCameraState(openCubeCamPoints.GetChild(0), character.transform.GetChild(1));
-            //Set camera position
-            openCubeCamPoints.transform.position = new Vector3(activeCube.transform.position.x, 1, activeCube.transform.position.z);
-             
             if (activeCube.EndCube)
             {
-                StartCoroutine(StopLoadTransition());
-                
+                StartCoroutine(StopLoadTransition("TowerExmpl"));
+
             }
+            else
+            {
+                StartCoroutine(StopLoadTransition("Tower"));
+            }
+
+            //activeCube.anim.SetTrigger("Open");
+            //activeCube.CubeOpened = true;
+
+            ////Switch Camera to open cube state
+            //ChangeCameraState(openCubeCamPoints.GetChild(0), character.transform.GetChild(1));
+            ////Set camera position
+            //openCubeCamPoints.transform.position = new Vector3(activeCube.transform.position.x, 1, activeCube.transform.position.z);
+             
+           
             //ChangeCameraState(character.transform.GetChild(0).GetChild(activeCameraPoint), character.transform.GetChild(1));
 
         }
@@ -581,10 +601,10 @@ public class GameManager : Singleton<GameManager>
 
 
 
-    public IEnumerator StopLoadTransition()
+    public IEnumerator StopLoadTransition(string scene)
     {
         yield return new WaitForSeconds(0.4f);
-        SceneManager.LoadScene("TowerExmpl");
+        SceneManager.LoadScene(scene);
     }
     //Find color from bottomLinks
     public int FindBottomColor(CubeElemController tile, int color)

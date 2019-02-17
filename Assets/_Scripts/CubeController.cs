@@ -28,6 +28,8 @@ public class CubeController : MonoBehaviour
     public int[,] initialMatrix;
     int[,] tmpMatrix;
     public List<int[,]> sideMatrices;
+    
+    
     //Camera reference points
     public Transform[] cameraPoints;
    
@@ -114,6 +116,7 @@ public class CubeController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         //EndCubeToggle
         if(EndCube)
         {
