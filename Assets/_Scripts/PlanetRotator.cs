@@ -1,6 +1,6 @@
 ﻿using Cinemachine;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public class PlanetRotator : MonoBehaviour
 {
@@ -20,13 +20,25 @@ public class PlanetRotator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (Input.GetMouseButtonUp(0))
         {
             GameObject rayObj = GrabRayObj();
-            Debug.Log(rayObj.transform.parent.name);
-            if (rayObj != null && rayObj.CompareTag("Tower"))
+            //Debug.Log(rayObj.transform.parent.name);
+            if (rayObj != null && rayObj.CompareTag("Tower") && activeCam == vcamMain)
             {
+                activeCam = vcamClose;
                 ChangeCamState(rayObj);
+            }
+            else if (rayObj != null && rayObj.CompareTag("Tower") && activeCam == vcamClose)
+            {
+                activeCam = vcamMain;
+                SceneManager.LoadScene("Main");
+            }
+            else if ((rayObj == null || !rayObj.CompareTag("Tower")) && activeCam == vcamClose)
+            {
+                activeCam = vcamMain;
+                ChangeCamState();
             }
 
         }
@@ -39,7 +51,7 @@ public class PlanetRotator : MonoBehaviour
 
         if (vcamClose.gameObject.activeSelf && rayObj != null)
         {
-            activeCam = vcamClose.transform;
+            //activeCam = vcamClose.transform;
             
         }
         else
@@ -48,7 +60,7 @@ public class PlanetRotator : MonoBehaviour
 
             vcamClose.parent = rayObj.transform.GetChild(1);
             vcamClose.transform.localPosition = new Vector3(rayObj.transform.GetChild(0).localPosition.x, rayObj.transform.GetChild(1).localPosition.y, rayObj.transform.GetChild(0).position.z-2);
-            activeCam = vcamMain.transform;
+            //activeCam = vcamMain.transform;
         }
 
 
@@ -100,10 +112,16 @@ public class PlanetRotator : MonoBehaviour
     //Rotate planet
     void OnMouseDrag()
     {
+       
         float rotX = Input.GetAxis("Mouse X") * rotSpeed * Mathf.Deg2Rad;
         float rotY = Input.GetAxis("Mouse Y") * rotSpeed * Mathf.Deg2Rad;
+        if (Input.touchCount > 0)
+        {
+            rotX = Input.touches[0].deltaPosition.x;
+            rotY = Input.touches[0].deltaPosition.y;
+        }
 
-       
+        Debug.Log("REEE " + Input.GetAxis("Mouse X") + " : " + Input.GetAxis("Mouse Y") + " = " + rotSpeed);
 
         cameras.transform.Rotate(Vector3.up, rotX, Space.Self);
         cameras.transform.Rotate(Vector3.forward, rotY, Space.Self);

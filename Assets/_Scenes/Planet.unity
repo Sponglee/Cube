@@ -821,7 +821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15ddafde4cd309a49b7920914799b51e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotSpeed: 200
+  rotSpeed: 50
   cameras: {fileID: 1617088203}
   vcamClose: {fileID: 13609265}
   vcamMain: {fileID: 895380136}
@@ -5456,7 +5456,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1763164143
 MonoBehaviour:
   m_ObjectHideFlags: 0

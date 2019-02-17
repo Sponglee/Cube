@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/TowerExmpl.unity
     guid: a9fd86526e1ca534ca4731e53657a8c1
+  - enabled: 1
+    path: Assets/_Scenes/Planet.unity
+    guid: 7ebdeadd6dcf8b14a9dac22b7dbd95ec
   m_configObjects: {}

@@ -32,14 +32,24 @@ public class CharacterController : MonoBehaviour
                 //Debug.Log("STOP");
 
                 int pose = Random.Range(0, 4);
-                charAnim.SetInteger("RandomIdle", pose);
+                //charAnim.SetInteger("RandomIdle", pose);
                 charAnim.SetBool("Moving", false);
                 //transform.LookAt(GameManager.Instance.camHolder.position);
             }
             else
             {
-                charAnim.SetBool("Moving", true);
-                charAnim.Play("runStart");
+                if(!JumpBool)
+                {
+                    charAnim.SetBool("Moving", true);
+                    charAnim.Play("runStart");
+
+                }
+                else
+                {
+                    charAnim.SetBool("Moving", true);
+                    charAnim.Play("Jump");
+                }
+              
             }
         }
     }
