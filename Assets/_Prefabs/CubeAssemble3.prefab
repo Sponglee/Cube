@@ -523,8 +523,19 @@ MonoBehaviour:
   - {fileID: 6585903345946680401}
   - {fileID: 7258489884802816260}
   - {fileID: 7395544818444790359}
-  activeCameraPoint: 0
-  cameraSpeed: 5
+  TutorialCube: 0
+  EndCube: 0
+  levelInfo:
+    type: 3
+    sides:
+    - sideMat: 0
+      elemColors: 
+    - sideMat: 0
+      elemColors: 
+    - sideMat: 0
+      elemColors: 
+    - sideMat: 0
+      elemColors: 
 --- !u!1 &1195939733169446692
 GameObject:
   m_ObjectHideFlags: 0

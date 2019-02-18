@@ -89,7 +89,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1172,6 +1172,15 @@ MonoBehaviour:
   scrollSpeed: 2
   rotResistance: 10000
   cameras: {fileID: 886997148}
+  data:
+    towerIndex: 0
+    levels:
+    - type: 3
+      sides:
+      - elemColors: 020000000000000002000000000000000000000000000000020000000000000002000000
+      - elemColors: 000000000100000000000000010000000100000001000000000000000100000000000000
+      - elemColors: 000000000000000000000000000000000000000000000000000000000000000000000000
+      - elemColors: 000000000000000000000000000000000000000000000000000000000000000000000000
 --- !u!65 &592670612
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3425,7 +3434,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4225720987246055575}
-  m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.03314831, y: 0.06831334, z: 0.033112995}
   m_Children:

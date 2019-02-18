@@ -10,6 +10,10 @@ public class TowerScroller : MonoBehaviour
     public float rotResistance = 5;
     public Transform cameras;
 
+
+    public TowerData data;
+
+
     //Rotate planet
     void OnMouseDrag()
     {
