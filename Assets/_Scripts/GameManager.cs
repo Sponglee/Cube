@@ -312,9 +312,9 @@ public class GameManager : Singleton<GameManager>
                 comboBuffer.Add(tile);
                 //Debug.Log("REE");
                 comboCount++;
-               
-                
 
+
+                Debug.Log(comboCount + " : " + activeCube.colorCombos[selectedColor].Count);
                 //Check buffer
                 if (comboCount >= activeCube.colorCombos[selectedColor].Count)
                 {
@@ -327,6 +327,8 @@ public class GameManager : Singleton<GameManager>
             }
             else if(selectedColor != 0)
             {
+                Debug.Log(comboCount + " : " + activeCube.colorCombos[selectedColor].Count);
+
                 //Check if there's selected color in bottomLinks - grab material from it
                 int bottomColor = FindBottomColor(tmpTile, selectedColor);
                 //Debug.Log(":>: " + bottomColor + " :: " + selectedColor);
@@ -418,9 +420,9 @@ public class GameManager : Singleton<GameManager>
        //Each elem in buffer
         foreach (Transform elem in comboBuffer)
         {
-            
 
 
+          
             //If combo more than colors - clear color from sides
             if(selectedColor != -1 && comboCount >= activeCube.colorCombos[selectedColor].Count)
             {
@@ -542,7 +544,7 @@ public class GameManager : Singleton<GameManager>
     public void CheckCubeEnd()
     {
         //Debug
-        //Debug.Log("_____________________");
+        Debug.Log("_____________________");
 
         int nullCount = 0;
         for (int i = 0; i < activeCube.colorCombos.Length; i++)
@@ -552,15 +554,15 @@ public class GameManager : Singleton<GameManager>
             {
                 if (activeCube.colorCombos[i].Count == 0)
                     nullCount++;
-                //Debug.Log(activeCube.colorCombos[i].Count + " : " + activeCube.materials[i]);
+                Debug.Log(activeCube.colorCombos[i].Count + " : " + activeCube.materials[i]);
             }
             else
             {
                 nullCount++;
-                //Debug.Log("NULL");
+                Debug.Log("NULL");
             }
         }
-        //Debug.Log("_____________________");
+        Debug.Log("_____________________");
 
         //Cube Open condition
         if (nullCount >= activeCube.colorCombos.Length)

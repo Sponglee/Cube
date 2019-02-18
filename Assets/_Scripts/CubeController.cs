@@ -202,8 +202,7 @@ public class CubeController : MonoBehaviour
         {
             //Set and remember random color per side
             int randomMat = UnityEngine.Random.Range(1, materials.Length);
-            Material tmpMat = materials[randomMat];
-
+            
             //Remember color for a side 
             levelInfo.sides[i].sideMat = randomMat;
             levelInfo.sides[i].elemColors = new int[levelInfo.type*levelInfo.type];
@@ -242,6 +241,7 @@ public class CubeController : MonoBehaviour
             if (randomMat != 0 && colorCombos[randomMat] == null)
                 colorCombos[randomMat] = new List<Transform>();
 
+
             //Grab references to each element per side
             foreach (Transform child in cubeSides[i].GetChild(0).GetChild(0))
             {
@@ -254,10 +254,16 @@ public class CubeController : MonoBehaviour
                 tmpController.ElemMat = tmpMat;
                 tmpController.ElemMatIndex = randomMat;
 
-               
-                //Add elem to combo per color
-                colorCombos[randomMat].Add(child);
+                //Add combo if not 0
+               if(levelInfo.sides[i].elemColors[child.GetSiblingIndex()] != 0)
+                {
+                    //Add elem to combo per color
+                    colorCombos[randomMat].Add(child);
+                }
+
             }
+
+            Debug.Log("SIDE " + levelInfo.sides[i]+ ": " + colorCombos[randomMat].Count);
         }
        
     }
