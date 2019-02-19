@@ -569,11 +569,13 @@ public class GameManager : Singleton<GameManager>
         {
             if (activeCube.EndCube)
             {
+                activeCube.anim.SetTrigger("Open");
                 StartCoroutine(StopLoadTransition("TowerExmpl"));
 
             }
             else
             {
+                activeCube.anim.SetTrigger("Open");
                 StartCoroutine(StopLoadTransition("Tower"));
             }
 
@@ -605,7 +607,7 @@ public class GameManager : Singleton<GameManager>
 
     public IEnumerator StopLoadTransition(string scene)
     {
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(2.4f);
         SceneManager.LoadScene(scene);
     }
     //Find color from bottomLinks

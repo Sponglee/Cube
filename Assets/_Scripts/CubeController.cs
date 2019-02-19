@@ -118,10 +118,10 @@ public class CubeController : MonoBehaviour
     {
 
         //EndCubeToggle
-        if(EndCube)
-        {
-            Instantiate(GameManager.Instance.elevator, transform.position, Quaternion.identity);
-        }
+        //if(EndCube)
+        //{
+        //    Instantiate(GameManager.Instance.elevator, transform.position, Quaternion.identity);
+        //}
         //Initialize tmpMats
         //tmpMats = new List<Material>();
         //Initialize colorCombos
