@@ -13,6 +13,8 @@ public class TowerController : MonoBehaviour
     public Transform cameraHolder;
     public Transform elevatorHolder;
 
+    public CharacterController characterController;
+
     public TowerData data;
 
 
@@ -30,6 +32,15 @@ public class TowerController : MonoBehaviour
 
     [SerializeField]
     private float swipeResistance = 50f;
+
+
+
+    private void Start()
+    {
+        
+    }
+
+
 
 
     private void Update()
@@ -60,7 +71,7 @@ public class TowerController : MonoBehaviour
 
                     if (tmp && tmp.CompareTag("Cube") && elevatorHolder.position == cameraHolder.position)
                     {
-                        StartCoroutine(StopLoadTransition("Main"));
+                        characterController.TowerJumpIn(tmp.transform);
                     }
                 }
 

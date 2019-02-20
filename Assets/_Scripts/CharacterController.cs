@@ -94,6 +94,11 @@ public class CharacterController : MonoBehaviour
         }
         else if (other.transform.CompareTag("Door"))
         {
+            if(SceneManager.GetActiveScene().name == "Tower")
+            {
+                SceneManager.LoadScene("Main");
+            }
+
             #region TUTORIAL
             //Check if door is for tutorial - change scene
             if(other.transform.parent.parent.parent.GetComponent<CubeController>().TutorialCube)
@@ -121,9 +126,57 @@ public class CharacterController : MonoBehaviour
       
     }
 
+
+
+    public void TowerJumpIn(Transform target)
+    {
+        Vector3 tarDir = (target.position - transform.position)*1.5f;
+        StartCoroutine(StopJumpIn(tarDir));  
+    }
+
+
+    public IEnumerator StopJumpIn(Vector3 tmpDir)
+    {
+        
+
+        yield return StartCoroutine(StopSmoothRotate(tmpDir));
+        tmpDir += Vector3.up * 2.5f;
+        transform.GetComponent<Rigidbody>().velocity = tmpDir;
+        charAnim.Play("Jump");
+    }
+
+
+    public void SmoothRotate(Vector3 tmpDir)
+    {
+        StartCoroutine(StopSmoothRotate(tmpDir));
+    }
+    public IEnumerator StopSmoothRotate(Vector3 tmpDir)
+    {
+        float AngleToFace = Vector3.Angle(Vector3.forward, tmpDir);
+      
+        tmpDir.y = 0; // keep the direction strictly horizontal
+        Quaternion rot = Quaternion.LookRotation(tmpDir);
+
+        float duration = 0.3f;
+        float i = 0f;
+        float rate = 1f / duration;
+        //move Camera
+        while (i < 1.0)
+        {
+            i += Time.deltaTime * rate;
+
+
+            // slerp to the desired rotation over time
+            transform.rotation = Quaternion.Slerp(transform.rotation, rot, i);
+            yield return null;
+        }
+    }
+
+
+
     //private void OnTriggerEnter (Collider collision)
     //{
-        
+
     //}
 
 }

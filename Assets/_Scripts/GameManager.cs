@@ -54,10 +54,15 @@ public class GameManager : Singleton<GameManager>
     void Start()
     {
 
-        GameObject cubeSpawn = Instantiate(cubePref, Vector3.zero, Quaternion.identity);
+        //Instantiate a cube prefab
+        if(SceneManager.GetActiveScene().name == "Main")
+        {
+            GameObject cubeSpawn = Instantiate(cubePref, Vector3.zero, Quaternion.identity);
+            activeCube = cubeSpawn.GetComponent<CubeController>();
+            activeCamPoints = cubeSpawn.transform.GetChild(0);
+        }
 
-        activeCube = cubeSpawn.GetComponent<CubeController>();
-        activeCamPoints = cubeSpawn.transform.GetChild(0);
+
 
         Time.timeScale = 1;
         //Debug Initialize camera
@@ -233,6 +238,7 @@ public class GameManager : Singleton<GameManager>
 
         Debug.DrawLine(character.transform.position, character.transform.position + tmpDir, Color.blue, 5f);
         //Move character
+        character.SmoothRotate(tmpDir);
         character.transform.GetComponent<Rigidbody>().velocity = tmpDir;
 
     }

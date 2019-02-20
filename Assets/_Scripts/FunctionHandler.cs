@@ -34,10 +34,7 @@ public class FunctionHandler : MonoBehaviour
     }
 
 
-    public void Restart()
-    {
-        SceneManager.LoadScene("Main");
-    }
+  
 
     //Menu
     public GameObject menu;
@@ -55,10 +52,10 @@ public class FunctionHandler : MonoBehaviour
     }
 
     //Tutorial
-    public void Tutorial()
+    public void LoadScene(string sceneName)
     {
        
-        SceneManager.LoadScene("Tutorial");
+        SceneManager.LoadScene(sceneName);
     }
 
     //Exit
