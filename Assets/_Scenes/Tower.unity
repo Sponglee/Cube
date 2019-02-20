@@ -1057,8 +1057,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 592670610}
-  - component: {fileID: 592670611}
   - component: {fileID: 592670612}
+  - component: {fileID: 592670611}
   m_Layer: 0
   m_Name: TowerHolder
   m_TagString: Untagged
@@ -1080,6 +1080,7 @@ Transform:
   - {fileID: 1602041138}
   - {fileID: 2975687447650792572}
   - {fileID: 1026149414}
+  - {fileID: 1051946571}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2243,7 +2244,6 @@ Transform:
   m_Children:
   - {fileID: 586713033}
   - {fileID: 886997148}
-  - {fileID: 1051946571}
   m_Father: {fileID: 592670610}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2252,7 +2252,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1026149414}
+    m_TransformParent: {fileID: 592670610}
     m_Modifications:
     - target: {fileID: 8709605219728817623, guid: bf92caa121f8e8648bf52c8b94a84fb4,
         type: 3}
@@ -2267,7 +2267,7 @@ PrefabInstance:
     - target: {fileID: 2521244974223181167, guid: bf92caa121f8e8648bf52c8b94a84fb4,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -15.97
       objectReference: {fileID: 0}
     - target: {fileID: 2521244974223181167, guid: bf92caa121f8e8648bf52c8b94a84fb4,
         type: 3}
@@ -2282,7 +2282,7 @@ PrefabInstance:
     - target: {fileID: 2521244974223181167, guid: bf92caa121f8e8648bf52c8b94a84fb4,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.0019692031
+      value: 0.0019692034
       objectReference: {fileID: 0}
     - target: {fileID: 2521244974223181167, guid: bf92caa121f8e8648bf52c8b94a84fb4,
         type: 3}
@@ -2292,12 +2292,12 @@ PrefabInstance:
     - target: {fileID: 2521244974223181167, guid: bf92caa121f8e8648bf52c8b94a84fb4,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.99999803
+      value: 0.9999981
       objectReference: {fileID: 0}
     - target: {fileID: 2521244974223181167, guid: bf92caa121f8e8648bf52c8b94a84fb4,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2521244974223181167, guid: bf92caa121f8e8648bf52c8b94a84fb4,
         type: 3}

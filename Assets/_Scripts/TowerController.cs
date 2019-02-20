@@ -97,7 +97,7 @@ public class TowerController : MonoBehaviour
 
         //Scroll camera and elevator
         cameraHolder.transform.position += new Vector3(0, -rotY / 100f, 0);
-        elevatorHolder.transform.position += new Vector3(0, -rotY / 150f, 0);
+        elevatorHolder.transform.position += new Vector3(0, -rotY / 120f, 0);
     }
 
 
