@@ -581,6 +581,12 @@ public class GameManager : Singleton<GameManager>
             }
             else
             {
+                //if (SceneManager.GetActiveScene().name == "Main")
+                //{
+
+                //    activeCube.anim.SetTrigger("Open");
+                //    StartCoroutine(StopLoadTransition("Tower"));
+                //}
                 activeCube.anim.SetTrigger("Open");
                 StartCoroutine(StopLoadTransition("Tower"));
             }
@@ -592,8 +598,8 @@ public class GameManager : Singleton<GameManager>
             //ChangeCameraState(openCubeCamPoints.GetChild(0), character.transform.GetChild(1));
             ////Set camera position
             //openCubeCamPoints.transform.position = new Vector3(activeCube.transform.position.x, 1, activeCube.transform.position.z);
-             
-           
+
+
             //ChangeCameraState(character.transform.GetChild(0).GetChild(activeCameraPoint), character.transform.GetChild(1));
 
         }
@@ -606,7 +612,7 @@ public class GameManager : Singleton<GameManager>
             TutorialManager.Instance.CloseTut(4);
         }
         #endregion
-       
+
     }
 
 
