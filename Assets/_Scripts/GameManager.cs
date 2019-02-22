@@ -78,7 +78,7 @@ public class GameManager : Singleton<GameManager>
     {
        if(Input.GetMouseButtonDown(2))
         {
-            StartCoroutine(GameManager.Instance.CubeFinish());
+            StartCoroutine(GameManager.Instance.TowerExitSequence());
         }
         //Check for clicks after cube opens
         if(activeCube.CubeOpened && !IsPointerOverUIObject("UI") && Input.GetMouseButtonDown(0))
@@ -596,7 +596,7 @@ public class GameManager : Singleton<GameManager>
 
 
                 //Cube Finish
-                StartCoroutine(CubeFinish());
+                StartCoroutine(TowerExitSequence());
 
                 //StartCoroutine(StopLoadTransition("Tower", 5.4f));
                 //FadeCanvas.Instance.FadeOut(2.3f);
@@ -628,21 +628,22 @@ public class GameManager : Singleton<GameManager>
 
 
 
-    public IEnumerator CubeFinish()
+    public IEnumerator TowerExitSequence()
     {
         activeCube.anim.SetTrigger("Open");
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.5f);
+        //Move camera to elevator
         elVcam.gameObject.SetActive(true);
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(0.6f);
 
         character.TowerJumpIn(elevator.transform, 2f);
      
         yield return new WaitForSeconds(1f);
         character.SmoothRotate(Vector3.right);
         activeCube.anim.Play("CubeClose");
-        yield return StartCoroutine(StopLoadTransition("Tower", 2.4f));
+        yield return StartCoroutine(StopLoadTransition("Tower", 1.4f));
     }
 
     public IEnumerator StopLoadTransition(string scene, float time)

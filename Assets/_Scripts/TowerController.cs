@@ -24,6 +24,8 @@ public class TowerController : Singleton<TowerController>
     public CinemachineVirtualCamera vdoor;
     public Transform FollowTarget;
 
+    
+
     public Transform currentCanvas;
 
     //Swipe variables
@@ -85,8 +87,6 @@ public class TowerController : Singleton<TowerController>
 
                     if (tmp && tmp.CompareTag("Cube") && elevatorHolder.position == cameraHolder.position)
                     {
-                        //Zoom in
-                        vdoor.Priority += 2;
 
                         //Hide Tower
                         transform.GetChild(1).gameObject.SetActive(false);
@@ -99,7 +99,13 @@ public class TowerController : Singleton<TowerController>
                             }
 
                         }
-                        characterController.TowerJumpIn(tmp.transform, 1.5f);
+
+
+                        StartCoroutine(TowerEnterSequence(tmp));
+
+
+
+                       
                     }
                 }
 
@@ -114,6 +120,20 @@ public class TowerController : Singleton<TowerController>
 
 
     }
+
+
+    public IEnumerator TowerEnterSequence(GameObject towerCube)
+    {
+        towerCube.GetComponent<Animator>().SetBool("TowerOpen", true);
+        yield return new WaitForSeconds(0.3f);
+
+        characterController.TowerJumpIn(towerCube.transform, 2.3f);
+        //Zoom in
+        vdoor.Priority += 2;
+
+
+    }
+
 
     //Scroll towerf planet
     void OnMouseDrag()
