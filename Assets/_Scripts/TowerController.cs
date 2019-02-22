@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class TowerController : MonoBehaviour
+public class TowerController : Singleton<TowerController>
 {
     public float rotSpeed = 20;
     public float scrollSpeed = 2;
@@ -21,6 +21,7 @@ public class TowerController : MonoBehaviour
 
     public Camera physicCam;
     public CinemachineVirtualCamera vcam;
+    public CinemachineVirtualCamera vdoor;
     public Transform FollowTarget;
 
     public Transform currentCanvas;
@@ -37,9 +38,18 @@ public class TowerController : MonoBehaviour
 
     private void Start()
     {
-        
+
+        StartCoroutine(StartDelay());
+       
     }
 
+    private IEnumerator StartDelay()
+    {
+        yield return new WaitForEndOfFrame();
+        /////// USE THIS IF EXITING MAIN SCENE
+        //Disable door camera for pan out shot
+        vdoor.Priority -= 2;
+    }
 
 
 
@@ -65,12 +75,30 @@ public class TowerController : MonoBehaviour
 
                 //}
 
+
+                //Door click event
                 if (currentCanvas && currentCanvas.gameObject.activeSelf)
                 {
+                    //Enable phys camera trigger
+                    physicCam.GetComponentInChildren<SphereCollider>().enabled = true;
                     GameObject tmp = GrabRayObj();
 
                     if (tmp && tmp.CompareTag("Cube") && elevatorHolder.position == cameraHolder.position)
                     {
+                        //Zoom in
+                        vdoor.Priority += 2;
+
+                        //Hide Tower
+                        transform.GetChild(1).gameObject.SetActive(false);
+                        //Disable all other cubes
+                        foreach (Transform child in transform.GetChild(0))
+                        {
+                            if (child.gameObject != tmp)
+                            {
+                                child.gameObject.SetActive(false);
+                            }
+
+                        }
                         characterController.TowerJumpIn(tmp.transform);
                     }
                 }

@@ -96,7 +96,8 @@ public class CharacterController : MonoBehaviour
         {
             if(SceneManager.GetActiveScene().name == "Tower")
             {
-                SceneManager.LoadScene("Main");
+
+                //SceneManager.LoadScene("Main");
             }
 
             #region TUTORIAL

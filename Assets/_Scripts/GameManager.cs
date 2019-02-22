@@ -12,7 +12,8 @@ public class GameManager : Singleton<GameManager>
 
     //elevator
     public GameObject elevator;
-
+    //elevator Camera ref
+    public CinemachineVirtualCamera elVcam;
    
    
     
@@ -575,8 +576,10 @@ public class GameManager : Singleton<GameManager>
         {
             if (activeCube.EndCube)
             {
-                activeCube.anim.SetTrigger("Open");
-                StartCoroutine(StopLoadTransition("TowerExmpl"));
+
+                //activeCube.anim.SetTrigger("Open");
+              
+                StartCoroutine(StopLoadTransition("TowerExmpl", 2.4f));
 
             }
             else
@@ -587,8 +590,13 @@ public class GameManager : Singleton<GameManager>
                 //    activeCube.anim.SetTrigger("Open");
                 //    StartCoroutine(StopLoadTransition("Tower"));
                 //}
-                activeCube.anim.SetTrigger("Open");
-                StartCoroutine(StopLoadTransition("Tower"));
+
+
+                //activeCube.anim.SetTrigger("Open");
+                character.TowerJumpIn(elevator.transform);
+                elVcam.gameObject.SetActive(true);
+                StartCoroutine(StopLoadTransition("Tower", 2.4f));
+                FadeCanvas.Instance.FadeOut(2.3f);
             }
 
             //activeCube.anim.SetTrigger("Open");
@@ -617,9 +625,10 @@ public class GameManager : Singleton<GameManager>
 
 
 
-    public IEnumerator StopLoadTransition(string scene)
+    public IEnumerator StopLoadTransition(string scene, float time)
     {
-        yield return new WaitForSeconds(2.4f);
+
+        yield return new WaitForSeconds(time);
         SceneManager.LoadScene(scene);
     }
     //Find color from bottomLinks
