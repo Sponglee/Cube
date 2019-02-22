@@ -38,8 +38,8 @@ public class TowerController : Singleton<TowerController>
 
     private void Start()
     {
-
-        StartCoroutine(StartDelay());
+        //Zoom out sequence
+        //StartCoroutine(StartDelay());
        
     }
 
@@ -99,7 +99,7 @@ public class TowerController : Singleton<TowerController>
                             }
 
                         }
-                        characterController.TowerJumpIn(tmp.transform);
+                        characterController.TowerJumpIn(tmp.transform, 1.5f);
                     }
                 }
 

@@ -129,9 +129,9 @@ public class CharacterController : MonoBehaviour
 
 
 
-    public void TowerJumpIn(Transform target)
+    public void TowerJumpIn(Transform target, float speed)
     {
-        Vector3 tarDir = (target.position - transform.position)*1.5f;
+        Vector3 tarDir = (target.position - transform.position)*speed;
         StartCoroutine(StopJumpIn(tarDir));  
     }
 
