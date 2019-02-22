@@ -57,7 +57,41 @@ public class TowerController : Singleton<TowerController>
 
     private void Update()
     {
+#if UNITY_EDITOR
+        if (Input.GetMouseButtonDown(0))
+        {
+            //Door click event
+            if (currentCanvas && currentCanvas.gameObject.activeSelf)
+            {
+                //Enable phys camera trigger
+                physicCam.GetComponentInChildren<SphereCollider>().enabled = true;
+                GameObject tmp = GrabRayObj();
 
+                if (tmp && tmp.CompareTag("Cube") && elevatorHolder.position == cameraHolder.position)
+                {
+
+                    //Hide Tower
+                    transform.GetChild(1).gameObject.SetActive(false);
+                    //Disable all other cubes
+                    foreach (Transform child in transform.GetChild(0))
+                    {
+                        if (child.gameObject != tmp)
+                        {
+                            child.gameObject.SetActive(false);
+                        }
+
+                    }
+
+
+                    StartCoroutine(TowerEnterSequence(tmp));
+
+
+
+
+                }
+            }
+        }
+        #endif
         if (Input.touchCount > 0)
         {
             //Touch touch = Input.GetTouch(0);
