@@ -632,7 +632,7 @@ public class GameManager : Singleton<GameManager>
     {
         activeCube.anim.SetTrigger("Open");
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.7f);
         //Move camera to elevator
         elVcam.gameObject.SetActive(true);
 
