@@ -12,28 +12,42 @@ public class FadeCanvas : Singleton<FadeCanvas>
     private float loadTime;
     private float minimumLogoTime = 3.0f; //Minimum logo time;
 
+    public bool FadeInBool = true;
 
     private void Start()
     {
         fadeGroup = FindObjectOfType<CanvasGroup>();
 
-        fadeGroup.alpha = 1;
+        if(FadeInBool)
+        {
+            fadeGroup.alpha = 1;
 
-        //Get a timestep of a completion time
-        if (Time.timeSinceLevelLoad < minimumLogoTime)
-            loadTime = minimumLogoTime;
+            //Get a timestep of a completion time
+            if (Time.timeSinceLevelLoad < minimumLogoTime)
+                loadTime = minimumLogoTime;
+            else
+                loadTime = Time.time;
+        }
         else
-            loadTime = Time.time;
+            fadeGroup.alpha = 0;
+           
+
+
+       
 
     }
 
 
     private void Update()
     {
-        //FadeIn
-        if (Time.timeSinceLevelLoad < minimumLogoTime)
-            fadeGroup.alpha = 1 - Time.timeSinceLevelLoad;
-       
+        if(FadeInBool)
+        {
+            //FadeIn
+            if (Time.timeSinceLevelLoad < minimumLogoTime)
+                fadeGroup.alpha = 1 - Time.timeSinceLevelLoad;
+
+        }
+
     }
 
     ////FadeOut

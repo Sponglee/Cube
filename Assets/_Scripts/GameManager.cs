@@ -76,7 +76,7 @@ public class GameManager : Singleton<GameManager>
     // Update is called once per frame
     void LateUpdate()
     {
-       if(Input.GetMouseButtonDown(2))
+        if(Input.GetMouseButtonDown(2))
         {
             StartCoroutine(GameManager.Instance.TowerExitSequence());
         }

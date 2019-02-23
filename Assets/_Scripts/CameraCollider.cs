@@ -9,7 +9,18 @@ public class CameraCollider : MonoBehaviour
     {
         if(other.CompareTag("Door"))
         {
-            SceneManager.LoadScene("Main");
+            FadeCanvas.Instance.FadeOut(1f);
+
+            StartCoroutine(StopLoadTransition("Main", 1f));
         }
     }
+
+
+    public IEnumerator StopLoadTransition(string scene, float time)
+    {
+
+        yield return new WaitForSeconds(time);
+        SceneManager.LoadScene(scene);
+    }
+
 }

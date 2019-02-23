@@ -69,7 +69,7 @@ public class TutorialManager : Singleton<TutorialManager> {
 
 
             leftHand.SetActive(true);
-            leftHand.transform.GetChild(0).GetComponent<Animator>().Play("TutorialHandHOLD"); 
+            leftHand.GetComponent<Animator>().Play("TutorialHandHOLD"); 
             rightHand.SetActive(true);
             rightHand.transform.GetChild(0).GetComponent<Animator>().Play("TutorialHandUP");
 

@@ -80,6 +80,18 @@ public class CharacterController : MonoBehaviour
         }   
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.transform.CompareTag("Door"))
+        {
+            if (SceneManager.GetActiveScene().name == "Tower")
+            {
+
+                gameObject.SetActive(false);
+                //FadeCanvas.Instance.FadeOut(1.3f);
+            }
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -94,15 +106,19 @@ public class CharacterController : MonoBehaviour
         }
         else if (other.transform.CompareTag("Door"))
         {
-            if(SceneManager.GetActiveScene().name == "Tower")
-            {
+            //if(SceneManager.GetActiveScene().name == "Tower")
+            //{
 
-                //SceneManager.LoadScene("Main");
-            }
+            //    gameObject.SetActive(false);
+            //    //FadeCanvas.Instance.FadeOut(1.3f);
+            //}
+
+
+
 
             #region TUTORIAL
             //Check if door is for tutorial - change scene
-            if(other.transform.parent.parent.parent.GetComponent<CubeController>().TutorialCube)
+            if (other.transform.parent.parent.parent.GetComponent<CubeController>().TutorialCube)
             {
                 SceneManager.LoadScene("Main");
             }

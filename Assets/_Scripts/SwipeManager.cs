@@ -1,8 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-
+using UnityEngine.UI;
 
 /** Swipe direction */
 public enum SwipeDirection
@@ -44,6 +43,13 @@ public class SwipeManager : Singleton<SwipeManager>
     [SerializeField]
     private GameManager gameManager;
 
+
+    //JumpBool charge system
+    public float ChargeTimer = 0;
+    public float ChargeLimit = 1f;
+    public float ChargeResistance = 0.4f;
+    public Image ChargeImg;
+
     // Use this for initialization
     void Start()
     {
@@ -63,32 +69,71 @@ public class SwipeManager : Singleton<SwipeManager>
 
             Touch[] touches = Input.touches;
 
-            //If there's 2 fingers
-            if(touches.Length == 2)
-            {
-                //Activate jumpbool
-                gameManager.character.JumpBool = true;
+            ////If there's 2 fingers
+            //if(touches.Length == 2)
+            //{
+            //    //Activate jumpbool
+            //    gameManager.character.JumpBool = true;
 
-                //If second finger swipes
-                if (touches[1].phase == TouchPhase.Began)
+            //    //If second finger swipes
+            //    if (touches[1].phase == TouchPhase.Began)
+            //    {
+            //        //Debug.Log("BEGAN");
+            //        startTouch = touches[1].position;
+            //        screenTouch = gameManager.physicalCam.ScreenToViewportPoint(startTouch);
+            //    }
+            //    else if (touches[1].phase == TouchPhase.Ended)
+            //    {
+            //        endTouch = gameManager.physicalCam.ScreenToViewportPoint(touches[1].position);
+            //        deltaSwipe = screenTouch - endTouch;
+            //        //Debug.Log("ENDED " + deltaSwipe.x + ":" + deltaSwipe.y
+            //        CheckSwipe(deltaSwipe);
+
+            //    }
+            //}
+            //Else if only 1 finger
+
+            if (touches.Length == 1)
+            {
+                Touch touch = Input.GetTouch(0);
+              
+                //Proceed with 1 finger
+                if (touch.phase == TouchPhase.Began)
                 {
+                    ChargeTimer = 0;
                     //Debug.Log("BEGAN");
-                    startTouch = touches[1].position;
+                    startTouch = touch.position;
                     screenTouch = gameManager.physicalCam.ScreenToViewportPoint(startTouch);
                 }
-                else if (touches[1].phase == TouchPhase.Ended)
+                else if (touch.phase == TouchPhase.Stationary)
                 {
-                    endTouch = gameManager.physicalCam.ScreenToViewportPoint(touches[1].position);
+                    ChargeTimer += Time.deltaTime;
+                    if(ChargeTimer>= ChargeResistance)
+                    {
+                        ChargeImg.gameObject.SetActive(true);
+                        ChargeImg.transform.position = touch.position;
+                        
+                        ChargeImg.fillAmount = ChargeTimer / ChargeLimit;
+                        if (ChargeTimer >= ChargeLimit)
+                        {
+                            gameManager.character.JumpBool = true;
+                            ChargeImg.color = Color.black;
+                        }
+                    }
+
+                   
+                }
+                else if (touch.phase == TouchPhase.Ended)
+                {
+                    ChargeImg.gameObject.SetActive(false);
+                    ChargeImg.color = Color.white;
+                    endTouch = gameManager.physicalCam.ScreenToViewportPoint(touch.position);
                     deltaSwipe = screenTouch - endTouch;
-                    //Debug.Log("ENDED " + deltaSwipe.x + ":" + deltaSwipe.y
+                    //Debug.Log("ENDED " + deltaSwipe.x + ":" + deltaSwipe.y);
                     CheckSwipe(deltaSwipe);
                    
                 }
-            }
-            //Else if only 1 finger
-            else if(touches.Length == 1)
-            {
-                Touch touch = Input.GetTouch(0);
+
                 //If jump finger was pressed - release and return
                 if (gameManager.character.JumpBool)
                 {
@@ -100,21 +145,6 @@ public class SwipeManager : Singleton<SwipeManager>
                         //Debug.Log("SECOND END");
                         return;
                     }
-                }
-                //Proceed with 1 finger
-                else if (touch.phase == TouchPhase.Began)
-                {
-                    //Debug.Log("BEGAN");
-                    startTouch = touch.position;
-                    screenTouch = gameManager.physicalCam.ScreenToViewportPoint(startTouch);
-                }
-                else if (touch.phase == TouchPhase.Ended)
-                {
-                    endTouch = gameManager.physicalCam.ScreenToViewportPoint(touch.position);
-                    deltaSwipe = screenTouch - endTouch;
-                    //Debug.Log("ENDED " + deltaSwipe.x + ":" + deltaSwipe.y);
-                    CheckSwipe(deltaSwipe);
-                   
                 }
             }
         }
