@@ -32,7 +32,9 @@ public class CubeController : MonoBehaviour
     
     //Camera reference points
     public Transform[] cameraPoints;
-   
+
+    //Obstacle prefab
+    public GameObject obstaclePref;
 
     //Cube opened bool
     private bool cubeOpened = false;
@@ -197,6 +199,7 @@ public class CubeController : MonoBehaviour
 
     public void RandomizeCube()
     {
+
         //For each side (4 - right , back, left, front)
         for (int i = 0; i < levelInfo.sides.Length; i++)
         {
@@ -226,6 +229,27 @@ public class CubeController : MonoBehaviour
           
         }
 
+
+        //Randomize obstacles
+        float obsRandomizer = UnityEngine.Random.Range(0, 100);
+
+        if (obsRandomizer >= 80)
+        {
+            int sideRandomizer = UnityEngine.Random.Range(0, cubeSides.Length);
+
+            //Transform randSide = cubeSides[sideRandomizer].GetChild(0).GetChild(0);
+            Transform randSide = cubeBottom.GetChild(0).GetChild(0);
+
+            GameObject tmpObs = Instantiate(obstaclePref);
+
+            ObstacleController obs = tmpObs.GetComponent<ObstacleController>();
+
+            obs.cube = this;
+            obs.startPoint = randSide.GetChild(UnityEngine.Random.Range(0, randSide.childCount));
+            obs.endPoint = randSide.GetChild(UnityEngine.Random.Range(0, randSide.childCount));
+
+
+        }
     }
 
 
