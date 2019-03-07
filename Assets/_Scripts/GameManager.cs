@@ -23,11 +23,33 @@ public class GameManager : Singleton<GameManager>
     public GameObject cubePref;
 
     //Reference point for camera
-    public Transform activeCamPoints;
+    public Transform camPointHolder;
     //Active cube ref
     public CubeController activeCube;
+
     //active Camera position
-    public int activeCameraPoint = 0;
+    [SerializeField]
+    private int activeCameraPoint = 0;
+    public int ActiveCameraPoint
+    {
+        get => activeCameraPoint;
+        set
+        {
+            if (value >= camPointHolder.childCount)
+            {
+                activeCameraPoint = 0;
+            }
+            else if(value < 0)
+            {
+                activeCameraPoint = camPointHolder.childCount-1;
+            }
+            else
+            {
+                activeCameraPoint = value;
+            }
+        }
+    }
+
 
 
     //Character reference
@@ -51,6 +73,7 @@ public class GameManager : Singleton<GameManager>
     public float charInputSpeed = 4f;
 
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -60,14 +83,14 @@ public class GameManager : Singleton<GameManager>
         {
             GameObject cubeSpawn = Instantiate(cubePref, Vector3.zero, Quaternion.identity);
             activeCube = cubeSpawn.GetComponent<CubeController>();
-            activeCamPoints = cubeSpawn.transform.GetChild(0);
+            camPointHolder = cubeSpawn.transform.GetChild(0);
         }
 
 
 
         Time.timeScale = 1;
         //Debug Initialize camera
-        ChangeCameraState(activeCube.cameraPoints[activeCameraPoint], activeCube.transform);
+        ChangeCameraState(activeCube.cameraPoints[ActiveCameraPoint], activeCube.transform);
         
         //Initialize combo buffer
         comboBuffer = new List<Transform>();
@@ -169,9 +192,9 @@ public class GameManager : Singleton<GameManager>
     //Character movement through input
     public void MoveCharacter(int crossDir)
     {
-        Vector3 dir = activeCamPoints.GetChild(activeCameraPoint)
-               .transform.position - new Vector3(activeCube.transform.position.x, activeCamPoints
-                   .GetChild(activeCameraPoint).transform.position.y, activeCube.transform.position.z);
+        Vector3 dir = camPointHolder.GetChild(ActiveCameraPoint)
+               .transform.position - new Vector3(activeCube.transform.position.x, camPointHolder
+                   .GetChild(ActiveCameraPoint).transform.position.y, activeCube.transform.position.z);
 
         
         Vector3 tmpDir;
@@ -252,8 +275,8 @@ public class GameManager : Singleton<GameManager>
     public void ChangeCameraState(Transform cameraParent, Transform target)
     {
         
-        activeCamPoints = cameraParent.parent;
-        activeCameraPoint = cameraParent.GetSiblingIndex();
+        camPointHolder = cameraParent.parent;
+        ActiveCameraPoint = cameraParent.GetSiblingIndex();
         camHolder.SetParent(cameraParent);
         camHolder.GetComponent<CinemachineVirtualCamera>().m_LookAt = target;
         camHolder.localRotation = Quaternion.identity;
@@ -263,19 +286,71 @@ public class GameManager : Singleton<GameManager>
 
   
     //Camera switching 
-    public void MoveCamera(Transform cameraPoints)
+    public void MoveCamera(Transform cameraPoints, int target = -1)
     {
-        
-        activeCameraPoint++;
-        if (activeCameraPoint >= cameraPoints.childCount)
-        {
-            activeCameraPoint = 0;
-        }
-        camHolder.SetParent(cameraPoints.GetChild(activeCameraPoint));
-        StartCoroutine(StopCamera(camHolder));
+      
+        StartCoroutine(StopCamera(cameraPoints, target));
     }
 
-    public IEnumerator StopCamera(Transform camera)
+    //Move camera to next position or to target
+    public IEnumerator StopCamera(Transform cameraPoints, int target)
+    {
+        //Automated camera move
+        if (target == -1)
+        {
+            ActiveCameraPoint++;
+
+            camHolder.SetParent(cameraPoints.GetChild(ActiveCameraPoint));
+            StartCoroutine(CameraLerp(camHolder));
+        }
+        else
+        if (target != -1 && Mathf.Abs(ActiveCameraPoint - target) == 2 /*&& selectedColor == -1*/)
+        {
+            while (ActiveCameraPoint != target)
+            {
+                ActiveCameraPoint++;
+                Debug.Log("<<<<<<<<<<<<<<<<" + ActiveCameraPoint + " :: " + target);
+
+              
+                camHolder.SetParent(cameraPoints.GetChild(ActiveCameraPoint));
+                yield return new WaitForSecondsRealtime(0.7f);
+                StartCoroutine(CameraLerp(camHolder));
+            }
+        }
+        ////Move to a target cam point
+        //else if(target != -1 && Mathf.Abs(ActiveCameraPoint-target) == 1)
+        //{
+
+        //    Debug.Log(">>>>>>>>>>>>>>>>>>>>>" + ActiveCameraPoint + " :: " + target);
+        //    if (ActiveCameraPoint == cameraPoints.childCount-1 && target == 0)
+        //    {
+        //        ActiveCameraPoint++;
+               
+        //    }
+        //    else if(ActiveCameraPoint == 0 && target == cameraPoints.childCount-1)
+        //    {
+        //        ActiveCameraPoint--;
+               
+        //    }
+        //    else if( ActiveCameraPoint > target)
+        //    {
+        //        ActiveCameraPoint--;
+        //    }
+        //    else
+        //    {
+        //        ActiveCameraPoint++;
+        //    }
+
+        //    Debug.Log("ACTIVE " + ActiveCameraPoint);
+        //    camHolder.SetParent(cameraPoints.GetChild(ActiveCameraPoint));
+        //    StartCoroutine(CameraLerp(camHolder));
+        //}
+
+    }
+
+
+    //Camera lerp
+    public IEnumerator CameraLerp(Transform camera)
     {
         //Smoothly move camera to point
         while (camera.transform.localPosition != new Vector3(0f, 0f, 0f))
@@ -284,6 +359,8 @@ public class GameManager : Singleton<GameManager>
             yield return null;
         }
     }
+
+    
 
     // Is touching ui check
     public bool IsPointerOverUIObject(string obj)
@@ -300,6 +377,78 @@ public class GameManager : Singleton<GameManager>
 
 
 
+    public int GrabLink(Transform tile)
+    {
+        //Get indexes of left camera point and right one
+        int tmpActiveCamPrev = ActiveCameraPoint-1;
+        if (tmpActiveCamPrev < 0)
+            tmpActiveCamPrev = camPointHolder.childCount - 1;
+        int tmpActiveCamNext = ActiveCameraPoint+1;
+        if (tmpActiveCamNext >= camPointHolder.childCount)
+            tmpActiveCamNext = 0;
+        
+
+
+        Debug.Log(tmpActiveCamPrev + " : " + tmpActiveCamNext + "::::" + ActiveCameraPoint);
+
+        CubeElemController tmpTile = tile.GetComponent<CubeElemController>();
+
+        for (int i = 0; i < tmpTile.BottomLinks.Count; i++)
+        {
+            Debug.Log("CHECK " + tmpTile.BottomLinks[i].SideName + "::::" + camPointHolder.GetChild(ActiveCameraPoint).name);
+
+            //Check if color is in front of the camera
+            if (tmpTile.BottomLinks[i].SideName == camPointHolder.GetChild(ActiveCameraPoint).name)
+            {
+                tile.GetComponent<CubeElemController>().materialInteraction = tmpTile.BottomLinks[i].transform.GetComponent<Renderer>().material;
+
+                int tmpColorIndex = tmpTile.BottomLinks[i].ElemMatIndex;
+                return tmpColorIndex;
+            }
+            //Or color link is to the left to the camera
+            else if (tmpTile.BottomLinks[i].SideName == camPointHolder.GetChild(tmpActiveCamPrev).name)
+            {
+                tile.GetComponent<CubeElemController>().materialInteraction = tmpTile.BottomLinks[i].transform.GetComponent<Renderer>().material;
+
+                int tmpColorIndex = tmpTile.BottomLinks[i].ElemMatIndex;
+                return tmpColorIndex;
+            }
+            //Or color link is to the right to the camera
+            else if (tmpTile.BottomLinks[i].SideName == camPointHolder.GetChild(tmpActiveCamNext).name)
+            {
+                tile.GetComponent<CubeElemController>().materialInteraction = tmpTile.BottomLinks[i].transform.GetComponent<Renderer>().material;
+
+                int tmpColorIndex = tmpTile.BottomLinks[i].ElemMatIndex;
+                return tmpColorIndex;
+            }
+            else
+            {
+                Debug.Log("else " + tmpTile.BottomLinks[0].SideName);
+                tile.GetComponent<CubeElemController>().materialInteraction = tmpTile.BottomLinks[0].transform.GetComponent<Renderer>().material;
+
+
+
+
+            }
+        }
+
+       
+        //Remember selection
+        foreach (Transform camPoint in activeCube.cameraPoints)
+        {
+           
+            if (camPoint.name == tmpTile.BottomLinks[0].SideName)
+            {
+                Debug.Log("MOVECAM " + activeCameraPoint + " : " +  camPoint.GetSiblingIndex());
+
+                MoveCamera(camPointHolder, camPoint.GetSiblingIndex());
+                break;
+            }
+        }
+
+        return tmpTile.BottomLinks[0].ElemMatIndex;
+    }
+
     //Check if elem is ref to other sides
     public void BottomCheck(Transform tile/*, GameObject tmpObj*/)
     {
@@ -312,9 +461,10 @@ public class GameManager : Singleton<GameManager>
             //First color pick
             if (selectedColor == -1)
             {
-                tile.GetComponent<CubeElemController>().materialInteraction = tmpTile.BottomLinks[0].transform.GetComponent<Renderer>().material;
-                //Remember selection
-                selectedColor = tmpTile.BottomLinks[0].ElemMatIndex;
+
+
+                //Remember the color
+                selectedColor = GrabLink(tile);
                 //Check if there's selected color in bottomLinks to add scorecount
                 int bottomColor = FindBottomColor(tmpTile, selectedColor);
 
@@ -324,7 +474,7 @@ public class GameManager : Singleton<GameManager>
                 comboCount++;
 
 
-                Debug.Log(comboCount + " : " + activeCube.colorCombos[selectedColor].Count);
+                //Debug.Log(comboCount + " : " + activeCube.colorCombos[selectedColor].Count);
                 //Check buffer
                 if (comboCount >= activeCube.colorCombos[selectedColor].Count)
                 {
@@ -337,8 +487,10 @@ public class GameManager : Singleton<GameManager>
             }
             else if(selectedColor != 0)
             {
-                Debug.Log(comboCount + " : " + activeCube.colorCombos[selectedColor].Count);
+                //Debug.Log(comboCount + " : " + activeCube.colorCombos[selectedColor].Count);
 
+                //Check for camera turn if needed
+                int tmpColor = GrabLink(tile); ;
                 //Check if there's selected color in bottomLinks - grab material from it
                 int bottomColor = FindBottomColor(tmpTile, selectedColor);
                 //Debug.Log(":>: " + bottomColor + " :: " + selectedColor);

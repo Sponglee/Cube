@@ -205,16 +205,16 @@ MonoBehaviour:
   anim: {fileID: 0}
   cubeBottom: {fileID: 1195939733169446693}
   cubeSides:
-  - {fileID: 1195939732975390631}
-  - {fileID: 1195939731907841062}
   - {fileID: 1195939732776394530}
+  - {fileID: 1195939732975390631}
   - {fileID: 1195939733440882051}
+  - {fileID: 1195939731907841062}
   elemCount: 3
   cameraPoints:
   - {fileID: 6845108921059320279}
-  - {fileID: 6585903345946680401}
-  - {fileID: 7258489884802816260}
   - {fileID: 7395544818444790359}
+  - {fileID: 7258489884802816260}
+  - {fileID: 6585903345946680401}
   obstaclePref: {fileID: 2337806135790278615, guid: 5bd4c10f8deb78245a8d6de60b513abe,
     type: 3}
   TutorialCube: 0
@@ -302,7 +302,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7258489884802816260}
   m_Layer: 0
-  m_Name: CameraPoint (2)
+  m_Name: CubeBack
   m_TagString: Cube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -401,7 +401,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7395544818444790359}
   m_Layer: 0
-  m_Name: CameraPoint (3)
+  m_Name: CubeRight
   m_TagString: Cube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -419,7 +419,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1331195031125437178}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 135, y: -90, z: 179.952}
 --- !u!1 &4483872922974531163
 GameObject:
@@ -475,7 +475,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6845108921059320279}
   m_Layer: 0
-  m_Name: CameraPoint
+  m_Name: CubeFront
   m_TagString: Cube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -505,7 +505,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6585903345946680401}
   m_Layer: 0
-  m_Name: CameraPoint (1)
+  m_Name: CubeLeft
   m_TagString: Cube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -523,7 +523,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1331195031125437178}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 135, y: 90, z: 179.952}
 --- !u!1 &8358590794064336841
 GameObject:
@@ -553,9 +553,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6845108921059320279}
-  - {fileID: 6585903345946680401}
-  - {fileID: 7258489884802816260}
   - {fileID: 7395544818444790359}
+  - {fileID: 7258489884802816260}
+  - {fileID: 6585903345946680401}
   m_Father: {fileID: 1195939733011301467}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

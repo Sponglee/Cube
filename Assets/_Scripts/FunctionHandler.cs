@@ -22,7 +22,7 @@ public class FunctionHandler : MonoBehaviour
     public void ChangeCamera()
     {
         //Switch cam
-        GameManager.Instance.MoveCamera(GameManager.Instance.activeCamPoints);
+        GameManager.Instance.MoveCamera(GameManager.Instance.camPointHolder);
         #region TUTORIAL
         if (TutorialManager.Instance && TutorialManager.Instance.TutorialActive == 2)
         {

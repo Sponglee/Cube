@@ -119,7 +119,7 @@ public class TowerController : Singleton<TowerController>
                     physicCam.GetComponentInChildren<SphereCollider>().enabled = true;
                     GameObject tmp = GrabRayObj();
 
-                    if (tmp && tmp.CompareTag("Cube") && elevatorHolder.position == cameraHolder.position)
+                    if (tmp && tmp.CompareTag("Cube") && elevatorHolder.position.y == cameraHolder.position.y)
                     {
 
                         //Hide Tower

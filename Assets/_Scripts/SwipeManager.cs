@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /** Swipe direction */
@@ -93,7 +94,7 @@ public class SwipeManager : Singleton<SwipeManager>
             //}
             //Else if only 1 finger
 
-            if (touches.Length == 1)
+            if (touches.Length == 1 && !IsPointerOverUIObject("UI"))
             {
                 Touch touch = Input.GetTouch(0);
               
@@ -201,4 +202,19 @@ public class SwipeManager : Singleton<SwipeManager>
         swipeValue = !swipeValue;
 
     }
+
+
+    // Is touching ui
+    public bool IsPointerOverUIObject(string obj)
+    {
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        if (results.Count > 0)
+            return results[0].gameObject.CompareTag(obj);
+        else
+            return false;
+    }
+
 }
