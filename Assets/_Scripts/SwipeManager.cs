@@ -94,7 +94,7 @@ public class SwipeManager : Singleton<SwipeManager>
             //}
             //Else if only 1 finger
 
-            if (touches.Length == 1 && !IsPointerOverUIObject("UI"))
+            if (touches.Length == 1)
             {
                 Touch touch = Input.GetTouch(0);
               
@@ -102,25 +102,36 @@ public class SwipeManager : Singleton<SwipeManager>
                 if (touch.phase == TouchPhase.Began)
                 {
                     ChargeTimer = 0;
+
+                    if (!IsPointerOverUIObject("UI"))
+                    {
+                       
+                    }
+                       
                     //Debug.Log("BEGAN");
                     startTouch = touch.position;
                     screenTouch = gameManager.physicalCam.ScreenToViewportPoint(startTouch);
                 }
                 else if (touch.phase == TouchPhase.Stationary)
                 {
-                    ChargeTimer += Time.deltaTime;
-                    if(ChargeTimer>= ChargeResistance)
-                    {
-                        ChargeImg.gameObject.SetActive(true);
-                        ChargeImg.transform.position = touch.position;
-                        
-                        ChargeImg.fillAmount = ChargeTimer / ChargeLimit;
-                        if (ChargeTimer >= ChargeLimit)
+                    //If not touching ui - charge the jump
+                       
+                   
+                        ChargeTimer += Time.deltaTime;
+                        if (ChargeTimer >= ChargeResistance)
                         {
-                            gameManager.character.JumpBool = true;
-                            ChargeImg.color = Color.black;
+                            ChargeImg.gameObject.SetActive(true);
+                            ChargeImg.transform.position = touch.position;
+
+                            ChargeImg.fillAmount = ChargeTimer / ChargeLimit;
+                            if (ChargeTimer >= ChargeLimit)
+                            {
+                                gameManager.character.JumpBool = true;
+                                ChargeImg.color = Color.black;
+                            }
                         }
-                    }
+                   
+                   
 
                    
                 }
@@ -148,6 +159,12 @@ public class SwipeManager : Singleton<SwipeManager>
                     }
                 }
             }
+            ////reset charge sprite
+            //else
+            //{
+            //    ChargeImg.gameObject.SetActive(false);
+            //    ChargeImg.color = Color.white;
+            //}
         }
     }
 
@@ -207,6 +224,7 @@ public class SwipeManager : Singleton<SwipeManager>
     // Is touching ui
     public bool IsPointerOverUIObject(string obj)
     {
+        Debug.Log("RE");
         PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
         eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         List<RaycastResult> results = new List<RaycastResult>();

@@ -377,76 +377,91 @@ public class GameManager : Singleton<GameManager>
 
 
 
-    public int GrabLink(Transform tile)
+    public int HighlighLink(Transform tile, bool selectedBool = false)
     {
-        //Get indexes of left camera point and right one
-        int tmpActiveCamPrev = ActiveCameraPoint-1;
-        if (tmpActiveCamPrev < 0)
-            tmpActiveCamPrev = camPointHolder.childCount - 1;
-        int tmpActiveCamNext = ActiveCameraPoint+1;
-        if (tmpActiveCamNext >= camPointHolder.childCount)
-            tmpActiveCamNext = 0;
-        
-
-
-        Debug.Log(tmpActiveCamPrev + " : " + tmpActiveCamNext + "::::" + ActiveCameraPoint);
-
-        CubeElemController tmpTile = tile.GetComponent<CubeElemController>();
-
-        for (int i = 0; i < tmpTile.BottomLinks.Count; i++)
+        //Reload for just check for already selectedColor from links
+        if (selectedBool)
         {
-            Debug.Log("CHECK " + tmpTile.BottomLinks[i].SideName + "::::" + camPointHolder.GetChild(ActiveCameraPoint).name);
-
-            //Check if color is in front of the camera
-            if (tmpTile.BottomLinks[i].SideName == camPointHolder.GetChild(ActiveCameraPoint).name)
-            {
-                tile.GetComponent<CubeElemController>().materialInteraction = tmpTile.BottomLinks[i].transform.GetComponent<Renderer>().material;
-
-                int tmpColorIndex = tmpTile.BottomLinks[i].ElemMatIndex;
-                return tmpColorIndex;
-            }
-            //Or color link is to the left to the camera
-            else if (tmpTile.BottomLinks[i].SideName == camPointHolder.GetChild(tmpActiveCamPrev).name)
-            {
-                tile.GetComponent<CubeElemController>().materialInteraction = tmpTile.BottomLinks[i].transform.GetComponent<Renderer>().material;
-
-                int tmpColorIndex = tmpTile.BottomLinks[i].ElemMatIndex;
-                return tmpColorIndex;
-            }
-            //Or color link is to the right to the camera
-            else if (tmpTile.BottomLinks[i].SideName == camPointHolder.GetChild(tmpActiveCamNext).name)
-            {
-                tile.GetComponent<CubeElemController>().materialInteraction = tmpTile.BottomLinks[i].transform.GetComponent<Renderer>().material;
-
-                int tmpColorIndex = tmpTile.BottomLinks[i].ElemMatIndex;
-                return tmpColorIndex;
-            }
-            else
-            {
-                Debug.Log("else " + tmpTile.BottomLinks[0].SideName);
-                tile.GetComponent<CubeElemController>().materialInteraction = tmpTile.BottomLinks[0].transform.GetComponent<Renderer>().material;
-
-
-
-
-            }
-        }
-
-       
-        //Remember selection
-        foreach (Transform camPoint in activeCube.cameraPoints)
-        {
+            CubeElemController tmpTile = tile.GetComponent<CubeElemController>();
            
-            if (camPoint.name == tmpTile.BottomLinks[0].SideName)
-            {
-                Debug.Log("MOVECAM " + activeCameraPoint + " : " +  camPoint.GetSiblingIndex());
 
-                MoveCamera(camPointHolder, camPoint.GetSiblingIndex());
-                break;
+            return -1;
+        }
+        //Actual remembering first color
+        else
+        {
+            //Get indexes of left camera point and right one
+            int tmpActiveCamPrev = ActiveCameraPoint - 1;
+            if (tmpActiveCamPrev < 0)
+                tmpActiveCamPrev = camPointHolder.childCount - 1;
+            int tmpActiveCamNext = ActiveCameraPoint + 1;
+            if (tmpActiveCamNext >= camPointHolder.childCount)
+                tmpActiveCamNext = 0;
+
+
+
+            Debug.Log(tmpActiveCamPrev + " : " + tmpActiveCamNext + "::::" + ActiveCameraPoint);
+
+            CubeElemController tmpTile = tile.GetComponent<CubeElemController>();
+
+            for (int i = 0; i < tmpTile.BottomLinks.Count; i++)
+            {
+                Debug.Log("CHECK " + tmpTile.BottomLinks[i].SideName + "::::" + camPointHolder.GetChild(ActiveCameraPoint).name);
+
+                //Check if color is in front of the camera
+                if (tmpTile.BottomLinks[i].SideName == camPointHolder.GetChild(ActiveCameraPoint).name)
+                {
+                    tile.GetComponent<CubeElemController>().materialInteraction = tmpTile.BottomLinks[i].transform.GetComponent<Renderer>().material;
+
+                    int tmpColorIndex = tmpTile.BottomLinks[i].ElemMatIndex;
+                    return tmpColorIndex;
+                }
+                //Or color link is to the left to the camera
+                else if (tmpTile.BottomLinks[i].SideName == camPointHolder.GetChild(tmpActiveCamPrev).name)
+                {
+                    tile.GetComponent<CubeElemController>().materialInteraction = tmpTile.BottomLinks[i].transform.GetComponent<Renderer>().material;
+
+                    int tmpColorIndex = tmpTile.BottomLinks[i].ElemMatIndex;
+                    return tmpColorIndex;
+                }
+                //Or color link is to the right to the camera
+                else if (tmpTile.BottomLinks[i].SideName == camPointHolder.GetChild(tmpActiveCamNext).name)
+                {
+                    tile.GetComponent<CubeElemController>().materialInteraction = tmpTile.BottomLinks[i].transform.GetComponent<Renderer>().material;
+
+                    int tmpColorIndex = tmpTile.BottomLinks[i].ElemMatIndex;
+                    return tmpColorIndex;
+                }
+                else
+                {
+                    Debug.Log("else " + tmpTile.BottomLinks[0].SideName);
+                    tile.GetComponent<CubeElemController>().materialInteraction = tmpTile.BottomLinks[0].transform.GetComponent<Renderer>().material;
+
+
+
+
+                }
             }
+
+
+            //Remember selection
+            foreach (Transform camPoint in activeCube.cameraPoints)
+            {
+
+                if (camPoint.name == tmpTile.BottomLinks[0].SideName)
+                {
+                    Debug.Log("MOVECAM " + activeCameraPoint + " : " + camPoint.GetSiblingIndex());
+
+                    MoveCamera(camPointHolder, camPoint.GetSiblingIndex());
+                    break;
+                }
+            }
+
+            return tmpTile.BottomLinks[0].ElemMatIndex;
+
         }
 
-        return tmpTile.BottomLinks[0].ElemMatIndex;
+
     }
 
     //Check if elem is ref to other sides
@@ -464,15 +479,24 @@ public class GameManager : Singleton<GameManager>
 
 
                 //Remember the color
-                selectedColor = GrabLink(tile);
+                selectedColor = HighlighLink(tile);
                 //Check if there's selected color in bottomLinks to add scorecount
-                int bottomColor = FindBottomColor(tmpTile, selectedColor);
+                int bottomColor = FindBottomLink(tmpTile, selectedColor);
 
                 //Remember color count
                 comboBuffer.Add(tile);
                 //Debug.Log("REE");
                 comboCount++;
 
+                //Light up links
+                foreach (CubeElemController item in tmpTile.BottomLinks)
+                {
+                    if (item.transform.GetComponent<Renderer>().material.color == activeCube.materials[selectedColor].color)
+                    {
+                        item.transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", tmpTile.BottomLinks[bottomColor].transform.GetComponent<Renderer>().material.color * 2f);
+                    }
+
+                }
 
                 //Debug.Log(comboCount + " : " + activeCube.colorCombos[selectedColor].Count);
                 //Check buffer
@@ -490,20 +514,32 @@ public class GameManager : Singleton<GameManager>
                 //Debug.Log(comboCount + " : " + activeCube.colorCombos[selectedColor].Count);
 
                 //Check for camera turn if needed
-                int tmpColor = GrabLink(tile); ;
+                int tmpColor = HighlighLink(tile,true);
                 //Check if there's selected color in bottomLinks - grab material from it
-                int bottomColor = FindBottomColor(tmpTile, selectedColor);
+                int bottomColor = FindBottomLink(tmpTile, selectedColor);
                 //Debug.Log(":>: " + bottomColor + " :: " + selectedColor);
                
 
                 if (bottomColor >=0 && tmpTile.BottomLinks[bottomColor].transform.GetComponent<Renderer>().material.color == activeCube.materials[selectedColor].color)
                 {
-                    //DEBUG
-                    //Debug.Log("~~~~" + tmpTile.BottomLinks[bottomColor].transform.GetComponent<Renderer>().material + " : " + activeCube.materials[selectedColor]);
 
-                    //Paint elem to selectedColor
-                    //tile.GetComponent<Renderer>().material = tmpTile.BottomLinks[bottomColor].transform.GetComponent<Renderer>().material;
+
+                    
+                    //////Paint elem to selectedColor if it's same color from links
                     tile.GetComponent<CubeElemController>().materialInteraction = tmpTile.BottomLinks[bottomColor].transform.GetComponent<Renderer>().material;
+
+                    //Light up links
+                    foreach (CubeElemController item in tmpTile.BottomLinks)
+                    {
+                        if(item.transform.GetComponent<Renderer>().material.color == activeCube.materials[selectedColor].color)
+                        {
+                            item.transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", tmpTile.BottomLinks[bottomColor].transform.GetComponent<Renderer>().material.color * 2f);
+                        }
+                        
+                    }
+                    
+
+
 
                     //Remember color count
                     if (!comboBuffer.Contains(tile))
@@ -616,14 +652,16 @@ public class GameManager : Singleton<GameManager>
                 //Iterate through links per elem in buffer
                 foreach (CubeElemController link in elem.GetComponent<CubeElemController>().BottomLinks)
                 {
-                    
-
+                   
                     //Remember selected color links indexes from the wall
                     if (link.GetComponent<Renderer>().material.color == activeCube.materials[selectedColor].color)
                     {
                         //set SIDE link to blank if combo
                         StartCoroutine(ChangeMat(link.transform.GetComponent<Renderer>().material, activeCube.materials[0], 0.04f));
-                       
+                        
+                        ////////////////Delight links
+                        //////////////link.transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", link.transform.GetComponent<CubeElemController>().ElemMat.color * 0f);
+
                         //Remember indexes of bottomLinks to remove
                         indexes.Add(link.transform);
                         //Debug.Log(">>" + indexes.Count);
@@ -637,8 +675,11 @@ public class GameManager : Singleton<GameManager>
                 //Delete all links from this buffer elem
                 foreach (Transform item in indexes)
                 {
+                   
                     //Debug.Log("INDEX : " + item + ":::: " + elem.GetSiblingIndex());
                     elem.GetComponent<CubeElemController>().BottomLinks.Remove(item.GetComponent<CubeElemController>());
+
+
                 }
                 indexes.Clear();
             }
@@ -647,6 +688,16 @@ public class GameManager : Singleton<GameManager>
                 //Set Bottom elem to blank if no combo
                 StartCoroutine(ChangeMat(elem.GetComponent<Renderer>().material, activeCube.materials[0], 0.08f));
 
+
+                //Remove light up glow from links
+                foreach (CubeElemController item in elem.GetComponent<CubeElemController>().BottomLinks)
+                {
+                    if (item.transform.GetComponent<Renderer>().material.color == activeCube.materials[selectedColor].color)
+                    {
+                        item.transform.GetComponent<Renderer>().material.SetColor("_EmissionColor", item.transform.GetComponent<CubeElemController>().ElemMat.color * 1f);
+                    }
+
+                }
             }
         }
 
@@ -805,7 +856,7 @@ public class GameManager : Singleton<GameManager>
         SceneManager.LoadScene(scene);
     }
     //Find color from bottomLinks
-    public int FindBottomColor(CubeElemController tile, int color)
+    public int FindBottomLink(CubeElemController tile, int color)
     {
         int result = -1;
 
