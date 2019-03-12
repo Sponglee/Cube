@@ -36,6 +36,8 @@ public class TowerController : Singleton<TowerController>
     [SerializeField]
     private float swipeResistance = 50f;
 
+    public Transform activeTower;
+    public Transform TowerGrid;
 
 
     private void Start()
@@ -123,9 +125,9 @@ public class TowerController : Singleton<TowerController>
                     {
 
                         //Hide Tower
-                        transform.GetChild(1).gameObject.SetActive(false);
+                        activeTower.GetChild(1).gameObject.SetActive(false);
                         //Disable all other cubes
-                        foreach (Transform child in transform.GetChild(0))
+                        foreach (Transform child in activeTower.GetChild(0))
                         {
                             if (child.gameObject != tmp)
                             {
