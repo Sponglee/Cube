@@ -25,7 +25,8 @@ public class TowerAimer : MonoBehaviour
         if (other.gameObject.CompareTag("Cube"))
         {
             towerController.FollowTarget.position = other.transform.position + Vector3.up*0.6f;
-            
+
+            Debug.Log(other.transform.name);
             other.transform.GetChild(1).gameObject.SetActive(true);
 
             if(towerController.currentCanvas && other.transform.GetChild(1) != towerController.currentCanvas)

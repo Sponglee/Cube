@@ -118,7 +118,7 @@ public class CharacterController : MonoBehaviour
 
             #region TUTORIAL
             //Check if door is for tutorial - change scene
-            if (other.transform.parent.parent.parent.GetComponent<CubeController>().TutorialCube)
+            if ( SceneManager.GetActiveScene().name == "Tutorial")
             {
                 SceneManager.LoadScene("Main");
             }
@@ -127,15 +127,15 @@ public class CharacterController : MonoBehaviour
             Destination = Vector3.zero;
             
             //Set new active cube and comboBuffer for GameManager
-            CubeController activeCube;
-            //Activate a cube
-            activeCube = other.transform.parent.parent.parent.GetComponent<CubeController>();
-            GameManager.Instance.activeCube = activeCube;
-            //Debug Initialize camera
-            GameManager.Instance.ChangeCameraState(activeCube.cameraPoints[GameManager.Instance.ActiveCameraPoint], activeCube.transform);
+            //CubeController activeCube;
+            ////Activate a cube
+            //activeCube = other.transform.parent.parent.parent.GetComponent<CubeController>();
+            //GameManager.Instance.activeCube = activeCube;
+            ////Debug Initialize camera
+            //GameManager.Instance.ChangeCameraState(activeCube.cameraPoints[GameManager.Instance.ActiveCameraPoint], activeCube.transform);
             //Initialize combo buffer
-            GameManager.Instance.comboBuffer = new List<Transform>();
-            transform.position = activeCube.transform.position + new Vector3(0, 0.3f, 0);
+            //GameManager.Instance.comboBuffer = new List<Transform>();
+            //transform.position = GameManager.Instance.activeCube.transform.position + new Vector3(0, 0.3f, 0);
 
         }
 

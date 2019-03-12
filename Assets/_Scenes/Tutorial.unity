@@ -9179,6 +9179,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3573005766365253439, guid: bf92caa121f8e8648bf52c8b94a84fb4,
+        type: 3}
+      propertyPath: m_Lens.FieldOfView
+      value: 85
+      objectReference: {fileID: 0}
+    - target: {fileID: 3573005766365253439, guid: bf92caa121f8e8648bf52c8b94a84fb4,
+        type: 3}
+      propertyPath: m_ComponentOwner
+      value: 
+      objectReference: {fileID: 961545079}
     - target: {fileID: 6038060031366984070, guid: bf92caa121f8e8648bf52c8b94a84fb4,
         type: 3}
       propertyPath: m_Enabled
