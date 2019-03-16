@@ -113,7 +113,7 @@ public class CubeController : MonoBehaviour
     }
 
     
-    public LevelData levelInfo;
+    public CubeData cubeInfo;
 
     // Start is called before the first frame update
     void Start()
@@ -132,8 +132,8 @@ public class CubeController : MonoBehaviour
         //Initialize cube sides if not tutorial
         if (!TutorialCube)
         {
-            RandomizeCube();
-            
+            //RandomizeCube();
+
             LoadCubeData();
         }
         #region TUTORIAL
@@ -200,17 +200,19 @@ public class CubeController : MonoBehaviour
     public void RandomizeCube()
     {
 
+        
         //For each side (4 - right , back, left, front)
-        for (int i = 0; i < levelInfo.sides.Length; i++)
+        for (int i = 0; i < cubeInfo.sides.Length; i++)
         {
+            Debug.Log("once");
             //Set and remember random color per side
             int randomMat = UnityEngine.Random.Range(1, materials.Length);
             
             //Remember color for a side 
-            levelInfo.sides[i].sideMat = randomMat;
-            levelInfo.sides[i].elemColors = new int[levelInfo.type*levelInfo.type];
+            cubeInfo.sides[i].sideMat = randomMat;
+            cubeInfo.sides[i].elemColors = new int[cubeInfo.type*cubeInfo.type];
 
-            for (int j = 0; j < levelInfo.type*levelInfo.type; j++)
+            for (int j = 0; j < cubeInfo.type*cubeInfo.type; j++)
             {
                 //Randomize side's elem colorss
                 float matRandomizer = UnityEngine.Random.Range(0, 100);
@@ -218,12 +220,12 @@ public class CubeController : MonoBehaviour
                 //If checked - get a randomMat to elem, if not - leave 0
                 if (matRandomizer <= 50)
                 {
-                    levelInfo.sides[i].elemColors[j] = randomMat;
-                   
+                    cubeInfo.sides[i].elemColors[j] = randomMat;
+                    Debug.Log("filled");
                 }
                 else
                 {
-                    levelInfo.sides[i].elemColors[j] = 0;
+                    cubeInfo.sides[i].elemColors[j] = 0;
                 }
             }
           
@@ -250,15 +252,21 @@ public class CubeController : MonoBehaviour
 
 
         }
+        LevelManager.Instance.twrData = new TowerData();
+        LevelManager.Instance.twrData.levels = new List<CubeData>();
+        LevelManager.Instance.twrData.levels.Add(cubeInfo);
+        SaveSystem.SaveLevel(0, LevelManager.Instance.twrData);
     }
 
 
     public void LoadCubeData()
     {
+        CubeData loadCubeInfo = SaveSystem.LoadLevel(0).levels[0];
+
         for (int i = 0; i < cubeSides.Length; i++)
         {
             //Get and remember random color per side
-            int randomMat = levelInfo.sides[i].sideMat;
+            int randomMat = loadCubeInfo.sides[i].sideMat;
 
 
             //Initialize color combos lists to anything except first material 
@@ -270,7 +278,7 @@ public class CubeController : MonoBehaviour
             foreach (Transform child in cubeSides[i].GetChild(0).GetChild(0))
             {
 
-                Material tmpMat = materials[levelInfo.sides[i].elemColors[child.GetSiblingIndex()]];
+                Material tmpMat = materials[loadCubeInfo.sides[i].elemColors[child.GetSiblingIndex()]];
 
                 //Side color elem
                 child.GetComponent<Renderer>().material = tmpMat;
@@ -279,7 +287,7 @@ public class CubeController : MonoBehaviour
                 tmpController.ElemMatIndex = randomMat;
 
                 //Add combo if not 0
-               if(levelInfo.sides[i].elemColors[child.GetSiblingIndex()] != 0)
+               if(loadCubeInfo.sides[i].elemColors[child.GetSiblingIndex()] != 0)
                 {
                     //Add elem to combo per color
                     colorCombos[randomMat].Add(child);
@@ -287,7 +295,7 @@ public class CubeController : MonoBehaviour
 
             }
 
-            Debug.Log("SIDE " + levelInfo.sides[i]+ ": " + colorCombos[randomMat].Count);
+            Debug.Log("SIDE " + cubeInfo.sides[i]+ ": " + colorCombos[randomMat].Count);
         }
        
     }

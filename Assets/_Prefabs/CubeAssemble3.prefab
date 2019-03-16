@@ -219,7 +219,7 @@ MonoBehaviour:
     type: 3}
   TutorialCube: 0
   EndCube: 0
-  levelInfo:
+  cubeInfo:
     type: 3
     sides:
     - sideMat: 0

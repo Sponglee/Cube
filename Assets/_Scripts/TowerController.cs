@@ -193,6 +193,7 @@ public class TowerController : Singleton<TowerController>
         //Scroll camera and elevator
         cameraHolder.transform.position += new Vector3(0, -rotY / 100f, 0);
         elevatorHolder.transform.position += new Vector3(0, -rotY / 120f, 0);
+        Debug.Log(rotY);
     }
 
 
@@ -275,7 +276,7 @@ public class TowerController : Singleton<TowerController>
     {
         if(other.CompareTag("MainCamera"))
         {
-            Debug.Log("REEE");
+            //Debug.Log("REEE");
         }
         
     }

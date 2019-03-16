@@ -84,6 +84,7 @@ public class GameManager : Singleton<GameManager>
             GameObject cubeSpawn = Instantiate(cubePref, Vector3.zero, Quaternion.identity);
             activeCube = cubeSpawn.GetComponent<CubeController>();
             camPointHolder = cubeSpawn.transform.GetChild(0);
+            
         }
 
 
@@ -91,7 +92,10 @@ public class GameManager : Singleton<GameManager>
         Time.timeScale = 1;
         //Debug Initialize camera
         ChangeCameraState(activeCube.cameraPoints[ActiveCameraPoint], activeCube.transform);
-        
+
+        //Rotate camera to show all sides
+        MoveCamera(activeCube.cameraPoints[ActiveCameraPoint]);
+
         //Initialize combo buffer
         comboBuffer = new List<Transform>();
     }
@@ -282,6 +286,8 @@ public class GameManager : Singleton<GameManager>
         camHolder.localRotation = Quaternion.identity;
         camHolder.localPosition = Vector3.zero;
         camHolder.localScale = Vector3.one;
+
+        StartCoroutine(StartCameraPan());
     }
 
   
@@ -295,6 +301,7 @@ public class GameManager : Singleton<GameManager>
     //Move camera to next position or to target
     public IEnumerator StopCamera(Transform cameraPoints, int target)
     {
+       
         //Automated camera move
         if (target == -1)
         {
@@ -360,7 +367,16 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    
+    public IEnumerator StartCameraPan()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        for (int i = 0; i < 2; i++)
+        {
+            MoveCamera(camPointHolder);
+            yield return new WaitForSeconds(0.8f);
+        }
+    }
 
     // Is touching ui check
     public bool IsPointerOverUIObject(string obj)
@@ -436,10 +452,7 @@ public class GameManager : Singleton<GameManager>
                 {
                     Debug.Log("else " + tmpTile.BottomLinks[0].SideName);
                     tile.GetComponent<CubeElemController>().materialInteraction = tmpTile.BottomLinks[0].transform.GetComponent<Renderer>().material;
-
-
-
-
+                    
                 }
             }
 

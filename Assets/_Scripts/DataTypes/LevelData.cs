@@ -2,23 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 [System.Serializable]
 public class LevelData
-{
 
-    public int type;
-    public ElemData[] sides = new ElemData[4];
-    
-   
-   
+{
+    public int currentTower;
+    public List<TowerData> towers;
 
 }
-
-[System.Serializable]
-public struct ElemData
-{
-    public int sideMat;
-    public int[] elemColors;
-}
-
