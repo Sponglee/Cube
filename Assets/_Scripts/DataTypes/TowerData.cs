@@ -6,7 +6,7 @@ using UnityEngine;
 public class TowerData
 
 {
-    public int currentCube;
+    public int twrProgress;
     public List<CubeData> levels;
 
 }

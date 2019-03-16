@@ -123,21 +123,29 @@ public class TowerController : Singleton<TowerController>
 
                     if (tmp && tmp.CompareTag("Cube") && elevatorHolder.position.y == cameraHolder.position.y)
                     {
-
-                        //Hide Tower
-                        activeTower.GetChild(1).gameObject.SetActive(false);
-                        //Disable all other cubes
-                        foreach (Transform child in activeTower.GetChild(0))
+                       
+                        if (tmp.transform.GetSiblingIndex() <= LevelManager.Instance.twrData.twrProgress)
                         {
-                            if (child.gameObject != tmp)
+                            LevelManager.Instance.CurrentCube = tmp.transform.GetSiblingIndex();
+                            //Hide Tower
+                            activeTower.GetChild(0).GetChild(0).GetChild(1).gameObject.SetActive(false);
+                            //Disable all other cubes
+                            foreach (Transform child in activeTower.GetChild(0).GetChild(0).GetChild(0))
                             {
-                                child.gameObject.SetActive(false);
-                            }
+                                if (child.gameObject != tmp)
+                                {
+                                    child.gameObject.SetActive(false);
+                                }
 
+                            }
+                            StartCoroutine(TowerEnterSequence(tmp));
+                        }
+                        else
+                        {
+                            Debug.Log("NOT UNLOCKED");
                         }
 
-
-                        StartCoroutine(TowerEnterSequence(tmp));
+                        
 
 
 

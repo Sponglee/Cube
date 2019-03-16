@@ -52,7 +52,7 @@ public static class SaveSystem
             TowerData data = formatter.Deserialize(stream) as TowerData;
 
             stream.Close();
-
+            Debug.Log("LOADED " + path);
             return data;
             
         }

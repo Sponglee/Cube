@@ -32,6 +32,8 @@ public class TowerAimer : MonoBehaviour
             if(towerController.currentCanvas && other.transform.GetChild(1) != towerController.currentCanvas)
             {
                 towerController.currentCanvas.gameObject.SetActive(false);
+
+                
             }
             towerController.currentCanvas = other.transform.GetChild(1);
 

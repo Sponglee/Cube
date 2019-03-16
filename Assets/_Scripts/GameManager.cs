@@ -105,6 +105,12 @@ public class GameManager : Singleton<GameManager>
     {
         if(Input.GetMouseButtonDown(2))
         {
+
+
+            LevelManager.Instance.CubeEnd = true;
+
+
+
             StartCoroutine(GameManager.Instance.TowerExitSequence());
         }
         //Check for clicks after cube opens
@@ -793,42 +799,13 @@ public class GameManager : Singleton<GameManager>
         //Cube Open condition
         if (nullCount >= activeCube.colorCombos.Length)
         {
-            if (activeCube.EndCube)
-            {
 
-                //activeCube.anim.SetTrigger("Open");
+            //Cube Finish
 
-                StartCoroutine(StopLoadTransition("TowerExmpl", 2.4f));
+            LevelManager.Instance.CurrentCube++;
+            StartCoroutine(TowerExitSequence());
 
-            }
-            else
-            {
-                //if (SceneManager.GetActiveScene().name == "Main")
-                //{
-
-                //    activeCube.anim.SetTrigger("Open");
-                //    StartCoroutine(StopLoadTransition("Tower"));
-                //}
-
-
-                //Cube Finish
-                StartCoroutine(TowerExitSequence());
-
-                //StartCoroutine(StopLoadTransition("Tower", 5.4f));
-                //FadeCanvas.Instance.FadeOut(2.3f);
-            }
-
-            //activeCube.anim.SetTrigger("Open");
-            //activeCube.CubeOpened = true;
-
-            ////Switch Camera to open cube state
-            //ChangeCameraState(openCubeCamPoints.GetChild(0), character.transform.GetChild(1));
-            ////Set camera position
-            //openCubeCamPoints.transform.position = new Vector3(activeCube.transform.position.x, 1, activeCube.transform.position.z);
-
-
-            //ChangeCameraState(character.transform.GetChild(0).GetChild(activeCameraPoint), character.transform.GetChild(1));
-
+         
         }
 
         #region TUTORIAL

@@ -197,71 +197,11 @@ public class CubeController : MonoBehaviour
     }
    
 
-    public void RandomizeCube()
-    {
-
-        
-        //For each side (4 - right , back, left, front)
-        for (int i = 0; i < cubeInfo.sides.Length; i++)
-        {
-            Debug.Log("once");
-            //Set and remember random color per side
-            int randomMat = UnityEngine.Random.Range(1, materials.Length);
-            
-            //Remember color for a side 
-            cubeInfo.sides[i].sideMat = randomMat;
-            cubeInfo.sides[i].elemColors = new int[cubeInfo.type*cubeInfo.type];
-
-            for (int j = 0; j < cubeInfo.type*cubeInfo.type; j++)
-            {
-                //Randomize side's elem colorss
-                float matRandomizer = UnityEngine.Random.Range(0, 100);
-
-                //If checked - get a randomMat to elem, if not - leave 0
-                if (matRandomizer <= 50)
-                {
-                    cubeInfo.sides[i].elemColors[j] = randomMat;
-                    Debug.Log("filled");
-                }
-                else
-                {
-                    cubeInfo.sides[i].elemColors[j] = 0;
-                }
-            }
-          
-        }
-
-
-        //Randomize obstacles
-        float obsRandomizer = UnityEngine.Random.Range(0, 100);
-
-        if (obsRandomizer >= 80)
-        {
-            int sideRandomizer = UnityEngine.Random.Range(0, cubeSides.Length);
-
-            //Transform randSide = cubeSides[sideRandomizer].GetChild(0).GetChild(0);
-            Transform randSide = cubeBottom.GetChild(0).GetChild(0);
-
-            GameObject tmpObs = Instantiate(obstaclePref);
-
-            ObstacleController obs = tmpObs.GetComponent<ObstacleController>();
-
-            obs.cube = this;
-            obs.startPoint = randSide.GetChild(UnityEngine.Random.Range(0, randSide.childCount));
-            obs.endPoint = randSide.GetChild(UnityEngine.Random.Range(0, randSide.childCount));
-
-
-        }
-        LevelManager.Instance.twrData = new TowerData();
-        LevelManager.Instance.twrData.levels = new List<CubeData>();
-        LevelManager.Instance.twrData.levels.Add(cubeInfo);
-        SaveSystem.SaveLevel(0, LevelManager.Instance.twrData);
-    }
-
+ 
 
     public void LoadCubeData()
     {
-        CubeData loadCubeInfo = SaveSystem.LoadLevel(0).levels[0];
+        CubeData loadCubeInfo = SaveSystem.LoadLevel(0).levels[LevelManager.Instance.CurrentCube];
 
         for (int i = 0; i < cubeSides.Length; i++)
         {
@@ -288,10 +228,10 @@ public class CubeController : MonoBehaviour
 
                 //Add combo if not 0
                if(loadCubeInfo.sides[i].elemColors[child.GetSiblingIndex()] != 0)
-                {
+               {
                     //Add elem to combo per color
                     colorCombos[randomMat].Add(child);
-                }
+               }
 
             }
 
