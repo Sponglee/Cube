@@ -7992,7 +7992,7 @@ MonoBehaviour:
   elevatorHolder: {fileID: 140156503}
   characterController: {fileID: 755578628}
   data:
-    currentCube: 0
+    twrProgress: 0
     levels:
     - type: 3
       sides:
@@ -9312,7 +9312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   twrData:
-    currentCube: 0
+    twrProgress: 0
     levels: []
   cubeInfo:
     type: 3
@@ -9331,7 +9331,10 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  currentCubeIndex: 0
+  CubeEnd: 0
+  towerIndex: 0
+  towerController: {fileID: 0}
+  currentCube: 0
 --- !u!4 &691320145
 Transform:
   m_ObjectHideFlags: 0
@@ -20285,7 +20288,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1513926758
 Transform:
   m_ObjectHideFlags: 0

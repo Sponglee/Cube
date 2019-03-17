@@ -262,7 +262,8 @@ public class TowerController : Singleton<TowerController>
 
 
 
-    public IEnumerator StopLook(Transform target, Vector3 tmpPos, float duration)
+    //Lerp to target location from destination
+    public IEnumerator StopLook(Transform target, Vector3 destination, float duration)
     {
         float i = 0f;
         float rate = 1f / duration;
@@ -270,7 +271,7 @@ public class TowerController : Singleton<TowerController>
         while (i < 1.0)
         {
             i += Time.deltaTime * rate;
-            target.position = Vector3.Lerp(target.position, tmpPos, i);
+            target.position = Vector3.Lerp(target.position, destination, i);
 
             yield return null;
         }

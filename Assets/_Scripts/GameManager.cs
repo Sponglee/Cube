@@ -802,7 +802,7 @@ public class GameManager : Singleton<GameManager>
 
             //Cube Finish
 
-            LevelManager.Instance.CurrentCube++;
+            LevelManager.Instance.CubeEnd=true;
             StartCoroutine(TowerExitSequence());
 
          

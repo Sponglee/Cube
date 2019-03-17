@@ -20,6 +20,10 @@ public class LevelManager : Singleton<LevelManager>
     //Current tower index
     public int towerIndex = 0;
 
+
+    //Tower Controller reference
+    [SerializeField]
+    private TowerController towerController;
     ////Selected cube progress
     //[SerializeField]
     //private int towerProgress = 0;
@@ -42,6 +46,8 @@ public class LevelManager : Singleton<LevelManager>
                 {
                     twrData.twrProgress = value;
                 }
+
+               
 
                 SaveSystem.SaveLevel(towerIndex, twrData);
 
@@ -89,31 +95,72 @@ public class LevelManager : Singleton<LevelManager>
         }
         else
         {
-
+            Debug.Log("CurrentCubeLOAD");
             CurrentCube = twrData.twrProgress;
             
         }
 
 
+        //**************************************
+        //Set character pair to current cube in tower
+        TowerController.Instance.cameraHolder.position = TowerController.Instance.TowerGrid.GetChild(CurrentCube).position + Vector3.up * 0.6f;
+
+        //Enable Canvas for currentCube
+        TowerController.Instance.TowerGrid.GetChild(CurrentCube).GetChild(1).gameObject.SetActive(true);
+
+
     }
 
+    //When Scene is loaded (only after another scene with levelManager preset, not first time)
     private void OnLevelWasLoaded(int level)
     {
-        if(level == 2)
+        Debug.Log("RE");
+       
+        if (level == 2)
         {
-            if(CubeEnd)
+
+           
+            if (CubeEnd)
             {
+
+
+
+                //Vector3 tmpPos = new Vector3(cameraHolder.position.x, FollowTarget.position.y, cameraHolder.position.z);
+
+                ////For camera
+                //StartCoroutine(StopLook(cameraHolder, tmpPos, 0.2f));
+                ////For elevator
+                //StartCoroutine(StopLook(elevatorHolder, new Vector3(elevatorHolder.position.x, tmpPos.y, elevatorHolder.position.z), 1f));
+
+
+                //**************************************
+                //Set character pair to current cube in tower
+                TowerController.Instance.cameraHolder.position = TowerController.Instance.TowerGrid.GetChild(CurrentCube).position + Vector3.up * 0.6f;
+
+                //Enable Canvas for currentCube
+                TowerController.Instance.TowerGrid.GetChild(CurrentCube).GetChild(1).gameObject.SetActive(true);
+
+
                 CurrentCube++;
+                CubeEnd = false;
+
             }
             else
             {
                 CurrentCube = twrData.twrProgress;
+
+                //***************************************
+                //Set character pair to current cube in tower
+                TowerController.Instance.cameraHolder.position = TowerController.Instance.TowerGrid.GetChild(CurrentCube).position + Vector3.up * 0.6f;
+
+                //Enable Canvas for currentCube
+                TowerController.Instance.TowerGrid.GetChild(CurrentCube).GetChild(1).gameObject.SetActive(true);
+
             }
-            
 
 
 
-            if(CurrentCube >= twrData.levels.Count)
+            if (CurrentCube >= twrData.levels.Count)
             {
                 SceneManager.LoadScene("TowerExmpl");
             }
