@@ -6,7 +6,9 @@ using UnityEngine;
 public class LevelData
 
 {
-    public int currentTower;
-    public List<TowerData> towers;
+   
+    public int levelProgression;
+
+   
 
 }

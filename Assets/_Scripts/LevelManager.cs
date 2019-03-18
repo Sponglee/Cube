@@ -247,7 +247,7 @@ public class LevelManager : Singleton<LevelManager>
             {
                 //Debug.Log("once");
                 //Set and remember random color per side
-                int randomMat = UnityEngine.Random.Range(1, materials.Length);
+                int randomMat = Random.Range(1, materials.Length);
 
                 //Remember color for a side 
                 cubeInfo.sides[i].sideMat = randomMat;
@@ -256,7 +256,7 @@ public class LevelManager : Singleton<LevelManager>
                 for (int j = 0; j < cubeInfo.type * cubeInfo.type; j++)
                 {
                     //Randomize side's elem colorss
-                    float matRandomizer = UnityEngine.Random.Range(0, 100);
+                    float matRandomizer = Random.Range(0, 100);
 
                     //If checked - get a randomMat to elem, if not - leave 0
                     if (matRandomizer <= 50)

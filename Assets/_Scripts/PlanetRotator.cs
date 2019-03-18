@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class PlanetRotator : MonoBehaviour
 {
-    public float rotSpeed = 200;
+    public float scrollSpeed = 200;
 
 
 
@@ -108,22 +108,32 @@ public class PlanetRotator : MonoBehaviour
         return null;
     }
 
-
+    public Transform cameraHolder;
     //Rotate planet
     void OnMouseDrag()
     {
-       
-        float rotX = Input.GetAxis("Mouse X") * rotSpeed * Mathf.Deg2Rad;
-        //float rotY = Input.GetAxis("Mouse Y") * rotSpeed * Mathf.Deg2Rad;
-        if (Input.touchCount > 0)
-        {
-            rotX = Input.touches[0].deltaPosition.x;
-            //rotY = Input.touches[0].deltaPosition.y;
-        }
 
-        Debug.Log("REEE " + Input.GetAxis("Mouse X") + " : " + Input.GetAxis("Mouse Y") + " = " + rotSpeed);
+        
 
-        transform.Rotate(Vector3.up, -rotX, Space.Self);
-        //cameras.transform.Rotate(Vector3.forward, rotY, Space.Self);
+            float rotX = Input.GetAxis("Mouse X") * scrollSpeed;
+            
+            if (Input.touchCount > 0)
+            {
+                rotX = Input.touches[0].deltaPosition.x;
+                
+            }
+
+            //Debug.Log("REEE " + rotX + " : " + Input.GetAxis("Mouse Y") + " = " + scrollSpeed);
+
+            //if (rotX > rotResistance)
+            //{
+            //    cameraHolder.transform.Rotate(Vector3.up, rotX, Space.Self);
+            //}
+
+            //Scroll camera and elevator
+            cameraHolder.position += new Vector3(0, 0, -rotX*5);
+            //elevatorHolder.transform.position += new Vector3(0, -rotX / 120f, 0);
+            
+        
     }
 }

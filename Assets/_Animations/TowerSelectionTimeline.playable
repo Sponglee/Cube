@@ -216,13 +216,13 @@ MonoBehaviour:
   - m_Start: 0
     m_ClipIn: 0
     m_Asset: {fileID: 114673091866908464}
-    m_Duration: 5
+    m_Duration: 3.6833333333333336
     m_TimeScale: 1
     m_ParentTrack: {fileID: 114930146053825860}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
     m_BlendInDuration: 0.016666666666666666
-    m_BlendOutDuration: 4.9833333333333325
+    m_BlendOutDuration: 3.666666666666666
     m_MixInCurve:
       serializedVersion: 2
       m_Curve:
@@ -282,15 +282,15 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: CM BottomShot
     m_Version: 1
-  - m_Start: 6.35
+  - m_Start: 4.983333333333333
     m_ClipIn: 0
     m_Asset: {fileID: 114229570634316280}
-    m_Duration: 7.8500000000000005
+    m_Duration: 3.416666666666666
     m_TimeScale: 1
     m_ParentTrack: {fileID: 114930146053825860}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
-    m_BlendInDuration: 7.550000000000001
+    m_BlendInDuration: 2.6833333333333336
     m_BlendOutDuration: -1
     m_MixInCurve:
       serializedVersion: 2
@@ -354,13 +354,13 @@ MonoBehaviour:
   - m_Start: 0.016666666666667274
     m_ClipIn: 0
     m_Asset: {fileID: 114300039371709410}
-    m_Duration: 6.333333333333332
+    m_Duration: 4.966666666666666
     m_TimeScale: 1
     m_ParentTrack: {fileID: 114930146053825860}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
-    m_BlendInDuration: 4.9833333333333325
-    m_BlendOutDuration: 1.3499999999999996
+    m_BlendInDuration: 3.666666666666666
+    m_BlendOutDuration: 1.2999999999999998
     m_MixInCurve:
       serializedVersion: 2
       m_Curve:
@@ -420,16 +420,16 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: CM MidShot
     m_Version: 1
-  - m_Start: 5
+  - m_Start: 3.6833333333333336
     m_ClipIn: 0
     m_Asset: {fileID: 114415433629768564}
-    m_Duration: 8.9
+    m_Duration: 3.9833333333333334
     m_TimeScale: 1
     m_ParentTrack: {fileID: 114930146053825860}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
-    m_BlendInDuration: 1.3499999999999996
-    m_BlendOutDuration: 7.550000000000001
+    m_BlendInDuration: 1.2999999999999998
+    m_BlendOutDuration: 2.6833333333333336
     m_MixInCurve:
       serializedVersion: 2
       m_Curve:
