@@ -7,6 +7,7 @@ public class TowerData
 
 {
     public int twrProgress;
-    public List<CubeData> levels;
+    public int twrCubeCount;
+    public List<CubeData> cubes;
 
 }

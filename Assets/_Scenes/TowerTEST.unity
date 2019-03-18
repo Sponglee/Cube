@@ -1249,8 +1249,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ef7d2686c2c2f59429aeb541d6807f00, type: 2}
-  - {fileID: 2100000, guid: ef7d2686c2c2f59429aeb541d6807f00, type: 2}
+  - {fileID: 2100000, guid: 87cc45b4bc2519f409e1609e3c6a7c9a, type: 2}
+  - {fileID: 2100000, guid: d6cde7f4523d5d84fa0add5031b1acd0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1743,7 +1743,6 @@ MonoBehaviour:
   characterController: {fileID: 755578628}
   data:
     twrProgress: 0
-    towerCubeCount: 0
     cubes: []
   physicCam: {fileID: 1883198662}
   vcam: {fileID: 13609264}
@@ -1980,7 +1979,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   twrData:
     twrProgress: 0
-    towerCubeCount: 0
     cubes: []
   cubeInfo:
     type: 3
@@ -2000,7 +1998,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   CubeEnd: 0
-  TowerEnd: 0
   towerIndex: 0
   towerController: {fileID: 0}
   currentCube: 0

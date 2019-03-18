@@ -377,7 +377,7 @@ public class GameManager : Singleton<GameManager>
     {
         yield return new WaitForSeconds(0.5f);
 
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 1; i++)
         {
             MoveCamera(camPointHolder);
             yield return new WaitForSeconds(0.8f);

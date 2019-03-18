@@ -16,7 +16,7 @@ public class LevelManager : Singleton<LevelManager>
 
     //Cube exit sequence bool
     public bool CubeEnd = false;
-
+    public bool TowerEnd = false;
     //Current tower index
     public int towerIndex = 0;
 
@@ -45,9 +45,17 @@ public class LevelManager : Singleton<LevelManager>
                 if (twrData != null)
                 {
                     twrData.twrProgress = value;
+                    Debug.Log(twrData.twrProgress + " : :: : " + twrData.twrCubeCount);
+                    //Enable Next Tower Bool
+                    if (twrData.twrProgress >= twrData.twrCubeCount)
+                    {
+                        TowerEnd = true;
+                       
+                    }
+
                 }
 
-               
+
 
                 SaveSystem.SaveLevel(towerIndex, twrData);
 
@@ -95,13 +103,22 @@ public class LevelManager : Singleton<LevelManager>
         }
         else
         {
+           
             Debug.Log("CurrentCubeLOAD");
             CurrentCube = twrData.twrProgress;
-            
+            if(CurrentCube>twrData.twrCubeCount)
+            {
+                CurrentCube = twrData.twrCubeCount;
+            }
         }
 
 
+
         //**************************************
+
+        //Initialize tower
+        TowerController.Instance.InitializeTower(twrData);
+
         //Set character pair to current cube in tower
         TowerController.Instance.cameraHolder.position = TowerController.Instance.TowerGrid.GetChild(CurrentCube).position + Vector3.up * 0.6f;
 
@@ -118,8 +135,8 @@ public class LevelManager : Singleton<LevelManager>
        
         if (level == 2)
         {
+            //TowerController.Instance.InitializeTower(twrData);
 
-           
             if (CubeEnd)
             {
 
@@ -140,8 +157,8 @@ public class LevelManager : Singleton<LevelManager>
                 //Enable Canvas for currentCube
                 TowerController.Instance.TowerGrid.GetChild(CurrentCube).GetChild(1).gameObject.SetActive(true);
 
-
-                CurrentCube++;
+                StartCoroutine(ProgressionMoveUp());
+                
                 CubeEnd = false;
 
             }
@@ -160,31 +177,67 @@ public class LevelManager : Singleton<LevelManager>
 
 
 
-            if (CurrentCube >= twrData.levels.Count)
-            {
-                SceneManager.LoadScene("TowerExmpl");
-            }
-
+          
 
 
         }
     }
 
+    public IEnumerator ProgressionMoveUp()
+    {
+        yield return new WaitForSeconds(2f);
+
+        CurrentCube++;
+
+        yield return new WaitForEndOfFrame();
+
+        if (TowerEnd)
+        {
+            SceneManager.LoadScene("TowerExmpl");
+            TowerEnd = false;
+        }
+        else
+        {
 
 
-   
+            TowerController tmpCont = TowerController.Instance;
+            //***************************************
+            //Set character pair to current cube in tower
+            tmpCont.FollowTarget.position = tmpCont.TowerGrid.GetChild(CurrentCube).position + Vector3.up * 0.6f;
+
+            //Enable Canvas for currentCube
+            tmpCont.TowerGrid.GetChild(CurrentCube).GetChild(1).gameObject.SetActive(true);
+
+
+            Vector3 tmpPos = new Vector3(tmpCont.cameraHolder.position.x, tmpCont.FollowTarget.position.y, tmpCont.cameraHolder.position.z);
+
+            //For camera
+            StartCoroutine(tmpCont.StopLook(tmpCont.cameraHolder, tmpPos, 0.5f));
+            //For elevator
+            StartCoroutine(tmpCont.StopLook(tmpCont.elevatorHolder, new Vector3(tmpCont.elevatorHolder.position.x, tmpPos.y, tmpCont.elevatorHolder.position.z), 1.5f));
+
+           
+        }
+
+        
+
+      
+
+    }
+
+
 
     //Generate tower cubes
     public void RandomizeTower()
     {
         twrData = new TowerData();
-        twrData.levels = new List<CubeData>();
+        twrData.cubes = new List<CubeData>();
         twrData.twrProgress = 0;
+        //Generate amount of cubes
+        twrData.twrCubeCount = Random.Range(3, 4);
 
-
-        foreach (Transform gridCube in TowerController.Instance.TowerGrid)
+        for (int t = 0; t < twrData.twrCubeCount; t++)
         {
-           
 
             cubeInfo = new CubeData();
             cubeInfo.type = 3;
@@ -221,11 +274,9 @@ public class LevelManager : Singleton<LevelManager>
 
             }
             //Debug.Log("====");
-            twrData.levels.Add(cubeInfo);
-
-
+            twrData.cubes.Add(cubeInfo);
         }
-
+      
         
        
         SaveSystem.SaveLevel(towerIndex, twrData);

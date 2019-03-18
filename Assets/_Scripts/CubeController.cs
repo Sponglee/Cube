@@ -201,7 +201,7 @@ public class CubeController : MonoBehaviour
 
     public void LoadCubeData()
     {
-        CubeData loadCubeInfo = SaveSystem.LoadLevel(0).levels[LevelManager.Instance.CurrentCube];
+        CubeData loadCubeInfo = SaveSystem.LoadLevel(0).cubes[LevelManager.Instance.CurrentCube];
 
         for (int i = 0; i < cubeSides.Length; i++)
         {

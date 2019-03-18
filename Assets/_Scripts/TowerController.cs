@@ -59,41 +59,50 @@ public class TowerController : Singleton<TowerController>
 
     private void Update()
     {
-        //#if UNITY_EDITOR
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    //Door click event
-        //    if (currentCanvas && currentCanvas.gameObject.activeSelf)
-        //    {
-        //        //Enable phys camera trigger
-        //        physicCam.GetComponentInChildren<SphereCollider>().enabled = true;
-        //        GameObject tmp = GrabRayObj();
+//#if UNITY_EDITOR
+//        if (Input.GetMouseButtonDown(2))
+//        {
 
-        //        if (tmp && tmp.CompareTag("Cube") && elevatorHolder.position == cameraHolder.position)
-        //        {
+//            GenerateTower(LevelManager.Instance.twrData);
 
-        //            //Hide Tower
-        //            transform.GetChild(1).gameObject.SetActive(false);
-        //            //Disable all other cubes
-        //            foreach (Transform child in transform.GetChild(0))
-        //            {
-        //                if (child.gameObject != tmp)
-        //                {
-        //                    child.gameObject.SetActive(false);
-        //                }
+//            //Set character pair to current cube in tower
+//            TowerController.Instance.cameraHolder.position = TowerController.Instance.TowerGrid.GetChild(LevelManager.Instance.CurrentCube).position + Vector3.up * 0.6f;
 
-        //            }
+//            //Enable Canvas for currentCube
+//            TowerController.Instance.TowerGrid.GetChild(LevelManager.Instance.CurrentCube).GetChild(1).gameObject.SetActive(true);
+
+//            ////Door click event
+//            //if (currentCanvas && currentCanvas.gameObject.activeSelf)
+//            //{
+//            //    //Enable phys camera trigger
+//            //    physicCam.GetComponentInChildren<SphereCollider>().enabled = true;
+//            //    GameObject tmp = GrabRayObj();
+
+//            //    if (tmp && tmp.CompareTag("Cube") && elevatorHolder.position == cameraHolder.position)
+//            //    {
+
+//            //        //Hide Tower
+//            //        transform.GetChild(1).gameObject.SetActive(false);
+//            //        //Disable all other cubes
+//            //        foreach (Transform child in transform.GetChild(0))
+//            //        {
+//            //            if (child.gameObject != tmp)
+//            //            {
+//            //                child.gameObject.SetActive(false);
+//            //            }
+
+//            //        }
 
 
-        //            StartCoroutine(TowerEnterSequence(tmp));
+//            //        StartCoroutine(TowerEnterSequence(tmp));
 
 
 
 
-        //        }
-        //    }
-        //}
-        //        #endif
+//            //    }
+//            //}
+//        }
+//#endif
         if (Input.touchCount > 0)
         {
             //Touch touch = Input.GetTouch(0);
@@ -142,7 +151,7 @@ public class TowerController : Singleton<TowerController>
                         }
                         else
                         {
-                            Debug.Log("NOT UNLOCKED");
+                            Debug.Log("NOT UNLOCKED " + tmp.transform.GetSiblingIndex());
                         }
 
                         
@@ -176,6 +185,22 @@ public class TowerController : Singleton<TowerController>
         vdoor.Priority += 2;
 
 
+    }
+
+
+
+    public GameObject nodePref;
+    public float nodeStep = 1.4f;
+
+    public void InitializeTower(TowerData twrData)
+    {
+        int gridStep = 0;
+
+        foreach (CubeData cube in twrData.cubes)
+        {
+            GameObject tmpNode = Instantiate(nodePref, TowerGrid.position + Vector3.up * nodeStep*gridStep, Quaternion.identity, TowerGrid);
+            gridStep++;
+        }
     }
 
 
