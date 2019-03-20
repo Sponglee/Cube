@@ -21,7 +21,7 @@ public class TowerAimer : MonoBehaviour
   
     private void OnTriggerEnter(Collider other)
     {
-       
+       if(SceneManager.GetActiveScene().buildIndex == 2)
         if (other.gameObject.CompareTag("Cube"))
         {
             towerController.FollowTarget.position = other.transform.position + Vector3.up*0.6f;
@@ -40,6 +40,15 @@ public class TowerAimer : MonoBehaviour
 
             //vcam.m_Follow = other.transform;
         }
+        else if(SceneManager.GetActiveScene().buildIndex == 3)
+        {
+            if (other.gameObject.CompareTag("Tower"))
+            {
+
+            }
+
+        }
     }
+
     
 }
