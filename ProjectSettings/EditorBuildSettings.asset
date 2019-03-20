@@ -15,11 +15,11 @@ EditorBuildSettings:
     path: Assets/_Scenes/Tower.unity
     guid: 49081cbe96f19a94b8bfbe8ed4908787
   - enabled: 1
-    path: Assets/_Scenes/Main.unity
-    guid: b036f552a257610478a5a6ba7cee3012
-  - enabled: 1
     path: Assets/_Scenes/TowerExmpl.unity
     guid: a9fd86526e1ca534ca4731e53657a8c1
+  - enabled: 1
+    path: Assets/_Scenes/Main.unity
+    guid: b036f552a257610478a5a6ba7cee3012
   - enabled: 0
     path: Assets/_Scenes/Planet.unity
     guid: 7ebdeadd6dcf8b14a9dac22b7dbd95ec

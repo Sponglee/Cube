@@ -20,7 +20,7 @@ public class PlanetRotator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
         //if (Input.GetMouseButtonUp(0))
         //{
         //    GameObject rayObj = GrabRayObj();
@@ -115,7 +115,7 @@ public class PlanetRotator : MonoBehaviour
 
         
 
-            float rotX = Input.GetAxis("Mouse X") * scrollSpeed;
+            float rotX = Input.GetAxis("Mouse X");
             
             if (Input.touchCount > 0)
             {
@@ -131,7 +131,7 @@ public class PlanetRotator : MonoBehaviour
             //}
 
             //Scroll camera and elevator
-            cameraHolder.position += new Vector3(0, 0, -rotX*5);
+            cameraHolder.position += new Vector3(0, 0, -rotX*scrollSpeed);
             //elevatorHolder.transform.position += new Vector3(0, -rotX / 120f, 0);
             
         

@@ -238,7 +238,7 @@ public class TowerController : Singleton<TowerController>
 
 
 
-    //Elem pick
+    //Cube pick
     public GameObject GrabRayObj()
     {
 
