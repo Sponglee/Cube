@@ -8,7 +8,7 @@ using UnityEngine;
 public static class SaveSystem
 {
    
-   public static void SaveLevel(int index, TowerData saveData)
+   public static void SaveLevel(int index, TowerData saveData, bool BackupSave=false)
     {
 
         if (!Directory.Exists(Path.Combine(Application.persistentDataPath, "twrsFolder")))
@@ -20,19 +20,16 @@ public static class SaveSystem
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Path.Combine(Application.persistentDataPath, "twrsFolder", string.Format("twrs{0}.twr",index));
 
-        //if (File.Exists(path))
-        //{
-        //    stream = new FileStream(path, FileMode.Create);
-        //}
-        //else
-        //{
-            stream = new FileStream(path, FileMode.Create);
-        //}
-           
+        if(BackupSave)
+        {
+            FileStream backupStream;
+            string bckupPath = Path.Combine(Application.persistentDataPath, "twrsFolder", string.Format("twrs{0}.bak", index));
+            backupStream = new FileStream(bckupPath, FileMode.Create);
+            formatter.Serialize(backupStream, saveData);
+            backupStream.Close();
+        }
 
-        //TowerData data = new TowerData();
-
-
+        stream = new FileStream(path, FileMode.Create);
         formatter.Serialize(stream, saveData);
         stream.Close();
 
@@ -40,10 +37,31 @@ public static class SaveSystem
     }
 
 
-    public static TowerData LoadLevel(int index)
+    public static TowerData LoadLevel(int index, bool backUp = false)
     {
         string path = Path.Combine(Application.persistentDataPath, "twrsFolder", string.Format("twrs{0}.twr", index));
-        if (File.Exists(path))
+        string bckupPath = Path.Combine(Application.persistentDataPath, "twrsFolder", string.Format("twrs{0}.bak", index));
+
+        if(backUp)
+        {
+            //LOAD BACKUP FILE
+            if (File.Exists(bckupPath))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+
+                FileStream stream = new FileStream(path, FileMode.Open);
+
+                TowerData data = formatter.Deserialize(stream) as TowerData;
+
+                stream.Close();
+                Debug.Log("LOADED BACKUP " + path);
+                return data;
+            }
+            else
+                return null;
+        }
+        //LOAD NORMAL FILE
+        else if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();
 
