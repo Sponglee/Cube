@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class TowerAimer : MonoBehaviour
 {
     public TowerController towerController;
-    public LevelController levelController;
+    public LevelsController levelController;
 
     //public Transform currentCanvas;
 
@@ -44,6 +44,9 @@ public class TowerAimer : MonoBehaviour
 
                 //vcam.m_Follow = other.transform;
             }
+           
+
+
         }
         else if(SceneManager.GetActiveScene().buildIndex == 3)
         {

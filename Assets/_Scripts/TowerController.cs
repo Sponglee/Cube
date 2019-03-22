@@ -21,7 +21,12 @@ public class TowerController : Singleton<TowerController>
 
     public Camera physicCam;
     public CinemachineVirtualCamera vcam;
+    //Camera for enter
     public CinemachineVirtualCamera vdoor;
+    //Camera for end 
+    public CinemachineVirtualCamera vcamTowerEnd;
+    //For exiting the tower
+    public GameObject TowerEndTrigger;
     public Transform FollowTarget;
 
     

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Cinemachine;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,6 +18,7 @@ public class LevelManager : Singleton<LevelManager>
     //Cube exit sequence bool
     public bool CubeEnd = false;
     public bool TowerEnd = false;
+   
     //Current tower index
     public int towerIndex = 0;
 
@@ -58,8 +60,7 @@ public class LevelManager : Singleton<LevelManager>
         }
     }
 
-
-
+   
     //Check forr endTower
     public void EndTowerCheck(int value)
     {
@@ -72,7 +73,9 @@ public class LevelManager : Singleton<LevelManager>
             if (twrData.twrProgress == twrData.twrCubeCount)
             {
                 TowerEnd = true;
-
+                //Enable FINISH tagged exit tower trigger
+                TowerController.Instance.TowerEndTrigger = TowerController.Instance.TowerGrid.parent.GetChild(1).GetChild(0).gameObject;
+                TowerController.Instance.TowerEndTrigger.SetActive(true);
             }
             Debug.Log("CURRENTCUBE SAVE");
             SaveSystem.SaveLevel(towerIndex, twrData, true);
@@ -149,23 +152,50 @@ public class LevelManager : Singleton<LevelManager>
             SetCamera(CurrentCube);
         }
 
+        //Check for endTower to enable exit trigger
+        EndTowerCheck(CurrentCube);
     }
 
 
 
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(2))
+        {
+            if(CurrentCube == twrData.twrCubeCount)
+                CurrentCube--;
+            StartCoroutine(ProgressionMoveUp());
+        }
+    }
+
+
+    //Scene loaded delegates
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+  
+
     //When Scene is loaded (only after another scene with levelManager preset, not first time)
-    private void OnLevelWasLoaded(int level)
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Debug.Log("RE " + gameObject.name);
        
 
-        if (level == 2)
+        if (scene.buildIndex == 2)
         {
             TowerController.Instance.InitializeTower(twrData);
-
+           
             if (CubeEnd)
             {
-                
+
+                Debug.Log(CurrentCube + " !#@$@1$!");
                 //**************************************
                 //Set character pair to current cube in tower
                 SetCamera(CurrentCube);
@@ -178,7 +208,7 @@ public class LevelManager : Singleton<LevelManager>
             else
             {
                 CurrentCube = twrData.twrProgress;
-                Debug.Log("CAMERA   " + CurrentCube + " : : : " + TowerController.Instance.TowerGrid.childCount);
+                Debug.Log("CAMERA   " + gameObject.name + " : "  + CurrentCube + " : : : " + TowerController.Instance.TowerGrid.childCount);
                 
                 
                 //***************************************
@@ -189,8 +219,8 @@ public class LevelManager : Singleton<LevelManager>
             }
 
 
-
-
+            //Check for endtower to enable exit trigger
+            EndTowerCheck(CurrentCube);
 
 
         }
@@ -199,7 +229,7 @@ public class LevelManager : Singleton<LevelManager>
 
     public void SetCamera(int curCubeTarget)
     {
-        Debug.Log("CURCUBE " + curCubeTarget);
+        Debug.Log("CURCUBE " + curCubeTarget + " : " + TowerController.Instance.TowerGrid.childCount);
         if (TowerController.Instance.TowerGrid.childCount != 0)
         {
             //Set camera to grid child
@@ -221,8 +251,7 @@ public class LevelManager : Singleton<LevelManager>
 
         if (TowerEnd)
         {
-            SceneManager.LoadScene("TowerExmpl");
-            TowerEnd = false;
+            StartCoroutine(TowerEndSequence());
         }
         else
         {
@@ -234,10 +263,7 @@ public class LevelManager : Singleton<LevelManager>
             //Set FOLLOW TARGET to current cube in tower
             if (CurrentCube >= twrData.twrCubeCount)
             {
-                tmpCont.FollowTarget.position = tmpCont.TowerGrid.GetChild(CurrentCube-1).position + Vector3.up * 0.6f;
-
-                //Enable Canvas for currentCube
-                tmpCont.TowerGrid.GetChild(CurrentCube-1).GetChild(1).gameObject.SetActive(true);
+               
             }
             else
             {
@@ -263,6 +289,44 @@ public class LevelManager : Singleton<LevelManager>
 
     }
 
+
+
+    public IEnumerator TowerEndSequence ()
+    {
+        TowerController towerCont = TowerController.Instance;
+
+        //Move elevator upstairs
+        towerCont.FollowTarget.position = towerCont.TowerGrid.parent.GetChild(1).position;
+        //towerCont.cameraHolder.position = towerCont.TowerGrid.parent.GetChild(1).GetChild(0).position;
+
+        //Enable Canvas for currentCube
+        towerCont.TowerGrid.GetChild(CurrentCube - 1).GetChild(1).gameObject.SetActive(false);
+
+        Vector3 tmpPos = new Vector3(towerCont.cameraHolder.position.x, towerCont.FollowTarget.position.y, towerCont.cameraHolder.position.z);
+
+
+        //For elevator
+        StartCoroutine(towerCont.StopLook(towerCont.elevatorHolder, new Vector3(towerCont.elevatorHolder.position.x, tmpPos.y, towerCont.elevatorHolder.position.z), 6f));
+
+
+
+        yield return new WaitForSecondsRealtime(2f);
+
+        //Set follow object to null
+        towerCont.vcam.m_Follow = null;
+        //Move Camera trigger in elevator pair to top, enable endtower camera 
+        towerCont.vcamTowerEnd.gameObject.SetActive(true);
+      
+        //Move Camera trigger up
+        //StartCoroutine(towerCont.StopLook(towerCont.cameraHolder, new Vector3(towerCont.cameraHolder.position.x, tmpPos.y, towerCont.cameraHolder.position.z), 5f));
+        //FadeCanvas.Instance.FadeOut(0.5f);
+
+
+
+       
+        //SceneManager.LoadScene("Levels");
+        TowerEnd = false;
+    }
 
 
     //Generate tower cubes

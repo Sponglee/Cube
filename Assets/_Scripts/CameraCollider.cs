@@ -13,6 +13,10 @@ public class CameraCollider : MonoBehaviour
 
             StartCoroutine(StopLoadTransition("Main", 1f));
         }
+        else if (other.gameObject.CompareTag("Finish"))
+        {
+            SceneManager.LoadScene("Levels");
+        }
     }
 
 

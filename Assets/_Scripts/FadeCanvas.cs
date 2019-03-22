@@ -13,6 +13,8 @@ public class FadeCanvas : Singleton<FadeCanvas>
     private float minimumLogoTime = 3.0f; //Minimum logo time;
 
     public bool FadeInBool = true;
+    public float fadeInDuration = 1f;
+
 
     private void Start()
     {
@@ -44,7 +46,7 @@ public class FadeCanvas : Singleton<FadeCanvas>
         {
             //FadeIn
             if (Time.timeSinceLevelLoad < minimumLogoTime)
-                fadeGroup.alpha = 1 - Time.timeSinceLevelLoad;
+                fadeGroup.alpha = 1 - Time.timeSinceLevelLoad/fadeInDuration;
 
         }
 
@@ -64,7 +66,7 @@ public class FadeCanvas : Singleton<FadeCanvas>
         while(tmpTime<duration)
         {
             tmpTime += Time.deltaTime; 
-            fadeGroup.alpha = tmpTime;
+            fadeGroup.alpha = tmpTime/duration;
             yield return null;
         }
     }

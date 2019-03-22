@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelController : MonoBehaviour
+public class LevelsController : MonoBehaviour
 {
     public Transform FollowTarget;
 
@@ -11,6 +11,7 @@ public class LevelController : MonoBehaviour
 
     public Camera physicCam;
     public Transform cameraHolder;
+    public Transform elevatorHolder;
 
     // Start is called before the first frame update
     void Start()
@@ -48,7 +49,7 @@ public class LevelController : MonoBehaviour
                     //physicCam.GetComponentInChildren<SphereCollider>().enabled = true;
                     GameObject tmp = GrabRayObj();
                     //Debug.Log(tmp.tag);
-                    if (tmp && tmp.CompareTag("Door")/* && elevatorHolder.position.y == cameraHolder.position.y*/)
+                    if (tmp && tmp.CompareTag("Door") && elevatorHolder.position.z == FollowTarget.position.z)
                     {
 
                         SceneManager.LoadScene("Tower");
@@ -86,7 +87,7 @@ public class LevelController : MonoBehaviour
                 //For camera
                 StartCoroutine(StopLook(cameraHolder, tmpPos, 0.2f));
                 //For elevator
-                //StartCoroutine(StopLook(elevatorHolder, new Vector3(elevatorHolder.position.x, tmpPos.y, elevatorHolder.position.z), 1f));
+                StartCoroutine(StopLook(elevatorHolder, new Vector3(elevatorHolder.position.x, elevatorHolder.position.y, tmpPos.z), 1f));
             }
         }
 

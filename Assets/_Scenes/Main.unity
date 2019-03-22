@@ -1437,7 +1437,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2837,6 +2837,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towerController: {fileID: 1194233143}
+  levelController: {fileID: 0}
   swipeResistance: 5
 --- !u!65 &1047803951
 BoxCollider:
@@ -3094,26 +3095,20 @@ MonoBehaviour:
   elevatorHolder: {fileID: 717493913}
   characterController: {fileID: 0}
   data:
-    currentCube: 0
-    levels:
-    - type: 3
-      sides:
-      - sideMat: 0
-        elemColors: 020000000000000002000000000000000000000000000000020000000000000002000000
-      - sideMat: 0
-        elemColors: 000000000100000000000000010000000100000001000000000000000100000000000000
-      - sideMat: 0
-        elemColors: 000000000000000000000000000000000000000000000000000000000000000000000000
-      - sideMat: 0
-        elemColors: 000000000000000000000000000000000000000000000000000000000000000000000000
+    twrProgress: 0
+    twrCubeCount: 0
+    cubes: []
   physicCam: {fileID: 0}
   vcam: {fileID: 1158557993}
   vdoor: {fileID: 0}
+  vcamTowerEnd: {fileID: 0}
   FollowTarget: {fileID: 1986427976}
   currentCanvas: {fileID: 0}
   swipeResistance: 5
   activeTower: {fileID: 0}
   TowerGrid: {fileID: 0}
+  nodePref: {fileID: 0}
+  nodeStep: 1.4
 --- !u!65 &1194233144
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3509,7 +3504,7 @@ PrefabInstance:
     - target: {fileID: 3573005766365253439, guid: bf92caa121f8e8648bf52c8b94a84fb4,
         type: 3}
       propertyPath: m_Lens.FieldOfView
-      value: 85
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 3573005766365253439, guid: bf92caa121f8e8648bf52c8b94a84fb4,
         type: 3}
