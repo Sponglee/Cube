@@ -1,8 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-
+using UnityEngine.UI;
 
 public class FadeCanvas : Singleton<FadeCanvas>
 {
@@ -53,9 +52,9 @@ public class FadeCanvas : Singleton<FadeCanvas>
     }
 
     ////FadeOut
-    public void FadeOut(float time)
+    public void FadeOut(float time, Color color)
     {
-
+        fadeGroup.transform.GetComponent<Image>().color = color;
         StartCoroutine(StopFadeOut(time));
 
     }

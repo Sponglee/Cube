@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelManager : Singleton<LevelManager>
+public class ProgressManager : Singleton<ProgressManager>
 {
 
     public TowerData twrData;
@@ -296,9 +296,10 @@ public class LevelManager : Singleton<LevelManager>
         TowerController towerCont = TowerController.Instance;
 
         //Move elevator upstairs
+        //Set follow object to null
+        towerCont.vcam.m_LookAt = null;
         towerCont.FollowTarget.position = towerCont.TowerGrid.parent.GetChild(1).position;
         //towerCont.cameraHolder.position = towerCont.TowerGrid.parent.GetChild(1).GetChild(0).position;
-
         //Enable Canvas for currentCube
         towerCont.TowerGrid.GetChild(CurrentCube - 1).GetChild(1).gameObject.SetActive(false);
 
@@ -306,16 +307,17 @@ public class LevelManager : Singleton<LevelManager>
 
 
         //For elevator
-        StartCoroutine(towerCont.StopLook(towerCont.elevatorHolder, new Vector3(towerCont.elevatorHolder.position.x, tmpPos.y, towerCont.elevatorHolder.position.z), 6f));
+        StartCoroutine(towerCont.StopLook(towerCont.elevatorHolder, new Vector3(towerCont.elevatorHolder.position.x, tmpPos.y, towerCont.elevatorHolder.position.z), 3f));
 
 
 
         yield return new WaitForSecondsRealtime(2f);
 
-        //Set follow object to null
-        towerCont.vcam.m_Follow = null;
+       
         //Move Camera trigger in elevator pair to top, enable endtower camera 
         towerCont.vcamTowerEnd.gameObject.SetActive(true);
+        //Disable vcam
+        towerCont.vcam.gameObject.SetActive(false);
       
         //Move Camera trigger up
         //StartCoroutine(towerCont.StopLook(towerCont.cameraHolder, new Vector3(towerCont.cameraHolder.position.x, tmpPos.y, towerCont.cameraHolder.position.z), 5f));

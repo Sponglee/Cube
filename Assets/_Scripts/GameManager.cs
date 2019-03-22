@@ -107,7 +107,7 @@ public class GameManager : Singleton<GameManager>
         {
 
 
-            LevelManager.Instance.CubeEnd = true;
+            ProgressManager.Instance.CubeEnd = true;
 
 
 
@@ -802,7 +802,7 @@ public class GameManager : Singleton<GameManager>
 
             //Cube Finish
 
-            LevelManager.Instance.CubeEnd=true;
+            ProgressManager.Instance.CubeEnd=true;
             StartCoroutine(TowerExitSequence());
 
          

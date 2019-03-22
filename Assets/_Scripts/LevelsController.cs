@@ -49,7 +49,7 @@ public class LevelsController : MonoBehaviour
                     //physicCam.GetComponentInChildren<SphereCollider>().enabled = true;
                     GameObject tmp = GrabRayObj();
                     //Debug.Log(tmp.tag);
-                    if (tmp && tmp.CompareTag("Door") && elevatorHolder.position.z == FollowTarget.position.z)
+                    if (tmp && tmp.CompareTag("Door") && Mathf.Approximately(elevatorHolder.position.z, FollowTarget.position.z))
                     {
 
                         SceneManager.LoadScene("Tower");

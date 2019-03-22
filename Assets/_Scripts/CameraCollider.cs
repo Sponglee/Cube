@@ -9,13 +9,16 @@ public class CameraCollider : MonoBehaviour
     {
         if(other.CompareTag("Door"))
         {
-            FadeCanvas.Instance.FadeOut(1f);
+            FadeCanvas.Instance.FadeOut(1f, Color.white);
 
             StartCoroutine(StopLoadTransition("Main", 1f));
         }
         else if (other.gameObject.CompareTag("Finish"))
         {
-            SceneManager.LoadScene("Levels");
+            TowerController.Instance.StopAllCoroutines();
+            //FadeCanvas.Instance.FadeOut(0.05f,Color.black);
+            StartCoroutine(StopLoadTransition("Levels", 0.05f));
+
         }
     }
 

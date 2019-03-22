@@ -138,9 +138,9 @@ public class TowerController : Singleton<TowerController>
                     if (tmp && tmp.CompareTag("Cube") && elevatorHolder.position.y == cameraHolder.position.y)
                     {
                        
-                        if (tmp.transform.GetSiblingIndex() <= LevelManager.Instance.twrData.twrProgress)
+                        if (tmp.transform.GetSiblingIndex() <= ProgressManager.Instance.twrData.twrProgress)
                         {
-                            LevelManager.Instance.CurrentCube = tmp.transform.GetSiblingIndex();
+                            ProgressManager.Instance.CurrentCube = tmp.transform.GetSiblingIndex();
                             //Hide Tower
                             activeTower.GetChild(0).GetChild(0).GetChild(1).gameObject.SetActive(false);
                             //Disable all other cubes

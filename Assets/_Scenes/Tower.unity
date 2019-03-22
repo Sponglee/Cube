@@ -145,7 +145,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 8
+  m_Priority: 9
   m_LookAt: {fileID: 586713033}
   m_Follow: {fileID: 0}
   m_Lens:
@@ -1158,8 +1158,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.03314831, y: 0.06831334, z: 0.033112995}
   m_Children:
-  - {fileID: 377545718}
   - {fileID: 1680452847}
+  - {fileID: 377545718}
   m_Father: {fileID: 1269176762}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
@@ -1229,7 +1229,7 @@ Transform:
   m_LocalScale: {x: 30, y: 550, z: 30}
   m_Children: []
   m_Father: {fileID: 330640045}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &377545719
 BoxCollider:
@@ -1977,7 +1977,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 10
+  m_Priority: 30
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
@@ -2170,7 +2170,7 @@ GameObject:
   - component: {fileID: 691320145}
   - component: {fileID: 691320144}
   m_Layer: 0
-  m_Name: LevelManager
+  m_Name: ProgressManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4565,13 +4565,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1680452846}
-  m_LocalRotation: {x: -0.70947444, y: 0.016576177, z: -0.7045343, w: -0.0016374772}
-  m_LocalPosition: {x: -100.69455, y: 125.01219, z: -45.074688}
+  m_LocalRotation: {x: -0.67880994, y: 0.0016646096, z: -0.7343119, w: -0.0005624941}
+  m_LocalPosition: {x: -101.3, y: 117.94, z: -45.5}
   m_LocalScale: {x: 31.81134, y: 19.479866, z: 29.536211}
   m_Children: []
   m_Father: {fileID: 330640045}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 54.4, y: -20.6, z: -8.2}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 179.816, y: -94.497986, z: 0.08198547}
 --- !u!65 &1680452848
 BoxCollider:
   m_ObjectHideFlags: 0
