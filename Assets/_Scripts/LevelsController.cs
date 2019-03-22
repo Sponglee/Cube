@@ -51,7 +51,8 @@ public class LevelsController : MonoBehaviour
                     //Debug.Log(tmp.tag);
                     if (tmp && tmp.CompareTag("Door") && Mathf.Approximately(elevatorHolder.position.z, FollowTarget.position.z))
                     {
-
+                        //Remember what tower u picked
+                        ProgressManager.Instance.towerIndex = tmp.transform.parent.GetSiblingIndex();
                         SceneManager.LoadScene("Tower");
                         //if (tmp.transform.GetSiblingIndex() <= LevelManager.Instance.twrData.twrProgress)
                         //{

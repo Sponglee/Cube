@@ -42,7 +42,7 @@ public class TowerController : Singleton<TowerController>
     private float swipeResistance = 50f;
 
     public Transform activeTower;
-    public Transform TowerGrid;
+    public Transform Grid;
 
 
     private void Start()
@@ -203,9 +203,13 @@ public class TowerController : Singleton<TowerController>
 
         foreach (CubeData cube in twrData.cubes)
         {
-            GameObject tmpNode = Instantiate(nodePref, TowerGrid.position + Vector3.up * nodeStep*gridStep, Quaternion.identity, TowerGrid);
+            GameObject tmpNode = Instantiate(nodePref, Grid.position + Vector3.up * nodeStep*gridStep, Quaternion.identity, Grid);
             gridStep++;
         }
+        //Move Tower mesh up for grid value
+        Grid.parent.GetChild(1).position = new Vector3(Grid.parent.GetChild(1).position.x,
+                                                        Grid.parent.GetChild(1).position.y + gridStep,
+                                                        Grid.parent.GetChild(1).position.z);
     }
 
 

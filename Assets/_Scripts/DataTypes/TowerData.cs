@@ -6,6 +6,7 @@ using UnityEngine;
 public class TowerData
 
 {
+    public int index;
     public int twrProgress;
     public int twrCubeCount;
     public List<CubeData> cubes;
