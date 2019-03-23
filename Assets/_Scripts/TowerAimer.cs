@@ -23,7 +23,7 @@ public class TowerAimer : MonoBehaviour
   
     private void OnTriggerEnter(Collider other)
     {
-      
+      //Tower
        if(SceneManager.GetActiveScene().buildIndex == 2)
         {
             if (other.gameObject.CompareTag("Cube"))
@@ -48,26 +48,31 @@ public class TowerAimer : MonoBehaviour
 
 
         }
+       //Levels
         else if(SceneManager.GetActiveScene().buildIndex == 3)
         {
                 Debug.Log("POINK " + other.name);
             if (other.gameObject.CompareTag("Tower"))
             {
-                   
+                //Move Follow Target to new tower 
                 levelController.FollowTarget.position = new Vector3(other.transform.position.x, levelController.FollowTarget.position.y, other.transform.position.z);
 
-                Debug.Log(other.transform.name);
+                //set currentTower to this tower
+                ProgressManager.Instance.CurrentTower = other.transform.parent.GetSiblingIndex();
+
+                //Debug.Log(other.transform.name);
                 other.transform.parent.GetChild(1).gameObject.SetActive(true);
                 other.transform.parent.GetChild(1).GetComponent<Canvas>().worldCamera = levelController.physicCam;
 
                 if (levelController.currentCanvas && other.transform.parent.GetChild(1) != levelController.currentCanvas)
                 {
                     levelController.currentCanvas.gameObject.SetActive(false);
-
-
                 }
                 levelController.currentCanvas = other.transform.parent.GetChild(1);
+
+
             }
+         
 
         }
     }

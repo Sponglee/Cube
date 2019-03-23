@@ -19,16 +19,30 @@ public class ProgressManager : Singleton<ProgressManager>
     public bool CubeEnd = false;
     public bool TowerEnd = false;
    
-    //Current tower index
-    public int towerIndex = 0;
-
-
     //Tower Controller reference
     [SerializeField]
     private TowerController towerController;
-    ////Selected cube progress
-    //[SerializeField]
-    //private int towerProgress = 0;
+
+
+    //Current tower index
+    public int towerIndex = 0;
+    //Progress of levels
+    public int levelProgress = 0;
+
+    [SerializeField]
+    private int currentTower = -1;
+    public int CurrentTower
+    {
+        get => currentTower;
+        set
+        {
+            currentTower = value;
+            //If Tower completed and its greater than previous levelprogress - set new one
+            if (TowerEnd && value > PlayerPrefs.GetInt("LevelProgress", 0))
+                PlayerPrefs.SetInt("LevelProgress", value);
+        }
+    }
+   
 
 
     [SerializeField]
@@ -64,7 +78,9 @@ public class ProgressManager : Singleton<ProgressManager>
         }
     }
 
-   
+  
+
+
     //Check forr endTower
     public void EndTowerCheck(int value)
     {
@@ -77,6 +93,14 @@ public class ProgressManager : Singleton<ProgressManager>
             if (twrData.twrProgress == twrData.twrCubeCount)
             {
                 TowerEnd = true;
+
+                Debug.Log(levelProgress + " == " + twrData.index);
+                if(twrData.index>=levelProgress)
+                {
+                    //If Tower is finished - increment levelProgress
+                    PlayerPrefs.SetInt("LevelProgress", CurrentTower + 1);
+                    levelProgress = PlayerPrefs.GetInt("LevelProgress", 0);
+                }
                 ////Enable FINISH tagged exit tower trigger
                 //TowerController.Instance.TowerEndTrigger = TowerController.Instance.Grid.parent.GetChild(1).GetChild(0).gameObject;
                 //TowerController.Instance.TowerEndTrigger.SetActive(true);
@@ -106,19 +130,34 @@ public class ProgressManager : Singleton<ProgressManager>
         //Make sure only 1 isntance is up
         DontDestroyOnLoad(gameObject);
 
+        //twrData = null;
     }
 
     private void Start()
     {
         Debug.Log("STAAARTT " + gameObject.name);
+
         //Check if tower is new, initialize or generate it
-        DifferentTowerInitialize();
-       
+        if(SceneManager.GetActiveScene().buildIndex == 2)
+        {
+            if (twrData.twrCubeCount == 0)
+            {
+                Debug.Log("<<<<<<<<<<<<<<<<<<<<<<<<1");
+                LoadNewTower();
+            }
+        }
+
+        //Set Up current Tower to progress if fresh launch
+        levelProgress = PlayerPrefs.GetInt("LevelProgress", 0);
+        //Set current Tower to progress, if first launch
+        if (CurrentTower == -1)
+            CurrentTower = levelProgress;
     }
 
     //Initializing new tower or start of the level
-    public void DifferentTowerInitialize()
+    public void LoadNewTower()
     {
+        Debug.Log("<<<<<<<<<<<<<<<<<<<<<<<<<<<" + gameObject.name);
         //Load tower data, if there's none - randomize it
         twrData = SaveSystem.LoadLevel(towerIndex);
 
@@ -153,7 +192,7 @@ public class ProgressManager : Singleton<ProgressManager>
 
 
 
-
+        Debug.Log("NEW LOADDED");
         //Initialize tower
         TowerController.Instance.InitializeTower(twrData);
 
@@ -203,22 +242,42 @@ public class ProgressManager : Singleton<ProgressManager>
     //When Scene is loaded (only after another scene with levelManager preset, not first time)
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("RE " + gameObject.name);
-       
+        Debug.Log("RE " + gameObject.name + " :::::: " + twrData.index);
+        levelProgress = PlayerPrefs.GetInt("LevelProgress", 0);
+
+        //Set current Tower to progress, if first launch
+        if (CurrentTower == -1)
+            CurrentTower = levelProgress;
+
 
         if (scene.buildIndex == 2)
         {
-
-            if(twrData.index == towerIndex)
+            //First launch of tower Scene (start sequence)
+            if (twrData.twrCubeCount == 0)
             {
-                Debug.Log("LOADDED TOWER");
-                TowerController.Instance.InitializeTower(twrData);
+                Debug.Log("FIRST LAUNCH");
+                Debug.Log("<<<<<<<<<<<<<<<<<<<<<<<<2");
+                LoadNewTower();
+                levelProgress = PlayerPrefs.GetInt("LevelProgress", 0);
+
+                return;
             }
             else
             {
-                DifferentTowerInitialize();
-            }
 
+                if (twrData.index == towerIndex)
+                {
+                    Debug.Log("LOADDED TOWER");
+                    TowerController.Instance.InitializeTower(twrData);
+                }
+                else
+                {
+                    Debug.Log("<<<<<<<<<<<<<<<<<<<<<<<<3");
+                    LoadNewTower();
+                }
+
+
+            }
 
             //If exited main scene
             if (CubeEnd)
@@ -256,6 +315,7 @@ public class ProgressManager : Singleton<ProgressManager>
 
 
         }
+     
     }
 
 
@@ -274,6 +334,7 @@ public class ProgressManager : Singleton<ProgressManager>
 
     public IEnumerator ProgressionMoveUp()
     {
+        //SOME REWARD SEQUENCE YIELD ANOTHER COROUTINE
         Debug.Log("UPPPPP");
         yield return new WaitForSeconds(2f);
 
@@ -321,7 +382,20 @@ public class ProgressManager : Singleton<ProgressManager>
 
     }
 
+    public IEnumerator ProgressionMoveRight()
+    {
+        if(TowerEnd)
+        {
+            TowerEnd = false;
+            //SOME REWARD SEQUENCE YIELD ANOTHER COROUTINE
+            Debug.Log("RIGHTTTTTT");
+            yield return new WaitForSeconds(2f);
 
+            LevelsController.Instance.MoveToNextTower(levelProgress);
+        }
+      
+
+    }
 
     public IEnumerator TowerEndSequence ()
     {
@@ -346,7 +420,6 @@ public class ProgressManager : Singleton<ProgressManager>
         //Disable vcam
         towerCont.vcam.gameObject.SetActive(false);
 
-        TowerEnd = false;
     }
 
 

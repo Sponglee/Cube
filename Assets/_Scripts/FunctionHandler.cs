@@ -63,5 +63,11 @@ public class FunctionHandler : MonoBehaviour
     {
         Application.Quit();
     }
-    
+
+    //Reset PlayerPrefs
+    public void Reset()
+    {
+        PlayerPrefs.DeleteAll();
+    }
+
 }

@@ -5,21 +5,40 @@ using UnityEngine.SceneManagement;
 
 public class CameraCollider : MonoBehaviour
 {
+    public int sceneIndex;
+
+    private void Start()
+    {
+        sceneIndex = SceneManager.GetActiveScene().buildIndex;
+    }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Door"))
+        Debug.Log("COINK " + other.name);
+        if (sceneIndex == 2)
         {
-            FadeCanvas.Instance.FadeOut(1f, Color.white);
+            if (other.CompareTag("Door"))
+            {
+                FadeCanvas.Instance.FadeOut(1f, Color.white);   
 
-            StartCoroutine(StopLoadTransition("Main", 1f));
+                StartCoroutine(StopLoadTransition("Main", 1f));
+            }
+            else if (other.gameObject.CompareTag("Finish"))
+            {
+                TowerController.Instance.StopAllCoroutines();
+                //FadeCanvas.Instance.FadeOut(0.05f,Color.black);
+                StartCoroutine(StopLoadTransition("Levels", 0.05f));
+
+            }
         }
-        else if (other.gameObject.CompareTag("Finish"))
+        else if (sceneIndex == 3)
         {
-            TowerController.Instance.StopAllCoroutines();
-            //FadeCanvas.Instance.FadeOut(0.05f,Color.black);
-            StartCoroutine(StopLoadTransition("Levels", 0.05f));
-
+             //Top part of tower
+            if (other.gameObject.CompareTag("Door"))
+            {
+                StartCoroutine(ProgressManager.Instance.ProgressionMoveRight());
+            }
         }
+
     }
 
 

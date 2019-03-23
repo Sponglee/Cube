@@ -3,20 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelsController : MonoBehaviour
+public class LevelsController : Singleton<LevelsController>
 {
     public Transform FollowTarget;
 
     public Transform currentCanvas;
 
     public Camera physicCam;
+    
+    //Scene cameraPair
     public Transform cameraHolder;
     public Transform elevatorHolder;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        //SetCamera and elevator to current Tower
+        Vector3 tmpPos = new Vector3(cameraHolder.position.x, cameraHolder.position.y, transform.GetChild(0).GetChild(ProgressManager.Instance.CurrentTower).position.z);
+        cameraHolder.position = tmpPos;
+        elevatorHolder.position = new Vector3(elevatorHolder.position.x, elevatorHolder.position.y, tmpPos.z);
     }
 
     // Update is called once per frame
@@ -49,37 +54,18 @@ public class LevelsController : MonoBehaviour
                     //physicCam.GetComponentInChildren<SphereCollider>().enabled = true;
                     GameObject tmp = GrabRayObj();
                     //Debug.Log(tmp.tag);
+
+
                     if (tmp && tmp.CompareTag("Door") && Mathf.Approximately(elevatorHolder.position.z, FollowTarget.position.z))
                     {
-                        //Remember what tower u picked
-                        ProgressManager.Instance.towerIndex = tmp.transform.parent.GetSiblingIndex();
-                        SceneManager.LoadScene("Tower");
-                        //if (tmp.transform.GetSiblingIndex() <= LevelManager.Instance.twrData.twrProgress)
-                        //{
-                        //    LevelManager.Instance.CurrentCube = tmp.transform.GetSiblingIndex();
-                        //    //Hide Tower
-                        //    activeTower.GetChild(0).GetChild(0).GetChild(1).gameObject.SetActive(false);
-                        //    //Disable all other cubes
-                        //    foreach (Transform child in activeTower.GetChild(0).GetChild(0).GetChild(0))
-                        //    {
-                        //        if (child.gameObject != tmp)
-                        //        {
-                        //            child.gameObject.SetActive(false);
-                        //        }
-
-                        //    }
-                        //    StartCoroutine(TowerEnterSequence(tmp));
-                        //}
-                        //else
-                        //{
-                        //    Debug.Log("NOT UNLOCKED " + tmp.transform.GetSiblingIndex());
-                        //}
 
 
-
-
-
-
+                        if (ProgressManager.Instance.CurrentTower <= ProgressManager.Instance.levelProgress)
+                        {
+                            //Remember what tower u picked
+                            ProgressManager.Instance.towerIndex = tmp.transform.parent.GetSiblingIndex();
+                            SceneManager.LoadScene("Tower");
+                        }
                     }
                 }
 
@@ -93,6 +79,16 @@ public class LevelsController : MonoBehaviour
         }
 
     }
+
+    public void MoveToNextTower(int targetTower)
+    {
+        //SetCamera and elevator to current Tower
+        Vector3 tmpPos = new Vector3(cameraHolder.position.x, cameraHolder.position.y, transform.GetChild(0).GetChild(targetTower).position.z);
+        StartCoroutine(StopLook(cameraHolder, tmpPos, 0.2f));
+        StartCoroutine(StopLook(elevatorHolder, new Vector3(elevatorHolder.position.x, elevatorHolder.position.y, tmpPos.z), 1f));
+    }
+
+
 
     //Lerp to target location from destination
     public IEnumerator StopLook(Transform target, Vector3 destination, float duration)
@@ -110,6 +106,9 @@ public class LevelsController : MonoBehaviour
 
 
     }
+
+
+
 
     //Tower pick
     public GameObject GrabRayObj()
