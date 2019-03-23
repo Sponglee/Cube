@@ -38,25 +38,28 @@ public class ProgressManager : Singleton<ProgressManager>
         get => currentCube;
         set
         {
-            //If current level is progressing - save progress
-            if(value > twrData.twrProgress)
-            {
-                currentCube = value;
+            currentCube = value;
+            if (value >= twrData.twrProgress)
                 EndTowerCheck(value);
-            }
-            //Return from cube or levels and tower is complete
-            else if(value == twrData.twrProgress && value == twrData.twrCubeCount)
-            {
-                currentCube = value-1;
-                EndTowerCheck(value);
-                
-            }
-            else
-            {
-                currentCube = value;
-                
+            ////If current level is progressing - save progress
+            //if(value > twrData.twrProgress)
+            //{
+            //    currentCube = value;
+            //    EndTowerCheck(value);
+            //}
+            ////Return from cube or levels and tower is complete
+            //else if(value == twrData.twrProgress && value == twrData.twrCubeCount)
+            //{
+            //    currentCube = value;
+            //    EndTowerCheck(value);
 
-            }
+            //}
+            //else
+            //{
+            //    currentCube = value;
+
+
+            //}
 
         }
     }
@@ -66,7 +69,7 @@ public class ProgressManager : Singleton<ProgressManager>
     public void EndTowerCheck(int value)
     {
         //Check for endTower
-        if (twrData != null && twrData.twrCubeCount != 0)
+        if (twrData != null && twrData.twrCubeCount != 0 && value > twrData.twrProgress)
         {
             twrData.twrProgress = value;
             Debug.Log(value + " : :: : " + twrData.twrProgress + " : :: : " + twrData.twrCubeCount);
@@ -80,6 +83,10 @@ public class ProgressManager : Singleton<ProgressManager>
             }
             Debug.Log("CURRENTCUBE SAVE");
             SaveSystem.SaveLevel(towerIndex, twrData, true);
+
+        }
+        else if(twrData != null && twrData.twrCubeCount != 0)
+        {
 
         }
 
@@ -171,6 +178,7 @@ public class ProgressManager : Singleton<ProgressManager>
             if(CurrentCube == twrData.twrCubeCount)
             {
                 CubeEnd= true;
+                
                 CurrentCube--;
             }
 
@@ -203,6 +211,7 @@ public class ProgressManager : Singleton<ProgressManager>
 
             if(twrData.index == towerIndex)
             {
+                Debug.Log("LOADDED TOWER");
                 TowerController.Instance.InitializeTower(twrData);
             }
             else
@@ -229,6 +238,8 @@ public class ProgressManager : Singleton<ProgressManager>
             else
             {
                 CurrentCube = twrData.twrProgress;
+                if (CurrentCube == twrData.twrCubeCount)
+                    CurrentCube--;
                 //Debug.Log("CAMERA   " + gameObject.name + " : "  + CurrentCube + " : : : " + TowerController.Instance.Grid.childCount);
                 
                 
