@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class TowerAimer : MonoBehaviour
 {
@@ -24,7 +25,7 @@ public class TowerAimer : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
       //Tower
-       if(SceneManager.GetActiveScene().buildIndex == 2)
+       if(SceneManager.GetActiveScene().buildIndex == 1)
         {
             if (other.gameObject.CompareTag("Cube"))
             {
@@ -33,14 +34,14 @@ public class TowerAimer : MonoBehaviour
                 Debug.Log(other.transform.name);
                 other.transform.GetChild(1).gameObject.SetActive(true);
 
-                if (towerController.currentCanvas && other.transform.GetChild(1) != towerController.currentCanvas)
+                if (towerController.CurrentCanvas && other.transform.GetChild(1) != towerController.CurrentCanvas)
                 {
-                    towerController.currentCanvas.gameObject.SetActive(false);
+                    towerController.CurrentCanvas.gameObject.SetActive(false);
 
 
                 }
-                towerController.currentCanvas = other.transform.GetChild(1);
-
+                towerController.CurrentCanvas = other.transform.GetChild(1);
+                towerController.CurrentCanvas.GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>().text = "LEVEL " + (other.transform.GetSiblingIndex() + 1).ToString() + "   X X X ";
 
                 //vcam.m_Follow = other.transform;
             }
@@ -49,7 +50,7 @@ public class TowerAimer : MonoBehaviour
 
         }
        //Levels
-        else if(SceneManager.GetActiveScene().buildIndex == 3)
+        else if(SceneManager.GetActiveScene().buildIndex == 2)
         {
                 Debug.Log("POINK " + other.name);
             if (other.gameObject.CompareTag("Tower"))
@@ -69,7 +70,7 @@ public class TowerAimer : MonoBehaviour
                     levelController.currentCanvas.gameObject.SetActive(false);
                 }
                 levelController.currentCanvas = other.transform.parent.GetChild(1);
-
+                levelController.currentCanvas.GetChild(0).GetChild(0).GetComponent<Text>().text = "Tower " + (other.transform.parent.GetSiblingIndex() + 1).ToString();
 
             }
          

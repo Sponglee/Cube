@@ -90,11 +90,12 @@ public class GameManager : Singleton<GameManager>
 
 
         Time.timeScale = 1;
+        Debug.Log(ActiveCameraPoint);
         //Debug Initialize camera
         ChangeCameraState(activeCube.cameraPoints[ActiveCameraPoint], activeCube.transform);
 
         //Rotate camera to show all sides
-        MoveCamera(activeCube.cameraPoints[ActiveCameraPoint]);
+        //MoveCamera(activeCube.cameraPoints[ActiveCameraPoint]);
 
         //Initialize combo buffer
         comboBuffer = new List<Transform>();
@@ -293,7 +294,7 @@ public class GameManager : Singleton<GameManager>
         camHolder.localPosition = Vector3.zero;
         camHolder.localScale = Vector3.one;
 
-        StartCoroutine(StartCameraPan());
+        //StartCoroutine(StartCameraPan());
     }
 
   
@@ -644,20 +645,20 @@ public class GameManager : Singleton<GameManager>
             if(selectedColor != -1 && comboCount >= activeCube.colorCombos[selectedColor].Count)
             {
 
-                #region TUTORIAL
-                if (TutorialManager.Instance && TutorialManager.Instance.TutorialActive == 1)
-                {
-                    Debug.Log("RzEEEEEEE");
-                    TutorialManager.Instance.TutorialActive = 2;
-                    TutorialManager.Instance.CloseTut(2);
-                }
-                else if (TutorialManager.Instance && TutorialManager.Instance.TutorialActive == 3)
-                {
-                    Debug.Log("RzEEEEEEE");
-                    TutorialManager.Instance.TutorialActive = 4;
-                    TutorialManager.Instance.CloseTut(4);
-                }
-                #endregion
+                //#region TUTORIAL
+                //if (TutorialManager.Instance && TutorialManager.Instance.TutorialActive == 1)
+                //{
+                //    Debug.Log("RzEEEEEEE");
+                //    TutorialManager.Instance.TutorialActive = 2;
+                //    TutorialManager.Instance.CloseTut(2);
+                //}
+                //else if (TutorialManager.Instance && TutorialManager.Instance.TutorialActive == 3)
+                //{
+                //    Debug.Log("RzEEEEEEE");
+                //    TutorialManager.Instance.TutorialActive = 4;
+                //    TutorialManager.Instance.CloseTut(4);
+                //}
+                //#endregion
 
 
                 
@@ -752,13 +753,13 @@ public class GameManager : Singleton<GameManager>
 
         
 
-        #region TUTORIAL
-        //Skip multiple color if in tutorial
-        if(activeCube.TutorialCube)
-        {
-            return;
-        }
-        #endregion
+        //#region TUTORIAL
+        ////Skip multiple color if in tutorial
+        //if(activeCube.TutorialCube)
+        //{
+        //    return;
+        //}
+        //#endregion
         //Check color of current tile if combo is broken
         
        
@@ -808,14 +809,14 @@ public class GameManager : Singleton<GameManager>
          
         }
 
-        #region TUTORIAL
-        if (TutorialManager.Instance && TutorialManager.Instance.TutorialActive == 4)
-        {
-            Debug.Log("RzEEEEEEE");
-            TutorialManager.Instance.TutorialActive = 4;
-            TutorialManager.Instance.CloseTut(4);
-        }
-        #endregion
+        //#region TUTORIAL
+        //if (TutorialManager.Instance && TutorialManager.Instance.TutorialActive == 4)
+        //{
+        //    Debug.Log("RzEEEEEEE");
+        //    TutorialManager.Instance.TutorialActive = 4;
+        //    TutorialManager.Instance.CloseTut(4);
+        //}
+        //#endregion
 
     }
 

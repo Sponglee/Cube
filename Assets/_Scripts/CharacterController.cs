@@ -116,13 +116,13 @@ public class CharacterController : MonoBehaviour
 
 
 
-            #region TUTORIAL
-            //Check if door is for tutorial - change scene
-            if ( SceneManager.GetActiveScene().name == "Tutorial")
-            {
-                SceneManager.LoadScene("Main");
-            }
-            #endregion
+            //#region TUTORIAL
+            ////Check if door is for tutorial - change scene
+            //if ( SceneManager.GetActiveScene().name == "Tutorial")
+            //{
+            //    SceneManager.LoadScene("Main");
+            //}
+            //#endregion
             //Stop movement
             Destination = Vector3.zero;
             

@@ -23,14 +23,14 @@ public class FunctionHandler : MonoBehaviour
     {
         //Switch cam
         GameManager.Instance.MoveCamera(GameManager.Instance.camPointHolder);
-        #region TUTORIAL
-        if (TutorialManager.Instance && TutorialManager.Instance.TutorialActive == 2)
-        {
-            Debug.Log("RzEEEEEEE");
-            TutorialManager.Instance.TutorialActive = 3;
-            TutorialManager.Instance.CloseTut(3);
-        }
-        #endregion
+        //#region TUTORIAL
+        //if (TutorialManager.Instance && TutorialManager.Instance.TutorialActive == 2)
+        //{
+        //    Debug.Log("RzEEEEEEE");
+        //    TutorialManager.Instance.TutorialActive = 3;
+        //    TutorialManager.Instance.CloseTut(3);
+        //}
+        //#endregion
     }
 
 

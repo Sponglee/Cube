@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
 public class TowerController : Singleton<TowerController>
 {
     public float rotSpeed = 20;
@@ -29,10 +29,18 @@ public class TowerController : Singleton<TowerController>
     public GameObject TowerEndTrigger;
     public Transform FollowTarget;
 
-    
 
-    public Transform currentCanvas;
-
+    [SerializeField]
+    private Transform currentCanvas;
+    public Transform CurrentCanvas
+    {
+        get => currentCanvas;
+        set
+        {
+            currentCanvas = value;
+            
+        }
+    }
     //Swipe variables
     private Vector3 startTouch;
     private Vector3 endTouch;
@@ -129,7 +137,7 @@ public class TowerController : Singleton<TowerController>
 
 
                 //Door click event
-                if (currentCanvas && currentCanvas.gameObject.activeSelf)
+                if (CurrentCanvas && CurrentCanvas.gameObject.activeSelf)
                 {
                     //Enable phys camera trigger
                     physicCam.GetComponentInChildren<SphereCollider>().enabled = true;
@@ -196,6 +204,8 @@ public class TowerController : Singleton<TowerController>
 
     public GameObject nodePref;
     public float nodeStep = 1.4f;
+
+  
 
     public void InitializeTower(TowerData twrData)
     {

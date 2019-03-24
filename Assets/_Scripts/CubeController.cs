@@ -136,64 +136,64 @@ public class CubeController : MonoBehaviour
 
             LoadCubeData();
         }
-        #region TUTORIAL
-        else if(TutorialCube)
-        {
+        //#region TUTORIAL
+        //else if(TutorialCube)
+        //{
             
-            PlayerPrefs.SetInt("TutorialStep", 1);
+        //    PlayerPrefs.SetInt("TutorialStep", 1);
            
 
-            ////Red
-            //colorCombos[1] = new List<Transform>();
-            ////Green
-            //colorCombos[2] = new List<Transform>();
+        //    ////Red
+        //    //colorCombos[1] = new List<Transform>();
+        //    ////Green
+        //    //colorCombos[2] = new List<Transform>();
 
-            foreach (Transform cubeSide in cubeSides)
-            {
+        //    foreach (Transform cubeSide in cubeSides)
+        //    {
 
-                //Set and remember random color per side
-                int randomMat = 0;
+        //        //Set and remember random color per side
+        //        int randomMat = 0;
 
-                if (cubeSide.name == "CubeFront")
-                {
-                    randomMat = 1;
-                }
-                else if(cubeSide.name == "CubeBack")
-                {
-                    randomMat = 2;
-                }
+        //        if (cubeSide.name == "CubeFront")
+        //        {
+        //            randomMat = 1;
+        //        }
+        //        else if(cubeSide.name == "CubeBack")
+        //        {
+        //            randomMat = 2;
+        //        }
 
-                Material tmpMat = materials[randomMat];
-                //tmpMats.Add(tmpMat);
+        //        Material tmpMat = materials[randomMat];
+        //        //tmpMats.Add(tmpMat);
 
-                //Debug.Log(":::" + randomMat);
-                //Initialize color combos lists to anything except first material 
-                if (randomMat != 0 && colorCombos[randomMat] == null)
-                    colorCombos[randomMat] = new List<Transform>();
+        //        //Debug.Log(":::" + randomMat);
+        //        //Initialize color combos lists to anything except first material 
+        //        if (randomMat != 0 && colorCombos[randomMat] == null)
+        //            colorCombos[randomMat] = new List<Transform>();
 
-                //Grab references to each element per side
-                foreach (Transform child in cubeSide.GetChild(0).GetChild(0))
-                {
+        //        //Grab references to each element per side
+        //        foreach (Transform child in cubeSide.GetChild(0).GetChild(0))
+        //        {
                   
-                    if (child.GetComponent<Renderer>().material.color != materials[0].color)
-                    {
-                        //Side color elem
-                        child.GetComponent<Renderer>().material = tmpMat;
-                        CubeElemController tmpController = child.GetComponent<CubeElemController>();
-                        tmpController.ElemMat = tmpMat;
-                        tmpController.ElemMatIndex = randomMat;
+        //            if (child.GetComponent<Renderer>().material.color != materials[0].color)
+        //            {
+        //                //Side color elem
+        //                child.GetComponent<Renderer>().material = tmpMat;
+        //                CubeElemController tmpController = child.GetComponent<CubeElemController>();
+        //                tmpController.ElemMat = tmpMat;
+        //                tmpController.ElemMatIndex = randomMat;
 
-                        //Add elem to combo per color
-                        colorCombos[randomMat].Add(child);
-                        //Debug.Log(colorCombos[randomMat].Count);
+        //                //Add elem to combo per color
+        //                colorCombos[randomMat].Add(child);
+        //                //Debug.Log(colorCombos[randomMat].Count);
 
-                    }
-                }
-            }
+        //            }
+        //        }
+        //    }
            
 
-        }
-        #endregion
+        //}
+        //#endregion
     }
    
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 
 public class LevelsController : Singleton<LevelsController>
@@ -15,9 +16,16 @@ public class LevelsController : Singleton<LevelsController>
     public Transform cameraHolder;
     public Transform elevatorHolder;
 
+    public PlayableDirector director;
+        
     // Start is called before the first frame update
     void Start()
     {
+        if(!ProgressManager.Instance.TowerExit)
+        {
+            director.enabled = false;
+        }
+      
         //SetCamera and elevator to current Tower
         Vector3 tmpPos = new Vector3(cameraHolder.position.x, cameraHolder.position.y, transform.GetChild(0).GetChild(ProgressManager.Instance.CurrentTower).position.z);
         cameraHolder.position = tmpPos;

@@ -14,7 +14,7 @@ public class CameraCollider : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("COINK " + other.name);
-        if (sceneIndex == 2)
+        if (sceneIndex == 1)
         {
             if (other.CompareTag("Door"))
             {
@@ -27,10 +27,10 @@ public class CameraCollider : MonoBehaviour
                 TowerController.Instance.StopAllCoroutines();
                 //FadeCanvas.Instance.FadeOut(0.05f,Color.black);
                 StartCoroutine(StopLoadTransition("Levels", 0.05f));
-
+                ProgressManager.Instance.TowerExit = true;
             }
         }
-        else if (sceneIndex == 3)
+        else if (sceneIndex == 2)
         {
              //Top part of tower
             if (other.gameObject.CompareTag("Door"))

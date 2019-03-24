@@ -207,7 +207,6 @@ MonoBehaviour:
   cubeSides:
   - {fileID: 1195939732776394530}
   - {fileID: 1195939732975390631}
-  - {fileID: 1195939733440882051}
   - {fileID: 1195939731907841062}
   elemCount: 3
   cameraPoints:

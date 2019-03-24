@@ -2156,7 +2156,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   CubeEnd: 0
-  TowerEnd: 0
+  TowerExit: 0
   towerController: {fileID: 0}
   towerIndex: 0
   levelProgress: 0

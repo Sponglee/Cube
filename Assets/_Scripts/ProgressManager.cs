@@ -17,7 +17,7 @@ public class ProgressManager : Singleton<ProgressManager>
 
     //Cube exit sequence bool
     public bool CubeEnd = false;
-    public bool TowerEnd = false;
+    public bool TowerExit = false;
    
     //Tower Controller reference
     [SerializeField]
@@ -38,7 +38,7 @@ public class ProgressManager : Singleton<ProgressManager>
         {
             currentTower = value;
             //If Tower completed and its greater than previous levelprogress - set new one
-            if (TowerEnd && value > PlayerPrefs.GetInt("LevelProgress", 0))
+            if (TowerExit && value > PlayerPrefs.GetInt("LevelProgress", 0))
                 PlayerPrefs.SetInt("LevelProgress", value);
         }
     }
@@ -79,7 +79,21 @@ public class ProgressManager : Singleton<ProgressManager>
     }
 
   
-
+    public void CheckLevelLoad()
+    {
+        if(CurrentTower != -1)
+        {
+            SceneManager.LoadScene("Levels");
+        }
+        else if(twrData != null && twrData.twrProgress > 0)
+        {
+            SceneManager.LoadScene("Tower");
+        }
+        else
+        {
+            SceneManager.LoadScene("Main");
+        }
+    }
 
     //Check forr endTower
     public void EndTowerCheck(int value)
@@ -92,14 +106,15 @@ public class ProgressManager : Singleton<ProgressManager>
             //Enable Next Tower Bool
             if (twrData.twrProgress == twrData.twrCubeCount)
             {
-                TowerEnd = true;
+                TowerExit = true;
 
                 Debug.Log(levelProgress + " == " + twrData.index);
                 if(twrData.index>=levelProgress)
                 {
+                    Debug.Log(">>>>>" + CurrentTower);
                     //If Tower is finished - increment levelProgress
                     PlayerPrefs.SetInt("LevelProgress", CurrentTower + 1);
-                    levelProgress = PlayerPrefs.GetInt("LevelProgress", 0);
+                    levelProgress = PlayerPrefs.GetInt("LevelProgress", -1);
                 }
                 ////Enable FINISH tagged exit tower trigger
                 //TowerController.Instance.TowerEndTrigger = TowerController.Instance.Grid.parent.GetChild(1).GetChild(0).gameObject;
@@ -138,20 +153,22 @@ public class ProgressManager : Singleton<ProgressManager>
         Debug.Log("STAAARTT " + gameObject.name);
 
         //Check if tower is new, initialize or generate it
-        if(SceneManager.GetActiveScene().buildIndex == 2)
+        if (SceneManager.GetActiveScene().buildIndex != 2)
         {
             if (twrData.twrCubeCount == 0)
             {
                 Debug.Log("<<<<<<<<<<<<<<<<<<<<<<<<1");
+
                 LoadNewTower();
             }
         }
 
         //Set Up current Tower to progress if fresh launch
-        levelProgress = PlayerPrefs.GetInt("LevelProgress", 0);
+        levelProgress = PlayerPrefs.GetInt("LevelProgress", -1);
         //Set current Tower to progress, if first launch
         if (CurrentTower == -1)
             CurrentTower = levelProgress;
+       
     }
 
     //Initializing new tower or start of the level
@@ -193,8 +210,12 @@ public class ProgressManager : Singleton<ProgressManager>
 
 
         Debug.Log("NEW LOADDED");
-        //Initialize tower
-        TowerController.Instance.InitializeTower(twrData);
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            //Initialize tower
+            TowerController.Instance.InitializeTower(twrData);
+        }
+
 
         ////Set character pair to current cube in tower
         if (CurrentCube >= twrData.twrCubeCount)
@@ -212,7 +233,7 @@ public class ProgressManager : Singleton<ProgressManager>
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(2) && SceneManager.GetActiveScene().buildIndex == 2)
+        if (Input.GetMouseButtonDown(2) && SceneManager.GetActiveScene().buildIndex == 1)
         {
             if(CurrentCube == twrData.twrCubeCount)
             {
@@ -243,14 +264,14 @@ public class ProgressManager : Singleton<ProgressManager>
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Debug.Log("RE " + gameObject.name + " :::::: " + twrData.index);
-        levelProgress = PlayerPrefs.GetInt("LevelProgress", 0);
+        levelProgress = PlayerPrefs.GetInt("LevelProgress", -1);
 
         //Set current Tower to progress, if first launch
         if (CurrentTower == -1)
             CurrentTower = levelProgress;
 
 
-        if (scene.buildIndex == 2)
+        if (scene.buildIndex == 1 || scene.buildIndex == 3)
         {
             //First launch of tower Scene (start sequence)
             if (twrData.twrCubeCount == 0)
@@ -258,8 +279,8 @@ public class ProgressManager : Singleton<ProgressManager>
                 Debug.Log("FIRST LAUNCH");
                 Debug.Log("<<<<<<<<<<<<<<<<<<<<<<<<2");
                 LoadNewTower();
-                levelProgress = PlayerPrefs.GetInt("LevelProgress", 0);
-
+                levelProgress = PlayerPrefs.GetInt("LevelProgress", -1);
+                
                 return;
             }
             else
@@ -315,6 +336,16 @@ public class ProgressManager : Singleton<ProgressManager>
 
 
         }
+        else if (scene.buildIndex == 2)
+        {
+            if (twrData.index >= levelProgress)
+            {
+                Debug.Log(">>>>>" + CurrentTower);
+                //If Tower is finished - increment levelProgress
+                PlayerPrefs.SetInt("LevelProgress", CurrentTower + 1);
+                levelProgress = PlayerPrefs.GetInt("LevelProgress", -1);
+            }
+        }
      
     }
 
@@ -342,7 +373,7 @@ public class ProgressManager : Singleton<ProgressManager>
 
         yield return new WaitForEndOfFrame();
 
-        if (TowerEnd)
+        if (TowerExit)
         {
             StartCoroutine(TowerEndSequence());
         }
@@ -384,9 +415,9 @@ public class ProgressManager : Singleton<ProgressManager>
 
     public IEnumerator ProgressionMoveRight()
     {
-        if(TowerEnd)
+        if(TowerExit)
         {
-            TowerEnd = false;
+            TowerExit = false;
             //SOME REWARD SEQUENCE YIELD ANOTHER COROUTINE
             Debug.Log("RIGHTTTTTT");
             yield return new WaitForSeconds(2f);

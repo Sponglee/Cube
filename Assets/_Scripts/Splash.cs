@@ -42,15 +42,16 @@ public class Splash: MonoBehaviour
             fadeGroup.alpha = Time.time - minimumLogoTime;
             if (fadeGroup.alpha >= 1)
             {
-                if(PlayerPrefs.GetInt("TutorialStep",0) == 0)
-                {
+                //if(PlayerPrefs.GetInt("TutorialStep",0) == 0)
+                //{
 
-                    SceneManager.LoadScene("Tutorial");
-                }
-                else
-                {
-                    SceneManager.LoadScene("Main");
-                }
+                //    SceneManager.LoadScene("Tutorial");
+                //}
+                //else
+                //{
+                ProgressManager.Instance.CheckLevelLoad();
+                   
+                //}
             }
         }
 

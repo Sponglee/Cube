@@ -89,7 +89,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1105,7 +1105,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   CubeEnd: 0
-  TowerEnd: 0
+  TowerExit: 0
   towerController: {fileID: 0}
   towerIndex: 0
   levelProgress: 0
@@ -5153,6 +5153,7 @@ MonoBehaviour:
   physicCam: {fileID: 1883198662}
   cameraHolder: {fileID: 1617088203}
   elevatorHolder: {fileID: 1086311414}
+  director: {fileID: 1617088205}
 --- !u!1001 &7612271424886955032
 PrefabInstance:
   m_ObjectHideFlags: 0
