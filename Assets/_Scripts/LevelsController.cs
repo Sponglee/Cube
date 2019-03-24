@@ -64,7 +64,8 @@ public class LevelsController : Singleton<LevelsController>
                     //Debug.Log(tmp.tag);
 
 
-                    if (tmp && tmp.CompareTag("Door") && Mathf.Approximately(elevatorHolder.position.z, FollowTarget.position.z))
+                    if (tmp && tmp.CompareTag("Door") && Mathf.Approximately(elevatorHolder.position.z, FollowTarget.position.z) 
+                        &&  Mathf.Approximately(cameraHolder.position.z, FollowTarget.position.z))
                     {
 
 
