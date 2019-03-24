@@ -214,21 +214,24 @@ public class ProgressManager : Singleton<ProgressManager>
         {
             //Initialize tower
             TowerController.Instance.InitializeTower(twrData);
+
+
+            ////Set character pair to current cube in tower
+            if (CurrentCube >= twrData.twrCubeCount)
+            {
+                SetCamera(CurrentCube - 1);
+            }
+            else
+            {
+                SetCamera(CurrentCube);
+            }
+
+            //Check for endTower to enable exit trigger
+            EndTowerCheck(CurrentCube);
         }
 
 
-        ////Set character pair to current cube in tower
-        if (CurrentCube >= twrData.twrCubeCount)
-        {
-            SetCamera(CurrentCube - 1);
-        }
-        else
-        {
-            SetCamera(CurrentCube);
-        }
-
-        //Check for endTower to enable exit trigger
-        EndTowerCheck(CurrentCube);
+       
     }
 
     private void Update()
@@ -289,7 +292,11 @@ public class ProgressManager : Singleton<ProgressManager>
                 if (twrData.index == towerIndex)
                 {
                     Debug.Log("LOADDED TOWER");
-                    TowerController.Instance.InitializeTower(twrData);
+                    if (scene.buildIndex == 1)
+                    {
+                        TowerController.Instance.InitializeTower(twrData);
+                    }
+
                 }
                 else
                 {
@@ -352,14 +359,17 @@ public class ProgressManager : Singleton<ProgressManager>
 
     public void SetCamera(int curCubeTarget)
     {
-        Debug.Log("CURCUBE " + curCubeTarget + " : " + TowerController.Instance.Grid.childCount);
-        if (TowerController.Instance.Grid.childCount != 0)
+        if (SceneManager.GetActiveScene().buildIndex == 1)
         {
-            //Set camera to grid child
-            TowerController.Instance.cameraHolder.position = TowerController.Instance.Grid.GetChild(curCubeTarget).position + Vector3.up * 0.6f;
+            //Debug.Log("CURCUBE " + curCubeTarget + " : " + TowerController.Instance.Grid.childCount);
+            if (TowerController.Instance.Grid.childCount != 0)
+            {
+                //Set camera to grid child
+                TowerController.Instance.cameraHolder.position = TowerController.Instance.Grid.GetChild(curCubeTarget).position + Vector3.up * 0.6f;
 
-            //Enable Canvas for currentCube
-            TowerController.Instance.Grid.GetChild(curCubeTarget).GetChild(1).gameObject.SetActive(true);
+                //Enable Canvas for currentCube
+                TowerController.Instance.Grid.GetChild(curCubeTarget).GetChild(1).gameObject.SetActive(true);
+            }
         }
     }
 
