@@ -45,9 +45,9 @@ public class TowerController : Singleton<TowerController>
     private Vector3 startTouch;
     private Vector3 endTouch;
     private Vector3 screenTouch;
-
     [SerializeField]
     private float swipeResistance = 50f;
+
 
     public Transform activeTower;
     public Transform Grid;
@@ -118,26 +118,22 @@ public class TowerController : Singleton<TowerController>
 //#endif
         if (Input.touchCount > 0)
         {
-            //Touch touch = Input.GetTouch(0);
-            //if (touch.phase == TouchPhase.Began)
-            //{
-            //    //Remember start touch position (SwipeManager replacement)
-            //    startTouch = touch.position;
-            //    screenTouch = physicCam.ScreenToViewportPoint(startTouch);
-            //}
+            Touch touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Began)
+            {
+                //Remember start touch position (SwipeManager replacement)
+                startTouch = touch.position;
+                screenTouch = physicCam.ScreenToViewportPoint(startTouch);
+            }
             if (Input.GetTouch(0).phase == TouchPhase.Ended)
             {
-                //endTouch = physicCam.ScreenToViewportPoint(touch.position);
-                //Vector3 deltaSwipe = screenTouch - endTouch;
+                endTouch = physicCam.ScreenToViewportPoint(touch.position);
+                Vector3 deltaSwipe = screenTouch - endTouch;
 
-                //if (Mathf.Abs(deltaSwipe.y) <= swipeResistance)
-                //{
-
-                //}
-
+                
 
                 //Door click event
-                if (CurrentCanvas && CurrentCanvas.gameObject.activeSelf)
+                if (CurrentCanvas && CurrentCanvas.gameObject.activeSelf && Mathf.Abs(deltaSwipe.y) <= swipeResistance)
                 {
                     //Enable phys camera trigger
                     physicCam.GetComponentInChildren<SphereCollider>().enabled = true;
@@ -160,7 +156,9 @@ public class TowerController : Singleton<TowerController>
                                 }
 
                             }
-                            StartCoroutine(TowerEnterSequence(tmp));
+                          
+                                StartCoroutine(TowerEnterSequence(tmp));
+
                         }
                         else
                         {

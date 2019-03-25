@@ -27,7 +27,7 @@ public class CameraCollider : MonoBehaviour
                 TowerController.Instance.StopAllCoroutines();
                 //FadeCanvas.Instance.FadeOut(0.05f,Color.black);
                 StartCoroutine(StopLoadTransition("Levels", 0.05f));
-                ProgressManager.Instance.TowerExit = true;
+                ProgressManager.Instance.TowerManualExit = true;
             }
         }
         else if (sceneIndex == 2)

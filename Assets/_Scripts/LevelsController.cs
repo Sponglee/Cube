@@ -17,13 +17,24 @@ public class LevelsController : Singleton<LevelsController>
     public Transform elevatorHolder;
 
     public PlayableDirector director;
-        
+
+    //Swipe variables
+    private Vector3 startTouch;
+    private Vector3 endTouch;
+    private Vector3 screenTouch;
+    [SerializeField]
+    private float swipeResistance = 50f;
+
     // Start is called before the first frame update
     void Start()
     {
-        if(!ProgressManager.Instance.TowerExit)
+        if(!ProgressManager.Instance.TowerExit || !ProgressManager.Instance.TowerManualExit)
         {
             director.enabled = false;
+        }
+        else
+        {
+            ProgressManager.Instance.TowerManualExit = false;
         }
       
         //SetCamera and elevator to current Tower
@@ -37,26 +48,21 @@ public class LevelsController : Singleton<LevelsController>
     {
         if (Input.touchCount > 0)
         {
-            //Touch touch = Input.GetTouch(0);
-            //if (touch.phase == TouchPhase.Began)
-            //{
-            //    //Remember start touch position (SwipeManager replacement)
-            //    startTouch = touch.position;
-            //    screenTouch = physicCam.ScreenToViewportPoint(startTouch);
-            //}
+            Touch touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Began)
+            {
+                //Remember start touch position (SwipeManager replacement)
+                startTouch = touch.position;
+                screenTouch = physicCam.ScreenToViewportPoint(startTouch);
+            }
             if (Input.GetTouch(0).phase == TouchPhase.Ended)
             {
-                //endTouch = physicCam.ScreenToViewportPoint(touch.position);
-                //Vector3 deltaSwipe = screenTouch - endTouch;
-
-                //if (Mathf.Abs(deltaSwipe.y) <= swipeResistance)
-                //{
-
-                //}
+                endTouch = physicCam.ScreenToViewportPoint(touch.position);
+                Vector3 deltaSwipe = screenTouch - endTouch;
 
 
                 //Door click event
-                if (currentCanvas && currentCanvas.gameObject.activeSelf)
+                if (currentCanvas && currentCanvas.gameObject.activeSelf && Mathf.Abs(deltaSwipe.y) <= swipeResistance)
                 {
                     //Enable phys camera trigger
                     //physicCam.GetComponentInChildren<SphereCollider>().enabled = true;

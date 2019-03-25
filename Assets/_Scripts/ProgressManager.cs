@@ -18,7 +18,8 @@ public class ProgressManager : Singleton<ProgressManager>
     //Cube exit sequence bool
     public bool CubeEnd = false;
     public bool TowerExit = false;
-   
+    //For exiting to levels manually
+    public bool TowerManualExit = false;
     //Tower Controller reference
     [SerializeField]
     private TowerController towerController;
