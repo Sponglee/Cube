@@ -358,7 +358,7 @@ MonoBehaviour:
   TowerExit: 0
   TowerManualExit: 0
   towerController: {fileID: 0}
-  towerIndex: 0
+  towerIndex: -1
   levelProgress: -1
   currentTower: -1
   currentCube: -1

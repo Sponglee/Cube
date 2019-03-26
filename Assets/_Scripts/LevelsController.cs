@@ -28,13 +28,19 @@ public class LevelsController : Singleton<LevelsController>
     // Start is called before the first frame update
     void Start()
     {
-        if(!ProgressManager.Instance.TowerExit || !ProgressManager.Instance.TowerManualExit)
+        //Conditions for tower pan sequence
+        if(ProgressManager.Instance.TowerExit)
         {
-            director.enabled = false;
+            
+        }
+        else if(ProgressManager.Instance.TowerManualExit)
+        {
+            ProgressManager.Instance.TowerManualExit = false;
         }
         else
         {
-            ProgressManager.Instance.TowerManualExit = false;
+            director.enabled = false;
+           
         }
       
         //SetCamera and elevator to current Tower

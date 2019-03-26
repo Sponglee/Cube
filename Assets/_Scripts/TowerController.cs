@@ -125,7 +125,7 @@ public class TowerController : Singleton<TowerController>
                 startTouch = touch.position;
                 screenTouch = physicCam.ScreenToViewportPoint(startTouch);
             }
-            if (Input.GetTouch(0).phase == TouchPhase.Ended)
+            else if (Input.GetTouch(0).phase == TouchPhase.Ended)
             {
                 endTouch = physicCam.ScreenToViewportPoint(touch.position);
                 Vector3 deltaSwipe = screenTouch - endTouch;

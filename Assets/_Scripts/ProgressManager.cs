@@ -179,7 +179,7 @@ public class ProgressManager : Singleton<ProgressManager>
         //Load tower data, if there's none - randomize it
         twrData = SaveSystem.LoadLevel(towerIndex);
 
-        if (twrData == null)
+        if (twrData == null && CurrentCube == -1)
         {
             //Load backup 
             //*** HERE ***
@@ -189,7 +189,7 @@ public class ProgressManager : Singleton<ProgressManager>
 
 
         }
-        else if (twrData.twrCubeCount != 0)
+        else if (twrData.twrCubeCount != 0 && CurrentCube == -1)
         {
 
             Debug.Log("CurrentCubeLOAD");
@@ -200,7 +200,7 @@ public class ProgressManager : Singleton<ProgressManager>
             }
         }
         //File bug proof
-        else
+        else if(CurrentCube == -1)
         {
             Debug.Log("____FILESAFE__________________________________________________________________________________________________________");
             //LOAD FILE WITH BACKUP
@@ -290,7 +290,7 @@ public class ProgressManager : Singleton<ProgressManager>
             else
             {
 
-                if (twrData.index == towerIndex)
+                if (twrData.index == towerIndex && scene.buildIndex == 1)
                 {
                     Debug.Log("LOADDED TOWER");
                     if (scene.buildIndex == 1)
