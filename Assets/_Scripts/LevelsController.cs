@@ -99,6 +99,43 @@ public class LevelsController : Singleton<LevelsController>
             }
         }
 
+
+        if(Input.GetMouseButtonDown(2))
+        {
+            endTouch = physicCam.ScreenToViewportPoint(Input.mousePosition);
+            Vector3 deltaSwipe = screenTouch - endTouch;
+
+
+            //Door click event
+            if (currentCanvas && currentCanvas.gameObject.activeSelf && Mathf.Abs(deltaSwipe.y) <= swipeResistance)
+            {
+                //Enable phys camera trigger
+                //physicCam.GetComponentInChildren<SphereCollider>().enabled = true;
+                GameObject tmp = GrabRayObj();
+                //Debug.Log(tmp.tag);
+
+
+                if (tmp && tmp.CompareTag("Door") && Mathf.Approximately(elevatorHolder.position.z, FollowTarget.position.z)
+                    && Mathf.Approximately(cameraHolder.position.z, FollowTarget.position.z))
+                {
+
+
+                    if (ProgressManager.Instance.CurrentTower <= ProgressManager.Instance.levelProgress)
+                    {
+                        //Remember what tower u picked
+                        ProgressManager.Instance.towerIndex = tmp.transform.parent.GetSiblingIndex();
+                        SceneManager.LoadScene("Tower");
+                    }
+                }
+            }
+
+            Vector3 tmpPos = new Vector3(cameraHolder.position.x, cameraHolder.position.y, FollowTarget.position.z);
+
+            //For camera
+            StartCoroutine(StopLook(cameraHolder, tmpPos, 0.2f));
+            //For elevator
+            StartCoroutine(StopLook(elevatorHolder, new Vector3(elevatorHolder.position.x, elevatorHolder.position.y, tmpPos.z), 1f));
+        }
     }
 
     public void MoveToNextTower(int targetTower)
