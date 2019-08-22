@@ -72,65 +72,20 @@ public class TowerController : Singleton<TowerController>
 
     private void Update()
     {
-//#if UNITY_EDITOR
-//        if (Input.GetMouseButtonDown(2))
-//        {
+#if UNITY_EDITOR
 
-//            GenerateTower(LevelManager.Instance.twrData);
-
-//            //Set character pair to current cube in tower
-//            TowerController.Instance.cameraHolder.position = TowerController.Instance.TowerGrid.GetChild(LevelManager.Instance.CurrentCube).position + Vector3.up * 0.6f;
-
-//            //Enable Canvas for currentCube
-//            TowerController.Instance.TowerGrid.GetChild(LevelManager.Instance.CurrentCube).GetChild(1).gameObject.SetActive(true);
-
-//            ////Door click event
-//            //if (currentCanvas && currentCanvas.gameObject.activeSelf)
-//            //{
-//            //    //Enable phys camera trigger
-//            //    physicCam.GetComponentInChildren<SphereCollider>().enabled = true;
-//            //    GameObject tmp = GrabRayObj();
-
-//            //    if (tmp && tmp.CompareTag("Cube") && elevatorHolder.position == cameraHolder.position)
-//            //    {
-
-//            //        //Hide Tower
-//            //        transform.GetChild(1).gameObject.SetActive(false);
-//            //        //Disable all other cubes
-//            //        foreach (Transform child in transform.GetChild(0))
-//            //        {
-//            //            if (child.gameObject != tmp)
-//            //            {
-//            //                child.gameObject.SetActive(false);
-//            //            }
-
-//            //        }
-
-
-//            //        StartCoroutine(TowerEnterSequence(tmp));
-
-
-
-
-//            //    }
-//            //}
-//        }
-//#endif
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
-            if (touch.phase == TouchPhase.Began)
+        if (Input.GetMouseButtonDown(0))
             {
                 //Remember start touch position (SwipeManager replacement)
-                startTouch = touch.position;
+                startTouch = Input.mousePosition;
                 screenTouch = physicCam.ScreenToViewportPoint(startTouch);
             }
-            else if (Input.GetTouch(0).phase == TouchPhase.Ended)
+            else if (Input.GetMouseButtonUp(0))
             {
-                endTouch = physicCam.ScreenToViewportPoint(touch.position);
+                endTouch = physicCam.ScreenToViewportPoint(Input.mousePosition);
                 Vector3 deltaSwipe = screenTouch - endTouch;
 
-                
+
 
                 //Door click event
                 if (CurrentCanvas && CurrentCanvas.gameObject.activeSelf && Mathf.Abs(deltaSwipe.y) <= swipeResistance)
@@ -141,7 +96,7 @@ public class TowerController : Singleton<TowerController>
 
                     if (tmp && tmp.CompareTag("Cube") && elevatorHolder.position.y == cameraHolder.position.y)
                     {
-                       
+
                         if (tmp.transform.GetSiblingIndex() <= ProgressManager.Instance.twrData.twrProgress)
                         {
                             ProgressManager.Instance.CurrentCube = tmp.transform.GetSiblingIndex();
@@ -156,8 +111,8 @@ public class TowerController : Singleton<TowerController>
                                 }
 
                             }
-                          
-                                StartCoroutine(TowerEnterSequence(tmp));
+
+                            StartCoroutine(TowerEnterSequence(tmp));
 
                         }
                         else
@@ -165,11 +120,11 @@ public class TowerController : Singleton<TowerController>
                             Debug.Log("NOT UNLOCKED " + tmp.transform.GetSiblingIndex());
                         }
 
-                        
 
 
 
-                       
+
+
                     }
                 }
 
@@ -180,7 +135,76 @@ public class TowerController : Singleton<TowerController>
                 //For elevator
                 StartCoroutine(StopLook(elevatorHolder, new Vector3(elevatorHolder.position.x, tmpPos.y, elevatorHolder.position.z), 1f));
             }
-        }
+
+
+ 
+#endif
+
+        //if (Input.touchCount > 0)
+        //{
+        //    Touch touch = Input.GetTouch(0);
+        //    if (touch.phase == TouchPhase.Began)
+        //    {
+        //        //Remember start touch position (SwipeManager replacement)
+        //        startTouch = touch.position;
+        //        screenTouch = physicCam.ScreenToViewportPoint(startTouch);
+        //    }
+        //    else if (Input.GetTouch(0).phase == TouchPhase.Ended)
+        //    {
+        //        endTouch = physicCam.ScreenToViewportPoint(touch.position);
+        //        Vector3 deltaSwipe = screenTouch - endTouch;
+
+                
+
+        //        //Door click event
+        //        if (CurrentCanvas && CurrentCanvas.gameObject.activeSelf && Mathf.Abs(deltaSwipe.y) <= swipeResistance)
+        //        {
+        //            //Enable phys camera trigger
+        //            physicCam.GetComponentInChildren<SphereCollider>().enabled = true;
+        //            GameObject tmp = GrabRayObj();
+
+        //            if (tmp && tmp.CompareTag("Cube") && elevatorHolder.position.y == cameraHolder.position.y)
+        //            {
+                       
+        //                if (tmp.transform.GetSiblingIndex() <= ProgressManager.Instance.twrData.twrProgress)
+        //                {
+        //                    ProgressManager.Instance.CurrentCube = tmp.transform.GetSiblingIndex();
+        //                    //Hide Tower
+        //                    activeTower.GetChild(0).GetChild(0).GetChild(1).gameObject.SetActive(false);
+        //                    //Disable all other cubes
+        //                    foreach (Transform child in activeTower.GetChild(0).GetChild(0).GetChild(0))
+        //                    {
+        //                        if (child.gameObject != tmp)
+        //                        {
+        //                            child.gameObject.SetActive(false);
+        //                        }
+
+        //                    }
+                          
+        //                        StartCoroutine(TowerEnterSequence(tmp));
+
+        //                }
+        //                else
+        //                {
+        //                    Debug.Log("NOT UNLOCKED " + tmp.transform.GetSiblingIndex());
+        //                }
+
+                        
+
+
+
+                       
+        //            }
+        //        }
+
+        //        Vector3 tmpPos = new Vector3(cameraHolder.position.x, FollowTarget.position.y, cameraHolder.position.z);
+
+        //        //For camera
+        //        StartCoroutine(StopLook(cameraHolder, tmpPos, 0.2f));
+        //        //For elevator
+        //        StartCoroutine(StopLook(elevatorHolder, new Vector3(elevatorHolder.position.x, tmpPos.y, elevatorHolder.position.z), 1f));
+        //    }
+        //}
 
 
     }

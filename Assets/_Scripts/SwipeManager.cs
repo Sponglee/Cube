@@ -64,7 +64,7 @@ public class SwipeManager : Singleton<SwipeManager>
 
         
 
-        if (Input.touchCount > 0 && !gameManager.activeCube.CubeOpened)
+        if (/*Input.touchCount > 0 && */  !gameManager.activeCube.CubeOpened)
         {
             Vector2 deltaSwipe = Vector2.zero;
 
@@ -94,12 +94,12 @@ public class SwipeManager : Singleton<SwipeManager>
             //}
             //Else if only 1 finger
 
-            if (touches.Length == 1)
+            if (true)
             {
-                Touch touch = Input.GetTouch(0);
+                //Touch touch = Input.GetTouch(0);
               
                 //Proceed with 1 finger
-                if (touch.phase == TouchPhase.Began)
+                if (Input.GetMouseButtonDown(0))
                 {
                     ChargeTimer = 0;
 
@@ -109,10 +109,10 @@ public class SwipeManager : Singleton<SwipeManager>
                     }
                        
                     //Debug.Log("BEGAN");
-                    startTouch = touch.position;
+                    startTouch = Input.mousePosition;
                     screenTouch = gameManager.physicalCam.ScreenToViewportPoint(startTouch);
                 }
-                else if (touch.phase == TouchPhase.Stationary)
+                else if (Input.GetMouseButton(0))
                 {
                     //If not touching ui - charge the jump
                        
@@ -121,7 +121,7 @@ public class SwipeManager : Singleton<SwipeManager>
                         if (ChargeTimer >= ChargeResistance)
                         {
                             ChargeImg.gameObject.SetActive(true);
-                            ChargeImg.transform.position = touch.position;
+                            ChargeImg.transform.position = Input.mousePosition;
 
                             ChargeImg.fillAmount = ChargeTimer / ChargeLimit;
                             if (ChargeTimer >= ChargeLimit)
@@ -135,11 +135,11 @@ public class SwipeManager : Singleton<SwipeManager>
 
                    
                 }
-                else if (touch.phase == TouchPhase.Ended)
+                else if (Input.GetMouseButtonUp(0))
                 {
                     ChargeImg.gameObject.SetActive(false);
                     ChargeImg.color = Color.white;
-                    endTouch = gameManager.physicalCam.ScreenToViewportPoint(touch.position);
+                    endTouch = gameManager.physicalCam.ScreenToViewportPoint(Input.mousePosition);
                     deltaSwipe = screenTouch - endTouch;
                     //Debug.Log("ENDED " + deltaSwipe.x + ":" + deltaSwipe.y);
                     CheckSwipe(deltaSwipe);
@@ -149,7 +149,7 @@ public class SwipeManager : Singleton<SwipeManager>
                 //If jump finger was pressed - release and return
                 if (gameManager.character.JumpBool)
                 {
-                    if (touches[0].phase == TouchPhase.Ended)
+                    if (Input.GetMouseButtonUp(0))
                     {
                         //Release jumpbool
                         gameManager.character.JumpBool = false;
